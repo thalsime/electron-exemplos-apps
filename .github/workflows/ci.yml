@@ -1,0 +1,31 @@
+name: CI
+
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main]
+
+jobs:
+  verificar-tipos:
+    name: Verificação de tipos
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Obter o código
+        uses: actions/checkout@v7
+
+      - name: Preparar o Node
+        uses: actions/setup-node@v7
+        with:
+          node-version: '24'
+          cache: npm
+
+      # --ignore-scripts pula o postinstall que baixa o binário do Electron
+      # (centenas de MB). Ele não é necessário aqui: as declarações de tipo
+      # (electron.d.ts) já vêm dentro do pacote publicado no npm.
+      - name: Instalar dependências
+        run: npm ci --ignore-scripts
+
+      - name: Verificar tipos de todos os exemplos
+        run: npm run verificar-tipos

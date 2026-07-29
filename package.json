@@ -1,0 +1,17 @@
+{
+  "name": "electron-exemplos-apps",
+  "version": "1.0.0",
+  "description": "Exemplos de APIs do Electron em português do Brasil, modernizados e convertidos para TypeScript",
+  "private": true,
+  "license": "Apache-2.0",
+  "scripts": {
+    "postinstall": "install-electron",
+    "verificar-tipos": "for d in */tsconfig.json; do [ -f \"$d\" ] || continue; echo \"[tsc] ${d%/tsconfig.json}\"; tsc --noEmit -p \"$d\" || exit 1; done",
+    "compilar-tudo": "for d in */tsconfig.json; do [ -f \"$d\" ] || continue; echo \"[tsc] ${d%/tsconfig.json}\"; tsc -p \"$d\" || exit 1; done"
+  },
+  "devDependencies": {
+    "@types/node": "^26.1.2",
+    "electron": "^43.2.0",
+    "typescript": "^7.0.2"
+  }
+}

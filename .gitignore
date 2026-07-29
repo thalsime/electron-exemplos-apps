@@ -1,1 +1,11 @@
 .DS_Store
+
+# Dependências instaladas pelo npm (uma única vez, na raiz do repositório)
+node_modules/
+
+# JavaScript gerado pelo TypeScript em cada exemplo
+dist/
+
+# Logs
+*.log
+npm-debug.log*

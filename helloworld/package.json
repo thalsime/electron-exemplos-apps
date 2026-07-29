@@ -1,5 +1,10 @@
 {
-  "name":    "helloworld",
+  "name": "helloworld",
   "version": "1.0.1",
-  "main":    "main.js"
+  "description": "Aplicativo Electron mínimo: abre uma janela e carrega uma página HTML",
+  "main": "dist/main.js",
+  "scripts": {
+    "build": "tsc",
+    "start": "tsc && electron ."
+  }
 }
