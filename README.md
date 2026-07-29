@@ -1,29 +1,60 @@
-# Electron Sample Apps
+**Português (Brasil)** | [English](README.en.md)
 
-This repository contains Electron sample apps to illustrate the usage of
-[Electron APIs](https://github.com/electron/electron/tree/master/docs).
+# Exemplos de aplicativos Electron
 
-These sample apps are migrated from [nw-sample-apps](https://github.com/zcbenz/nw-sample-apps),
-[chrome-app-sample](https://github.com/GoogleChrome/chrome-app-samples) and
-[chromium extensions examples](https://code.google.com/p/chromium/codesearch#chromium/src/chrome/common/extensions/docs/examples/&sq=package:chromium&type=cs).
+> **Trabalho em andamento.** Este repositório está sendo traduzido para o português do Brasil,
+> atualizado para o Electron mais recente e convertido para TypeScript, para servir de material
+> didático. Enquanto o trabalho não termina, parte dos exemplos ainda está no estado original,
+> em inglês e escrita para versões antigas do Electron.
+>
+> Repositório original: [hokein/electron-sample-apps](https://github.com/hokein/electron-sample-apps).
 
-All samples are test on Electron v1.6.11.
+Este repositório reúne aplicativos de exemplo do Electron que ilustram o uso das
+[APIs do Electron](https://www.electronjs.org/docs/latest/api/app).
 
-## How to run apps
+Os exemplos foram migrados de [nw-sample-apps](https://github.com/zcbenz/nw-sample-apps),
+[chrome-app-samples](https://github.com/GoogleChrome/chrome-app-samples) e dos
+[exemplos de extensões do Chrome](https://github.com/GoogleChrome/chrome-extensions-samples).
 
-1. Install Electron via `npm install -g electron`.
+No repositório original, os exemplos foram testados no Electron v1.6.11. Neste fork, cada exemplo
+já convertido é testado no Electron 43.
 
-2. Run the sample via `electron <electron-sample-apps-path>/<sample-name>`.
+## Como executar os exemplos
 
-If you want to know more about Electron app's development, please refer to the
-[official docs](https://github.com/electron/electron/blob/master/docs/tutorial/quick-start.md).
+O Electron e o TypeScript são declarados uma única vez, na raiz do repositório, e atendem a todos
+os exemplos. Não é preciso instalar nada globalmente nem instalar dependências pasta por pasta.
 
-## License
+1. Instale as dependências uma vez, na raiz do repositório:
 
-electron-sample-apps is published under the Apache v2 license. See `LICENSE` for details.
+   ```bash
+   npm install
+   ```
 
-## Donation
+2. Entre na pasta do exemplo e execute:
 
-If this project helps you out, you can give me a cup of coffee :)
+   ```bash
+   cd helloworld
+   npm start
+   ```
+
+O comando `npm start` compila o TypeScript do exemplo e abre a janela do aplicativo.
+
+> **Atenção:** use sempre `npm start`. Digitar `electron .` direto no terminal não funciona, porque
+> o binário está instalado na raiz do repositório e apenas o `npm` o localiza, subindo pelas pastas.
+
+Para aprender mais sobre o desenvolvimento de aplicativos Electron, consulte a
+[documentação oficial](https://www.electronjs.org/docs/latest). Vale começar pelo
+[modelo de processos](https://www.electronjs.org/docs/latest/tutorial/process-model), que explica a
+separação entre processo principal e processo renderizador - a base para entender os exemplos.
+
+## Licença
+
+O `electron-sample-apps` é publicado sob a licença Apache v2. Veja o arquivo `LICENSE` para os
+detalhes. Este fork preserva a licença e os créditos do projeto original.
+
+## Doação
+
+Os créditos deste trabalho pertencem ao autor do repositório original. Se o projeto foi útil para
+você, considere pagar um café para ele:
 
 [![paypal](https://img.shields.io/badge/donate-paypal-brightgreen.svg)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=ZVNVLSK6P6JRG)
