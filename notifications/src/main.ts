@@ -25,8 +25,9 @@ function createWindow() {
 
 app.whenReady().then(createWindow)
 
+// O original não registrava este handler, e sem ele o Electron encerra sozinho
+// quando a última janela fecha. Declarar o encerramento de forma explícita
+// preserva esse comportamento e deixa a intenção visível no código.
 app.on('window-all-closed', () => {
-  if (process.platform !== 'darwin') {
-    app.quit()
-  }
+  app.quit()
 })
