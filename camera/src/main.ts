@@ -30,8 +30,10 @@ function createWindow() {
 
 app.whenReady().then(createWindow)
 
+// O original mantinha o processo vivo no macOS depois de fechar a janela, seguindo
+// a convenção do sistema, mas nunca implementou o handler activate que recria a
+// janela - o resultado era um ícone inerte no Dock. Por decisão do mantenedor, o
+// aplicativo encerra em todas as plataformas.
 app.on('window-all-closed', () => {
-  if (process.platform !== 'darwin') {
-    app.quit()
-  }
+  app.quit()
 })
