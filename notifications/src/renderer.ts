@@ -21,13 +21,44 @@ const options: NotificationSample[] = [
   }
 ]
 
+// O exemplo demonstra o disparo da notificação, não navegação: clicar nela apenas
+// a dispensa. A lista mantém as notificações vivas enquanto podem ser clicadas -
+// sem guardar a referência, o coletor de lixo descarta o handler e o clique deixa
+// de responder depois de algum tempo.
+//
+// Limitação conhecida no macOS durante o desenvolvimento: o clique não chega a
+// este código. O aplicativo roda sob o identificador genérico com.github.Electron,
+// e quando existe mais de uma instalação do Electron na máquina o sistema entrega
+// o clique a outra delas, que abre a tela de boas-vindas do Electron. Some ao
+// empacotar o aplicativo com identificador próprio, e não ocorre no Windows.
+const notificacoesAtivas: Notification[] = []
+
+function dispensarAoClicar(notification: Notification): void {
+  notificacoesAtivas.push(notification)
+
+  function esquecer(): void {
+    const posicao = notificacoesAtivas.indexOf(notification)
+    if (posicao >= 0) {
+      notificacoesAtivas.splice(posicao, 1)
+    }
+  }
+
+  notification.onclick = function (evt) {
+    evt.preventDefault();
+    notification.close();
+    esquecer();
+  }
+
+  notification.onclose = esquecer
+}
+
 function doNotify(evt: Event): void {
   const target = evt.currentTarget as HTMLElement
   if (target.id == "basic") {
-    new Notification(options[0].title, options[0]);
+    dispensarAoClicar(new Notification(options[0].title, options[0]));
   }
   else if (target.id == "image") {
-    new Notification(options[1].title, options[1]);
+    dispensarAoClicar(new Notification(options[1].title, options[1]));
   }
 }
 
