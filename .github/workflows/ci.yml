@@ -30,9 +30,10 @@ jobs:
       - name: Verificar tipos de todos os exemplos
         run: npm run verificar-tipos
 
-  # Os exemplos migrados para a stack Vite da turma têm dependências próprias e
-  # dependem de vite/client, então não podem ser verificados com o node_modules
-  # da raiz. Cada um é checado dentro do seu próprio diretório.
+  # Os exemplos migrados para a stack Vite dependem de vite/client, que o
+  # tsconfig da raiz não alcança. Com npm workspaces existe um único
+  # package-lock.json, na raiz, então a instalação acontece uma vez e a
+  # verificação roda dentro de cada workspace.
   verificar-projetos-vite:
     name: Verificação de tipos dos projetos Vite
     runs-on: ubuntu-latest
@@ -42,9 +43,13 @@ jobs:
       matrix:
         projeto:
           - camera
-          - notifications
-          - helloworld-sharedobj
           - frameless-window
+          - helloworld
+          - helloworld-sharedobj
+          - notifications
+          - power-save-blocker
+          - tray
+          - webgl
 
     steps:
       - name: Obter o código
@@ -54,10 +59,12 @@ jobs:
         uses: actions/setup-node@v7
         with:
           node-version: '24'
+          cache: npm
 
-      - name: Instalar dependências
+      # --ignore-scripts pula o download do binário do Electron, desnecessário
+      # para checagem de tipos: as declarações vêm dentro do pacote npm.
+      - name: Instalar dependências de todos os workspaces
         run: npm ci --ignore-scripts
-        working-directory: ${{ matrix.projeto }}
 
       - name: Verificar tipos
         run: npx tsc --noEmit

@@ -5,8 +5,7 @@
   "main": "dist-electron/main.js",
   "scripts": {
     "dev": "vite",
-    "build": "tsc --noEmit && vite build",
-    "postinstall": "install-electron"
+    "build": "tsc --noEmit && vite build"
   },
   "devDependencies": {
     "@types/node": "^26.1.2",

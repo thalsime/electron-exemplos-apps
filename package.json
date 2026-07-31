@@ -4,6 +4,16 @@
   "description": "Exemplos de APIs do Electron em português do Brasil, modernizados e convertidos para TypeScript",
   "private": true,
   "license": "Apache-2.0",
+  "workspaces": [
+    "camera",
+    "frameless-window",
+    "helloworld",
+    "helloworld-sharedobj",
+    "notifications",
+    "power-save-blocker",
+    "tray",
+    "webgl"
+  ],
   "scripts": {
     "postinstall": "install-electron",
     "verificar-tipos": "for d in */tsconfig.json; do [ -f \"$d\" ] || continue; p=\"${d%/tsconfig.json}\"; if [ -f \"$p/vite.config.ts\" ]; then echo \"[pulado] $p (projeto Vite: verificado no job próprio do CI)\"; continue; fi; echo \"[tsc] $p\"; tsc --noEmit -p \"$d\" || exit 1; done",
@@ -11,7 +21,10 @@
   },
   "devDependencies": {
     "@types/node": "^26.1.2",
-    "electron": "^43.2.0",
-    "typescript": "^7.0.2"
+    "electron": "42.6.0",
+    "typescript": "7.0.2",
+    "vite": "^8.1.3",
+    "vite-plugin-electron": "^1.1.0",
+    "vite-plugin-electron-renderer": "^1.0.0"
   }
 }
