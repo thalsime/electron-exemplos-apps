@@ -1,0 +1,7 @@
+node_modules/
+dist/
+dist-electron/
+
+# HTML temporário que o vite-plugin-electron escreve quando o projeto não tem
+# renderizador. Ele é removido ao final, mas fica para trás se o processo morrer.
+index.html
