@@ -3,12 +3,14 @@
 <head>
   <meta charset="utf-8">
   <title>Hello 3D World</title>
-  <link href="styles/main.css" rel="stylesheet">
-  <script src="js/Detector.js"></script>
-  <script src="js/three.min.js"></script>
+  <!-- Caminho absoluto a partir de public/: assim o Vite serve os arquivos como
+       estão, sem tratá-los como módulo, e as duas bibliotecas continuam expondo
+       Detector e THREE no escopo global, como faziam em 2012. -->
+  <script src="/js/Detector.js"></script>
+  <script src="/js/three.min.js"></script>
 </head>
 <body>
   <div class="close"></div>
-  <script src="js/showlogo3d.js"></script>
+  <script type="module" src="/src/renderer.ts"></script>
 </body>
 </html>
