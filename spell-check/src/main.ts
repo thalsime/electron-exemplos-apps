@@ -24,14 +24,25 @@ function criarJanela(): void {
   // é necessário hoje.
   //
   // ATENÇÃO A UMA DIFERENÇA DE PLATAFORMA que muda o resultado do exemplo:
-  // no Windows e no Linux o corretor é o do Chromium, e a lista de idiomas
-  // abaixo é o que manda. No macOS o Electron delega ao corretor do sistema
-  // (NSSpellChecker), que detecta o idioma sozinho - e `setSpellCheckerLanguages`
-  // vira uma chamada sem efeito, como a própria documentação registra.
+  // no Windows e no Linux o corretor é o do Chromium (Hunspell), e a lista de
+  // idiomas abaixo é o que manda. No macOS o Electron delega ao corretor do
+  // sistema (NSSpellChecker), e `setSpellCheckerLanguages` vira uma chamada sem
+  // efeito - a própria documentação da API registra isso.
   //
-  // A consequência prática no macOS: a detecção do erro funciona, mas as
-  // SUGESTÕES saem no idioma que o sistema tem ativo em Ajustes do Sistema >
-  // Teclado > Texto, e não no que este código pede.
+  // O que se observa no macOS, medido nesta máquina em 2026-08-15:
+  //
+  //   - a DETECÇÃO fica multi-idioma e funciona bem: palavras corretas tanto em
+  //     português quanto em inglês passam sem sublinhado, no mesmo texto. O
+  //     Hunspell do Chromium não faz isso com um idioma só configurado;
+  //   - as SUGESTÕES, porém, saem do dicionário inglês. Digitar "erru" num texto
+  //     em português sugere "err", e não "erro".
+  //
+  // Não é configuração faltando nesta máquina: `app.getLocale()`,
+  // `app.getPreferredSystemLanguages()` e `getSpellCheckerLanguages()` devolvem
+  // todos `pt-BR`, e o dicionário português do sistema TEM as sugestões certas
+  // (consultado direto, `NSSpellChecker` responde "erro, erre, erra, errou" para
+  // "erru"). O que não repassa essas sugestões é a ponte entre o Chromium e o
+  // corretor do macOS.
   const sessao = janelaPrincipal.webContents.session
   sessao.setSpellCheckerEnabled(true)
   sessao.setSpellCheckerLanguages(IDIOMAS)
