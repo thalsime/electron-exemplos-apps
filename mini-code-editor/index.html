@@ -1,34 +1,36 @@
 <!DOCTYPE html>
 <html>
-<head>
-<title>Mini Code Editor</title>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Mini Code Editor</title>
 
-<script src="zepto.min.js"></script>
-<script src="editor.js"></script>
+    <!-- O CodeMirror 5 declara `var CodeMirror` em script clássico: precisa vir
+         por tag <script>, e não por import de módulo. Fica em public/, servido
+         sem processamento. -->
+    <script src="/cm/lib/codemirror.js"></script>
+    <script src="/cm/mode/css/css.js"></script>
+    <script src="/cm/mode/xml/xml.js"></script>
+    <script src="/cm/mode/javascript/javascript.js"></script>
+    <script src="/cm/mode/htmlmixed/htmlmixed.js"></script>
 
-<script src="cm/lib/codemirror.js"></script>
-<script src="cm/mode/css/css.js"></script>
-<script src="cm/mode/xml/xml.js"></script>
-<script src="cm/mode/javascript/javascript.js"></script>
-<script src="cm/mode/htmlmixed/htmlmixed.js"></script>
+    <link rel="stylesheet" href="/cm/lib/codemirror.css" />
+    <link rel="stylesheet" href="/cm/theme/lesser-dark.css" />
+  </head>
+  <body>
+    <div class="buttons">
+      <button id="new"><img src="/img/16x16/file_add.png" alt="" />New</button>
+      <button id="open"><img src="/img/16x16/file.png" alt="" />Open</button>
+      <button id="save"><img src="/img/16x16/diskette.png" alt="" />Save</button>
+      <button id="save-as"><img src="/img/16x16/diskette.png" alt="" />Save as</button>
+    </div>
 
-<link rel="stylesheet" href="style.css">
-<link rel="stylesheet" href="cm/lib/codemirror.css">
-<link rel="stylesheet" href="cm/theme/lesser-dark.css">
-</head>
-<body>
-<div class="buttons">
-	<button id="new"> <img src="img/16x16/file_add.png"/>New  </button>
-	<button id="open"><img src="img/16x16/file.png"/>    Open </button>
-	<button id="save"><img src="img/16x16/diskette.png"/>Save </button>
-</div>
+    <div id="editor"></div>
 
-<div id="editor"></div>
+    <div class="info">
+      <label>Filename: </label><span id="title"></span>
+      <label>Mode: </label><span id="mode"></span>
+    </div>
 
-<div class="info">
-  <label>Filename: </label><span id="title"></span>
-  <label>Mode: </label><span id="mode"></span>
-</div>
-
-</body>
+    <script type="module" src="/src/renderer.ts"></script>
+  </body>
 </html>

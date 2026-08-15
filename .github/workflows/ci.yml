@@ -47,10 +47,12 @@ jobs:
           - cookies
           - crash-report
           - desktop-capture
+          - file-explorer
           - frameless-window
           - helloworld
           - helloworld-sharedobj
           - menus
+          - mini-code-editor
           - mp3-encoder
           - notifications
           - power-save-blocker
