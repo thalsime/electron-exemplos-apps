@@ -48,7 +48,7 @@ jobs:
           - relatorio-de-falha
           - captura-de-tela
           - explorador-de-arquivos
-          - frameless-window
+          - janela-sem-moldura
           - helloworld
           - helloworld-sharedobj
           - menus

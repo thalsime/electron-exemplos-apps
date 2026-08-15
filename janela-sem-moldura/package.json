@@ -1,5 +1,5 @@
 {
-  "name": "frameless-window-demo",
+  "name": "janela-sem-moldura-demo",
   "version": "1.1.0",
   "description": "Janela sem moldura com barra de título desenhada pela própria página",
   "main": "dist-electron/main.js",
