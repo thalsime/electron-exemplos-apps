@@ -6,9 +6,9 @@
   "license": "Apache-2.0",
   "workspaces": [
     "camera",
+    "captura-de-tela",
     "certificado-cliente",
     "cookies",
-    "desktop-capture",
     "file-explorer",
     "frameless-window",
     "helloworld",

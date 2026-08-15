@@ -1,5 +1,5 @@
 {
-  "name": "desktop-capture-demo",
+  "name": "captura-de-tela-demo",
   "version": "1.1.0",
   "description": "Captura de tela ou janela usando desktopCapturer e getDisplayMedia",
   "main": "dist-electron/main.js",

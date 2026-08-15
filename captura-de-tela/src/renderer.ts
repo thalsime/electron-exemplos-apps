@@ -31,7 +31,7 @@ function encerrarTransmissao(): void {
   transmissao?.getTracks().forEach((faixa) => faixa.stop())
   transmissao = null
   elemento<HTMLVideoElement>('video').srcObject = null
-  elemento<HTMLButtonElement>('#toggle').textContent = 'Enable Capture'
+  elemento<HTMLButtonElement>('#alternar').textContent = 'Iniciar captura'
 }
 
 async function iniciarTransmissao(id: string, nome: string): Promise<void> {
@@ -46,7 +46,7 @@ async function iniciarTransmissao(id: string, nome: string): Promise<void> {
     transmissao = await navigator.mediaDevices.getDisplayMedia({ video: true, audio: false })
     const video = elemento<HTMLVideoElement>('video')
     video.srcObject = transmissao
-    elemento<HTMLButtonElement>('#toggle').textContent = 'Disable Capture'
+    elemento<HTMLButtonElement>('#alternar').textContent = 'Parar captura'
     registrar(`Capturando: ${nome}`)
 
     // Encerrar pela interface do sistema também precisa limpar o nosso estado.
@@ -96,8 +96,8 @@ async function atualizarFontes(): Promise<void> {
 window.addEventListener('DOMContentLoaded', () => {
   void atualizarFontes()
 
-  elemento('#refresh').addEventListener('click', () => void atualizarFontes())
-  elemento('#toggle').addEventListener('click', () => {
+  elemento('#atualizar').addEventListener('click', () => void atualizarFontes())
+  elemento('#alternar').addEventListener('click', () => {
     if (transmissao) {
       encerrarTransmissao()
       registrar('Captura encerrada.')
