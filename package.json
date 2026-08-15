@@ -7,6 +7,7 @@
   "workspaces": [
     "camera",
     "client-certificate",
+    "crash-report",
     "frameless-window",
     "helloworld",
     "helloworld-sharedobj",
