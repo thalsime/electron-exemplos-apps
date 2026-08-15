@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Cookies</title>
+  </head>
+  <body>
+    <h2>Cookies! ... Nom Nom Nom...</h2>
+    <button id="remove_button">DELETE ALL!</button>
+    <div id="filter_div">
+      Filter: <input id="filter" type="text" />
+      <button>x</button>
+    </div>
+    <br />
+    <div id="summary_div">
+      Showing <span id="filter_count"></span> of <span id="total_count"></span> cookie
+      domains.
+      <span id="delete_all_button"></span>
+    </div>
+    <br />
+    <table id="cookies">
+      <tr class="header">
+        <th>Domain</th>
+        <th>#Cookies</th>
+        <th>Names</th>
+        <th></th>
+      </tr>
+    </table>
+    <script type="module" src="/src/renderer.ts"></script>
+  </body>
+</html>
