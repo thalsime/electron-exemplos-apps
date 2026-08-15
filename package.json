@@ -11,6 +11,7 @@
     "frameless-window",
     "helloworld",
     "helloworld-sharedobj",
+    "menus",
     "notifications",
     "power-save-blocker",
     "service-worker/mock-response",
