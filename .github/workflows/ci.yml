@@ -46,6 +46,7 @@ jobs:
           - client-certificate
           - cookies
           - crash-report
+          - desktop-capture
           - frameless-window
           - helloworld
           - helloworld-sharedobj
