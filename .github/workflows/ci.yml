@@ -47,6 +47,7 @@ jobs:
           - cookies
           - crash-report
           - desktop-capture
+          - file-explorer
           - frameless-window
           - helloworld
           - helloworld-sharedobj
