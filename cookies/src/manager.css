@@ -1,0 +1,23 @@
+body {
+  font-family: system-ui, sans-serif;
+  margin: 1rem;
+}
+
+table {
+  border-collapse: collapse;
+  margin-top: 0.5rem;
+}
+
+td, th {
+  border: 1px solid black;
+  padding: 2px 6px;
+  text-align: left;
+}
+
+td.button {
+  border: none;
+}
+
+td.cookie_count {
+  text-align: right;
+}

@@ -1,5 +1,18 @@
 {
-  "name"    : "printing-demo",
-  "version" : "1.1.0",
-  "main"    : "main.js"
+  "name": "printing-demo",
+  "version": "1.1.0",
+  "description": "Impressão e geração de PDF a partir de uma segunda janela controlada por IPC",
+  "main": "dist-electron/main.js",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc --noEmit && vite build"
+  },
+  "devDependencies": {
+    "@types/node": "^26.1.2",
+    "electron": "42.6.0",
+    "typescript": "7.0.2",
+    "vite": "^8.1.3",
+    "vite-plugin-electron": "^1.1.0",
+    "vite-plugin-electron-renderer": "^1.0.0"
+  }
 }

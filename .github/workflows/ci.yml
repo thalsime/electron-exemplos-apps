@@ -44,6 +44,7 @@ jobs:
         projeto:
           - camera
           - client-certificate
+          - cookies
           - crash-report
           - frameless-window
           - helloworld
@@ -51,9 +52,12 @@ jobs:
           - menus
           - notifications
           - power-save-blocker
+          - printing
           - service-worker/mock-response
+          - spell-check
           - tray
           - webgl
+          - webview/browser
 
     steps:
       - name: Obter o código
