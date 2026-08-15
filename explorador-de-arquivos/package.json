@@ -1,5 +1,5 @@
 {
-  "name": "file-explorer-demo",
+  "name": "explorador-de-arquivos-demo",
   "version": "1.1.0",
   "description": "Navegador de arquivos com acesso ao disco isolado no processo principal",
   "main": "dist-electron/main.js",

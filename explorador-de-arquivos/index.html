@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Explorador de arquivos</title>
+  </head>
+  <body>
+    <!-- Os rótulos abaixo estão traduzidos, mas os caminhos em data-path NÃO:
+         no disco, essas pastas do macOS se chamam Documents, Pictures, Music e
+         Movies em inglês, mesmo que o Finder as exiba em português. Traduzir o
+         caminho apontaria para pastas inexistentes. -->
+    <ul id="barra-lateral">
+      <li class="titulo-secao">Favoritos</li>
+      <li class="ativo"><a href="#" data-path="~">Início</a></li>
+      <li><a href="#" data-path="~/Documents">Documentos</a></li>
+      <li><a href="#" data-path="~/Pictures">Imagens</a></li>
+      <li><a href="#" data-path="~/Music">Música</a></li>
+      <li><a href="#" data-path="~/Movies">Filmes</a></li>
+      <li class="titulo-secao">Sobre</li>
+      <li><a href="#" id="sobre">Sobre o exemplo</a></li>
+    </ul>
+
+    <div id="conteudo">
+      <ul id="caminho"></ul>
+      <ul id="arquivos"></ul>
+    </div>
+
+    <script type="module" src="/src/renderer.ts"></script>
+  </body>
+</html>

@@ -47,7 +47,7 @@ jobs:
           - cookies
           - relatorio-de-falha
           - captura-de-tela
-          - file-explorer
+          - explorador-de-arquivos
           - frameless-window
           - helloworld
           - helloworld-sharedobj
