@@ -6,7 +6,7 @@
   "license": "Apache-2.0",
   "workspaces": [
     "camera",
-    "client-certificate",
+    "certificado-cliente",
     "cookies",
     "crash-report",
     "desktop-capture",

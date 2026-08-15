@@ -1,5 +1,5 @@
 {
-  "name": "client-certificate-demo",
+  "name": "certificado-cliente-demo",
   "version": "1.2.0",
   "description": "Autenticação por certificado de cliente contra um servidor HTTPS local",
   "main": "dist-electron/main.js",

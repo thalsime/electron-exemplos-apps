@@ -1,7 +1,7 @@
 import { app, BrowserWindow } from 'electron'
 import path from 'path'
 
-// Endereço do servidor HTTPS que acompanha o exemplo, em `servidor.ts`.
+// Endereço do servidor HTTPS que acompanha o exemplo, em `servidor.mts`.
 // Ele exige certificado de cliente e responde "approved" ou "denied".
 const SERVIDOR = 'https://localhost:5000'
 
