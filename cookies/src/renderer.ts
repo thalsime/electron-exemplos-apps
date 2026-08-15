@@ -55,13 +55,13 @@ async function removerTudo(): Promise<void> {
 }
 
 function montarTabela(): void {
-  const filtro = elemento<HTMLInputElement>('#filter').value
+  const filtro = elemento<HTMLInputElement>('#filtro').value
   const listados = dominios(filtro)
 
-  elemento('#filter_count').textContent = String(listados.length)
-  elemento('#total_count').textContent = String(porDominio.size)
+  elemento('#contagem-filtrada').textContent = String(listados.length)
+  elemento('#contagem-total').textContent = String(porDominio.size)
 
-  const acao = elemento('#delete_all_button')
+  const acao = elemento('#acao-em-massa')
   acao.replaceChildren()
   if (listados.length > 0) {
     const botao = document.createElement('button')
@@ -72,7 +72,7 @@ function montarTabela(): void {
     acao.appendChild(botao)
   }
 
-  const tabela = elemento<HTMLTableElement>('#cookies')
+  const tabela = elemento<HTMLTableElement>('#tabela-cookies')
   while (tabela.rows.length > 1) {
     tabela.deleteRow(tabela.rows.length - 1)
   }
@@ -85,7 +85,7 @@ function montarTabela(): void {
 
     const contagem = linha.insertCell(-1)
     contagem.textContent = String(cookies.length)
-    contagem.className = 'cookie_count'
+    contagem.className = 'contagem'
 
     // Os nomes tornam o exemplo legível: sem eles a tabela mostra só números.
     linha.insertCell(-1).textContent = cookies.map((c) => c.name).join(', ')
@@ -107,7 +107,7 @@ async function recarregar(): Promise<void> {
 }
 
 function limparFiltro(): void {
-  const filtro = elemento<HTMLInputElement>('#filter')
+  const filtro = elemento<HTMLInputElement>('#filtro')
   filtro.focus()
   if (filtro.value.length > 0) {
     filtro.value = ''
@@ -118,10 +118,10 @@ function limparFiltro(): void {
 window.addEventListener('DOMContentLoaded', () => {
   void recarregar()
 
-  elemento('#filter').focus()
-  elemento('#remove_button').addEventListener('click', () => void removerTudo())
-  elemento('#filter').addEventListener('input', montarTabela)
-  elemento('#filter_div button').addEventListener('click', limparFiltro)
+  elemento('#filtro').focus()
+  elemento('#remover-tudo').addEventListener('click', () => void removerTudo())
+  elemento('#filtro').addEventListener('input', montarTabela)
+  elemento('#area-filtro button').addEventListener('click', limparFiltro)
 
   window.addEventListener('keydown', (evento) => {
     if (evento.key === TECLA_ESC) limparFiltro()
