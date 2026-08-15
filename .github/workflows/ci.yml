@@ -48,6 +48,7 @@ jobs:
           - helloworld-sharedobj
           - notifications
           - power-save-blocker
+          - service-worker/mock-response
           - tray
           - webgl
 
