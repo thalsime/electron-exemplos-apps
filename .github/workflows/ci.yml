@@ -46,10 +46,12 @@ jobs:
           - client-certificate
           - cookies
           - crash-report
+          - desktop-capture
           - frameless-window
           - helloworld
           - helloworld-sharedobj
           - menus
+          - mp3-encoder
           - notifications
           - power-save-blocker
           - printing

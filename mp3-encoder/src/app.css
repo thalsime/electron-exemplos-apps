@@ -1,0 +1,26 @@
+body {
+  font-family: system-ui, sans-serif;
+  margin: 1rem;
+}
+
+#form label {
+  display: inline-block;
+  width: 70px;
+}
+
+#form > div { margin-bottom: 0.5rem; }
+
+#logs {
+  margin-top: 1rem;
+  padding: 0.5rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  height: 240px;
+  overflow-y: auto;
+  font-family: ui-monospace, monospace;
+  font-size: 0.85rem;
+  white-space: pre-wrap;
+}
+
+.error { color: red; }
+.good { color: green; }
