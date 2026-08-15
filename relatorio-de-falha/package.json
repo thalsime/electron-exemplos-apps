@@ -1,5 +1,5 @@
 {
-  "name": "crash-report-demo",
+  "name": "relatorio-de-falha-demo",
   "version": "1.1.0",
   "description": "Relatório de falha do renderizador enviado a um coletor HTTP local",
   "main": "dist-electron/main.js",

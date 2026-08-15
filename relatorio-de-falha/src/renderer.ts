@@ -12,14 +12,14 @@ declare global {
 // Monta a tabela dos relatórios já enviados ao coletor. A lista chega pronta do
 // processo principal: aqui não há acesso a nenhuma API do Electron.
 async function montarTabela(): Promise<void> {
-  const destino = document.getElementById('crash_reporters')
+  const destino = document.getElementById('relatorios')
   if (!destino) return
 
   const relatorios = await window.crashReportApi.listarRelatorios()
 
   if (relatorios.length === 0) {
     destino.textContent =
-      'Nenhum relatório enviado ainda. Clique em Crash e reabra o aplicativo.'
+      'Nenhum relatório enviado ainda. Clique em Provocar falha e reabra o aplicativo.'
     return
   }
 
@@ -42,7 +42,7 @@ async function montarTabela(): Promise<void> {
 window.addEventListener('DOMContentLoaded', () => {
   void montarTabela()
 
-  document.getElementById('crash')?.addEventListener('click', () => {
+  document.getElementById('provocar-falha')?.addEventListener('click', () => {
     window.crashReportApi.provocarFalha()
   })
 })
