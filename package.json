@@ -18,7 +18,8 @@
     "service-worker/mock-response",
     "spell-check",
     "tray",
-    "webgl"
+    "webgl",
+    "webview/browser"
   ],
   "scripts": {
     "postinstall": "install-electron",

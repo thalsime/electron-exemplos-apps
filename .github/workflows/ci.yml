@@ -56,6 +56,7 @@ jobs:
           - spell-check
           - tray
           - webgl
+          - webview/browser
 
     steps:
       - name: Obter o código
