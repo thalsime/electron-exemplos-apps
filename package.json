@@ -6,11 +6,15 @@
   "license": "Apache-2.0",
   "workspaces": [
     "camera",
+    "client-certificate",
+    "crash-report",
     "frameless-window",
     "helloworld",
     "helloworld-sharedobj",
+    "menus",
     "notifications",
     "power-save-blocker",
+    "service-worker/mock-response",
     "tray",
     "webgl"
   ],

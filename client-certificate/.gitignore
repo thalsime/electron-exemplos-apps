@@ -1,0 +1,11 @@
+node_modules/
+dist/
+dist-electron/
+
+# Certificados gerados pelo ssl/setup.sh: NUNCA versionar chave privada
+ssl/*.key
+ssl/*.crt
+ssl/*.csr
+ssl/*.p12
+ssl/*.pem
+ssl/*.srl
