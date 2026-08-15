@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Janela sem moldura</title>
+  </head>
+  <body>
+    <div id="content">
+      <div id="conteudo-interno">
+        Escolha as barras de título a exibir:<br />
+        <input type="checkbox" id="caixa-superior" />Barra superior <br />
+        <input type="checkbox" id="caixa-inferior" />Barra inferior <br />
+        <input type="checkbox" id="caixa-esquerda" />Barra à esquerda <br />
+        <input type="checkbox" id="caixa-direita" />Barra à direita <br />
+        <br />
+
+        <button id="botao-fechar-janela">Fechar</button>
+        <button id="botao-minimizar-janela">Minimizar</button>
+        <button id="botao-maximizar-janela">Maximizar</button>
+        <button id="botao-restaurar-janela">Restaurar</button>
+        <button id="botao-tela-cheia">Alternar tela cheia</button>
+        <button id="botao-alternar-maximizada">Alternar maximizada</button> <br />
+
+        <button id="min">_</button>
+        <button id="max">=</button>
+        <button id="exit">X</button>
+      </div>
+    </div>
+
+    <script type="module" src="/src/renderer.ts"></script>
+  </body>
+</html>
