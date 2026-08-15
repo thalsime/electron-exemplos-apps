@@ -45,7 +45,7 @@ jobs:
           - camera
           - certificado-cliente
           - cookies
-          - crash-report
+          - relatorio-de-falha
           - desktop-capture
           - file-explorer
           - frameless-window
