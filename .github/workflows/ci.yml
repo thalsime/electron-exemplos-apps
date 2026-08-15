@@ -43,7 +43,7 @@ jobs:
       matrix:
         projeto:
           - camera
-          - client-certificate
+          - certificado-cliente
           - cookies
           - crash-report
           - desktop-capture
