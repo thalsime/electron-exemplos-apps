@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Client Certificate</title>
+    <style>
+      body { font-family: system-ui, sans-serif; margin: 2rem; line-height: 1.5; }
+      code { background: #f0f0f0; padding: 0.1rem 0.3rem; border-radius: 3px; }
+      ol { padding-left: 1.2rem; }
+    </style>
+  </head>
+  <body>
+    <h1>Servidor fora do ar</h1>
+    <p>
+      Este exemplo carrega <code>https://localhost:5000</code>, servido pelo
+      <code>servidor.mts</code> que acompanha a pasta. A conexão falhou, então
+      provavelmente o servidor não está rodando.
+    </p>
+    <ol>
+      <li>Gere os certificados: <code>./ssl/setup.sh</code></li>
+      <li>Importe <code>rootCA.crt</code> e <code>client.p12</code> no sistema</li>
+      <li>Em outro terminal, suba o servidor: <code>npm run servidor</code></li>
+      <li>Reinicie este aplicativo</li>
+    </ol>
+    <p>Com tudo no lugar, esta janela mostra <code>approved</code> no lugar desta página.</p>
+  </body>
+</html>
