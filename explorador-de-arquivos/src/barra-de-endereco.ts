@@ -31,7 +31,7 @@ export class BarraDeEndereco {
     trechos.forEach((trecho, indice) => {
       const item = document.createElement('li')
       item.dataset.path = trecho.caminho
-      if (indice === trechos.length - 1) item.classList.add('active')
+      if (indice === trechos.length - 1) item.classList.add('ativo')
 
       const link = document.createElement('a')
       link.href = '#'

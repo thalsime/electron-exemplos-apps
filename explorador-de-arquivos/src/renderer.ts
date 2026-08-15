@@ -45,16 +45,16 @@ async function abrirEntrada(entrada: EntradaDePasta): Promise<void> {
 }
 
 window.addEventListener('DOMContentLoaded', () => {
-  lista = new ListaDeArquivos(elemento('#files'), (entrada) => void abrirEntrada(entrada))
-  barra = new BarraDeEndereco(elemento('#addressbar'), (caminho) => void navegarPara(caminho))
+  lista = new ListaDeArquivos(elemento('#arquivos'), (entrada) => void abrirEntrada(entrada))
+  barra = new BarraDeEndereco(elemento('#caminho'), (caminho) => void navegarPara(caminho))
 
   // Os atalhos da barra lateral guardam o caminho no próprio HTML, como no
   // original - só o atributo mudou de nw-path para data-path.
   document.querySelectorAll<HTMLElement>('[data-path]').forEach((atalho) => {
     atalho.addEventListener('click', (evento) => {
       evento.preventDefault()
-      document.querySelectorAll('#sidebar li').forEach((li) => li.classList.remove('active'))
-      atalho.closest('li')?.classList.add('active')
+      document.querySelectorAll('#barra-lateral li').forEach((li) => li.classList.remove('ativo'))
+      atalho.closest('li')?.classList.add('ativo')
       void navegarPara(atalho.dataset.path ?? '~')
     })
   })
