@@ -52,6 +52,7 @@ jobs:
           - notifications
           - power-save-blocker
           - service-worker/mock-response
+          - spell-check
           - tray
           - webgl
 
