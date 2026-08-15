@@ -46,7 +46,7 @@ jobs:
           - certificado-cliente
           - cookies
           - relatorio-de-falha
-          - desktop-capture
+          - captura-de-tela
           - file-explorer
           - frameless-window
           - helloworld
