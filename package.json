@@ -15,6 +15,7 @@
     "menus",
     "notifications",
     "power-save-blocker",
+    "printing",
     "service-worker/mock-response",
     "spell-check",
     "tray",
