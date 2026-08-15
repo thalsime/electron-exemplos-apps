@@ -51,6 +51,7 @@ jobs:
           - helloworld
           - helloworld-sharedobj
           - menus
+          - mp3-encoder
           - notifications
           - power-save-blocker
           - printing
