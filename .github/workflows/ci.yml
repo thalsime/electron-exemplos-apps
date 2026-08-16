@@ -57,6 +57,7 @@ jobs:
           - codificador-mp3
           - console-e-registros
           - comunicacao-entre-janelas
+          - compactador-de-pasta
           - notificacoes
           - bloqueio-de-suspensao
           - painel-flutuante
