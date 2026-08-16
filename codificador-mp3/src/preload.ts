@@ -1,6 +1,6 @@
-import { contextBridge, ipcRenderer, webUtils } from 'electron'
-import type { LinhaDeRegistro, PedidoDeCodificacao } from './main'
-import type { ApiMp3 } from './ponte'
+import { contextBridge, ipcRenderer, webUtils } from 'electron';
+import type { LinhaDeRegistro, PedidoDeCodificacao } from './main';
+import type { ApiMp3 } from './ponte';
 
 // O tipo é aplicado à variável porque `exposeInMainWorld(apiKey: string, api: any)` não
 // confere nada: sem esta anotação, a ponte poderia divergir do contrato em silêncio.
@@ -18,8 +18,8 @@ const apiMp3: ApiMp3 = {
   // O andamento chega do processo principal ao longo da execução, e não de uma
   // vez no fim: o codificador escreve no stdout enquanto trabalha.
   aoReceberRegistro: (ouvinte: (linha: LinhaDeRegistro) => void): void => {
-    ipcRenderer.on('mp3:registro', (_evento, linha: LinhaDeRegistro) => ouvinte(linha))
+    ipcRenderer.on('mp3:registro', (_evento, linha: LinhaDeRegistro) => ouvinte(linha));
   },
-}
+};
 
-contextBridge.exposeInMainWorld('apiMp3', apiMp3)
+contextBridge.exposeInMainWorld('apiMp3', apiMp3);
