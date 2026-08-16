@@ -1,17 +1,9 @@
 import './estilo.css'
 import type { ArquivoGravado, FonteDeCaptura } from './main'
 
-declare global {
-  interface Window {
-    apiGravador: {
-      listarFontes: () => Promise<FonteDeCaptura[]>
-      escolherFonte: (id: string) => Promise<boolean>
-      marcarGravacao: (ativa: boolean) => void
-      salvar: (dados: ArrayBuffer) => Promise<ArquivoGravado | null>
-      aoPedirAlternancia: (ouvinte: () => void) => void
-    }
-  }
-}
+// Quem descreve `window.apiGravador` é o src/ponte.d.ts, o mesmo arquivo contra o qual o
+// preload se confere. Os dois tipos continuam importados aqui porque `escolherFonte` e
+// `mostrarResultado` os usam nas próprias assinaturas.
 
 const previa = document.getElementById('previa') as HTMLVideoElement | null
 const botaoGravar = document.getElementById('botao-gravar') as HTMLButtonElement | null
