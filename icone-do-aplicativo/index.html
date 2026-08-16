@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Ícone do aplicativo</title>
+  </head>
+  <body>
+    <header>
+      <img id="previa" src="icone.png" alt="Ícone deste aplicativo" width="96" height="96" />
+      <div>
+        <h1>Ícone do aplicativo</h1>
+        <p>
+          Este aplicativo substitui o ícone padrão do Electron. Você está no
+          <strong id="plataforma">...</strong>, e nem todo recurso desta página existe aqui.
+        </p>
+      </div>
+    </header>
+
+    <h2>Nesta plataforma</h2>
+    <ul id="recursos"></ul>
+
+    <h2>Distintivo com contador</h2>
+    <div class="botoes">
+      <button id="botao-somar">Somar uma pendência</button>
+      <button id="botao-limpar">Limpar o contador</button>
+    </div>
+
+    <h2>Trocar o ícone em execução</h2>
+    <div class="botoes">
+      <button id="botao-alerta">Trocar pelo ícone de alerta</button>
+      <button id="botao-restaurar">Restaurar o original</button>
+    </div>
+
+    <p id="retorno" class="retorno"></p>
+
+    <table>
+      <thead>
+        <tr><th>Formato</th><th>Onde é usado</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><code>icone.png</code></td><td>janela e barra de tarefas no Linux; Dock no macOS em execução</td></tr>
+        <tr><td><code>icone.icns</code></td><td>pacote do aplicativo no macOS, ao empacotar</td></tr>
+        <tr><td><code>icone.ico</code></td><td>executável e atalhos no Windows, ao empacotar</td></tr>
+      </tbody>
+    </table>
+
+    <script type="module" src="/src/renderer.ts"></script>
+  </body>
+</html>
