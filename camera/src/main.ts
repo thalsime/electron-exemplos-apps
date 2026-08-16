@@ -1,9 +1,9 @@
-import { app, BrowserWindow } from 'electron'
-import path from 'path'
+import { app, BrowserWindow } from 'electron';
+import path from 'path';
 
 // A referência da janela fica em escopo de módulo de propósito: se existisse só
 // dentro da função, o coletor de lixo poderia descartar a janela ainda em uso.
-let janelaPrincipal: BrowserWindow | null = null
+let janelaPrincipal: BrowserWindow | null = null;
 
 // A janela nasce sem nenhuma permissão extra. O exemplo original ligava
 // nodeIntegration sem que uma linha sequer do renderizador usasse Node - aqui
@@ -20,27 +20,27 @@ function criarJanela(): void {
       contextIsolation: true,
       nodeIntegration: false,
     },
-  })
+  });
 
   // Em desenvolvimento a página vem do servidor do Vite; empacotado, vem do
   // build gerado em dist/. É o mesmo par de caminhos em todos os exemplos.
   if (process.env.VITE_DEV_SERVER_URL) {
-    janelaPrincipal.loadURL(process.env.VITE_DEV_SERVER_URL)
+    janelaPrincipal.loadURL(process.env.VITE_DEV_SERVER_URL);
   } else {
-    janelaPrincipal.loadFile(path.join(__dirname, '../dist/index.html'))
+    janelaPrincipal.loadFile(path.join(__dirname, '../dist/index.html'));
   }
 
   janelaPrincipal.on('closed', () => {
-    janelaPrincipal = null
-  })
+    janelaPrincipal = null;
+  });
 }
 
-app.whenReady().then(criarJanela)
+app.whenReady().then(criarJanela);
 
 // O original mantinha o processo vivo no macOS depois de fechar a janela,
 // seguindo a convenção do sistema, mas nunca implementou o evento `activate` que
 // recria a janela - o resultado era um ícone inerte no Dock. Por decisão do
 // mantenedor, o aplicativo encerra em todas as plataformas.
 app.on('window-all-closed', () => {
-  app.quit()
-})
+  app.quit();
+});
