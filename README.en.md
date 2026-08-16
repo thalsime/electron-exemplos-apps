@@ -28,7 +28,10 @@ app, and its README explains the two-process architecture that every other sampl
 Then move to **[`ola-mundo-objeto-compartilhado`](ola-mundo-objeto-compartilhado/)**, which adds
 the bridge between the two processes.
 
-## The twenty samples
+## The samples
+
+The collection has **21** samples. The first two are the foundation for all the others; the
+rest are in alphabetical order.
 
 | Sample | Topic |
 |---|---|
@@ -50,6 +53,7 @@ the bridge between the two processes.
 | [`notificacoes`](notificacoes/) | operating system notifications |
 | [`relatorio-de-falha`](relatorio-de-falha/) | `crashReporter` and crash reports |
 | [`service-worker/resposta-simulada`](service-worker/resposta-simulada/) | intercepting requests with a Service Worker |
+| [`telas-no-mesmo-renderizador`](telas-no-mesmo-renderizador/) | several screens in a single window, no router |
 | [`webgl`](webgl/) | 3D model with WebGL and three.js |
 | [`webview/navegador`](webview/navegador/) | mini browser built on the `<webview>` tag |
 

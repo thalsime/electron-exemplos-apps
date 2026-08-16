@@ -58,6 +58,7 @@ jobs:
           - bloqueio-de-suspensao
           - impressao
           - service-worker/resposta-simulada
+          - telas-no-mesmo-renderizador
           - corretor-ortografico
           - bandeja
           - webgl
