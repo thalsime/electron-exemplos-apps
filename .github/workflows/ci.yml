@@ -59,7 +59,7 @@ jobs:
           - impressao
           - service-worker/resposta-simulada
           - corretor-ortografico
-          - tray
+          - bandeja
           - webgl
           - webview/browser
 
