@@ -15,6 +15,12 @@ app.whenReady().then(function () {
   janelaOculta = new BrowserWindow({ show: false })
   iconeDaBandeja = new Tray(caminhoDoIcone)
 
+  // Este exemplo não tem `src/ponte.d.ts` porque não tem fronteira: tudo roda no
+  // processo principal, e a janela oculta nunca carrega página nenhuma. E como não há
+  // IPC, também não há `any` a reconstruir - o modelo abaixo é conferido contra
+  // `MenuItemConstructorOptions`, que o próprio `electron.d.ts` declara. Escrever
+  // `type: 'radiu'` aqui é erro de compilação; o mesmo engano dentro de um canal de IPC
+  // passaria batido.
   const menuDeContexto = Menu.buildFromTemplate([
     {
       label: 'Item1',
