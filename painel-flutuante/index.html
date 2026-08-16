@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Painel flutuante</title>
+  </head>
+  <body class="conteudo">
+    <div id="palco">
+      <p class="etiqueta">Slide</p>
+      <p id="numero-do-slide">1</p>
+      <p id="titulo-do-slide">Abertura</p>
+    </div>
+
+    <div id="aviso" class="aviso">
+      Modo apresentação <strong id="situacao">desligado</strong>.
+      <span id="detalhe-do-bloqueio"></span>
+    </div>
+
+    <p class="rodape">
+      Esta janela não tem botão nenhum: ela só mostra o que o painel manda. Quem comanda é a
+      janelinha sem moldura, e quem entrega o recado é o processo principal.
+    </p>
+
+    <script type="module" src="/src/conteudo.ts"></script>
+  </body>
+</html>

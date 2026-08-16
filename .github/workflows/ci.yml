@@ -59,6 +59,7 @@ jobs:
           - comunicacao-entre-janelas
           - notificacoes
           - bloqueio-de-suspensao
+          - painel-flutuante
           - impressao
           - service-worker/resposta-simulada
           - sqlite
