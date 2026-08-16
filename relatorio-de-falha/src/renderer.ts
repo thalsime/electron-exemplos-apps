@@ -1,13 +1,6 @@
-import type { RelatorioDeFalha } from './preload'
-
-declare global {
-  interface Window {
-    crashReportApi: {
-      listarRelatorios: () => Promise<RelatorioDeFalha[]>
-      provocarFalha: () => void
-    }
-  }
-}
+// Quem descreve `window.crashReportApi` é o src/ponte.d.ts, o mesmo arquivo contra o
+// qual o preload se confere. A página não precisa nem importar `RelatorioDeFalha`: o
+// tipo de cada item de `relatorios` vem do contrato, por inferência.
 
 // Monta a tabela dos relatórios já enviados ao coletor. A lista chega pronta do
 // processo principal: aqui não há acesso a nenhuma API do Electron.
