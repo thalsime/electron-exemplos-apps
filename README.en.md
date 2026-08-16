@@ -30,7 +30,7 @@ the bridge between the two processes.
 
 ## The samples
 
-The collection has **28** samples. The first two are the foundation for all the others; the
+The collection has **29** samples. The first two are the foundation for all the others; the
 rest are in alphabetical order.
 
 | Sample | Topic |
@@ -49,6 +49,7 @@ rest are in alphabetical order.
 | [`cookies`](cookies/) | reading, writing and removing session cookies |
 | [`corretor-ortografico`](corretor-ortografico/) | native spell checker and context-menu suggestions |
 | [`explorador-de-arquivos`](explorador-de-arquivos/) | browsing the file system |
+| [`gravador-de-tela`](gravador-de-tela/) | recording the screen or camera to a file |
 | [`icone-do-aplicativo`](icone-do-aplicativo/) | replacing the default icon, with badge and variants |
 | [`impressao`](impressao/) | printing and PDF generation |
 | [`janela-sem-moldura`](janela-sem-moldura/) | frameless window with custom controls |

@@ -47,6 +47,7 @@ jobs:
           - cookies
           - relatorio-de-falha
           - captura-de-tela
+          - gravador-de-tela
           - explorador-de-arquivos
           - icone-do-aplicativo
           - janela-sem-moldura
