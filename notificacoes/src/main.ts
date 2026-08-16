@@ -5,7 +5,7 @@ let janelaPrincipal: BrowserWindow | null = null
 
 // O renderizador deste exemplo não precisa mais de Node: o único uso era montar
 // o caminho do ícone, que agora o Vite resolve em tempo de build.
-function criarJanela() {
+function criarJanela(): void {
   janelaPrincipal = new BrowserWindow({
     width: 800,
     height: 600,
