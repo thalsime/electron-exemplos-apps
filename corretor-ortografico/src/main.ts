@@ -61,6 +61,13 @@ function criarJanela(): void {
   //
   // Repare que este handler vive no processo principal e não precisa de preload
   // nem de IPC: o evento nasce aqui, com os dados já resolvidos.
+  //
+  // É também por isso que este exemplo não tem `src/ponte.d.ts`, e é a exceção que
+  // ilumina a regra do acervo. Onde há IPC, o Electron declara os argumentos como
+  // `any[]` e o contrato precisa ser reconstruído à mão. Aqui não há canal: `parametros`
+  // já chega tipado como `ContextMenuParams` pelo próprio `electron.d.ts`, com
+  // `misspelledWord` e `dictionarySuggestions` no lugar. Evento nativo traz o tipo junto;
+  // canal de IPC, não.
   janelaPrincipal.webContents.on('context-menu', (_evento, parametros) => {
     const menu = new Menu()
 
