@@ -214,6 +214,73 @@ Nomes de tipos seguem as convenções de tradução acima - português, ASCII pu
 PascalCase. O nome do tipo da ponte deriva da chave já exposta, sem renomeá-la: `apiNotas`
 vira `ApiNotas`.
 
+## Convenções de estilo
+
+**Todo statement termina em ponto e vírgula.** É a convenção `semi: always`, padrão do
+Prettier e da regra `semi` do ESLint na versão estendida para TypeScript (hoje em
+`@stylistic/ts/semi`). Nenhuma das duas ferramentas entra neste repositório - elas são a
+âncora da convenção, não parte da instalação.
+
+**Onde o ponto e vírgula entra**
+
+- Declaração de variável: `const`, `let`, `var`
+- Statement de expressão, inclusive quando o valor atribuído é uma função. Aí o fechamento
+  vira `};`
+- `return`, `throw`, `break`, `continue`
+- `import`, `import type`, `export`, `export default`, e o `export {}` que fecha os
+  renderizadores
+- `type X = ...;`
+- Membros de `interface` e de type literal escrito em várias linhas
+- Propriedades e assinaturas sem corpo, o que aparece nos `.d.ts` e sob `declare`
+
+**Onde não entra**
+
+- Depois do `}` que fecha declaração de função, classe, interface, enum, namespace ou
+  `declare global`
+- Depois do `}` de `if`, `else`, `for`, `while`, `switch`, `try`, `catch`, `finally`
+- Depois do `{}` de corpo vazio
+- Em membro de type literal escrito inline: `{ x: number; y: number }` fica como está
+- Em `/// <reference types="vite/client" />`, que é comentário e não statement
+
+A diferença que organiza tudo isso é entre **declaração** e **expressão**. `function f() {}` é
+uma declaração e termina em si mesma. `const f = function () {};` é uma declaração de variável
+cujo valor por acaso é uma função - e declaração de variável termina em ponto e vírgula, esteja
+o valor em que linha estiver.
+
+### Por que não deixar o JavaScript resolver
+
+O JavaScript insere ponto e vírgula sozinho quando o programa não teria como ser lido de outro
+jeito. Chama-se **ASI**, inserção automática de ponto e vírgula, e o problema é justo esse
+"não teria como": quando existe outra leitura possível, a linguagem prefere a outra, e o erro
+não aparece na compilação - aparece em execução, longe de onde foi escrito.
+
+```ts
+// 1. A linha seguinte começa com parêntese. Isto não é uma quebra: é uma chamada
+const janela = new BrowserWindow(opcoes)
+(await janela.webContents.executeJavaScript('1'))
+// lido como: new BrowserWindow(opcoes)(await ...)
+
+// 2. A linha seguinte começa com colchete. Isto não é uma quebra: é uma indexação
+const canais = obterCanais()
+['salvar'].disparar()
+// lido como: obterCanais()['salvar'].disparar()
+
+// 3. A linha seguinte começa com crase. Isto não é uma quebra: é um tagged template
+const rotulo = montarRotulo()
+`${caminho} pronto`
+// lido como: montarRotulo()`${caminho} pronto`
+```
+
+E há o caso inverso, em que a ASI insere onde ninguém queria - depois de um `return` solitário,
+sempre:
+
+```ts
+return
+  { ok: true }   // devolve undefined, e o objeto vira código morto
+```
+
+Escrever o ponto e vírgula tira a decisão da linguagem e devolve a quem lê o código.
+
 ## Requisitos
 
 - Node.js 24 ou superior

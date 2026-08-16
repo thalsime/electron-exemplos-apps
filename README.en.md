@@ -203,6 +203,75 @@ Type names follow the collection's translation conventions - Portuguese, plain A
 PascalCase. The bridge type's name derives from the key already exposed, without renaming it:
 `apiNotas` becomes `ApiNotas`.
 
+## Style conventions
+
+**Every statement ends in a semicolon.** This is the `semi: always` convention, the default in
+Prettier and in the ESLint `semi` rule in its TypeScript-aware form (today
+`@stylistic/ts/semi`). Neither tool is installed in this repository - they are the anchor for
+the convention, not part of the setup.
+
+**Where the semicolon goes**
+
+- Variable declarations: `const`, `let`, `var`
+- Expression statements, including when the assigned value is a function. There the closing
+  brace becomes `};`
+- `return`, `throw`, `break`, `continue`
+- `import`, `import type`, `export`, `export default`, and the `export {}` that closes the
+  renderers
+- `type X = ...;`
+- Members of an `interface` and of a multi-line type literal
+- Properties and bodyless signatures, which is what shows up in `.d.ts` files and under
+  `declare`
+
+**Where it does not go**
+
+- After the `}` closing a function, class, interface, enum, namespace or `declare global`
+  declaration
+- After the `}` of `if`, `else`, `for`, `while`, `switch`, `try`, `catch`, `finally`
+- After the `{}` of an empty body
+- On a member of an inline type literal: `{ x: number; y: number }` stays as it is
+- On `/// <reference types="vite/client" />`, which is a comment and not a statement
+
+The distinction that organises all of it is **declaration versus expression**. `function f() {}`
+is a declaration and ends in itself. `const f = function () {};` is a variable declaration whose
+value happens to be a function - and a variable declaration ends in a semicolon, no matter which
+line the value ends on.
+
+### Why not let JavaScript sort it out
+
+JavaScript inserts semicolons on its own when the program could not be read any other way. It
+is called **ASI**, automatic semicolon insertion, and the catch is exactly that "could not":
+when another reading is available, the language takes the other one, and the mistake does not
+surface at compile time - it surfaces at runtime, far from where it was written.
+
+```ts
+// 1. The next line starts with a parenthesis. That is not a break: it is a call
+const janela = new BrowserWindow(opcoes)
+(await janela.webContents.executeJavaScript('1'))
+// read as: new BrowserWindow(opcoes)(await ...)
+
+// 2. The next line starts with a bracket. That is not a break: it is an index access
+const canais = obterCanais()
+['salvar'].disparar()
+// read as: obterCanais()['salvar'].disparar()
+
+// 3. The next line starts with a backtick. That is not a break: it is a tagged template
+const rotulo = montarRotulo()
+`${caminho} pronto`
+// read as: montarRotulo()`${caminho} pronto`
+```
+
+And there is the reverse case, where ASI inserts one nobody wanted - after a lone `return`,
+always:
+
+```ts
+return
+  { ok: true }   // returns undefined, and the object becomes dead code
+```
+
+Writing the semicolon takes the decision away from the language and hands it back to whoever
+reads the code.
+
 ## Requirements
 
 - Node.js 24 or later
