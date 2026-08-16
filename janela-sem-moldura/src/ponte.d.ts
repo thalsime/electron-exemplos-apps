@@ -7,17 +7,17 @@
 // resposta atravessa o IPC, então toda leitura é aguardada - e o contrato é onde essa
 // mudança fica registrada.
 export interface JanelaApi {
-  close: () => Promise<void>
-  minimizar: () => Promise<void>
-  maximizar: () => Promise<void>
-  restaurar: () => Promise<void>
-  definirTelaCheia: (flag: boolean) => Promise<void>
-  estaEmTelaCheia: () => Promise<boolean>
-  estaMaximizada: () => Promise<boolean>
+  close: () => Promise<void>;
+  minimizar: () => Promise<void>;
+  maximizar: () => Promise<void>;
+  restaurar: () => Promise<void>;
+  definirTelaCheia: (flag: boolean) => Promise<void>;
+  estaEmTelaCheia: () => Promise<boolean>;
+  estaMaximizada: () => Promise<boolean>;
 }
 
 declare global {
   interface Window {
-    janelaApi: JanelaApi
+    janelaApi: JanelaApi;
   }
 }
