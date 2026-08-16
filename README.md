@@ -29,7 +29,7 @@ cada API.
 
 ## Os exemplos
 
-O acervo tem **26** exemplos. Os dois primeiros são a base de todos os outros; os demais estão
+O acervo tem **27** exemplos. Os dois primeiros são a base de todos os outros; os demais estão
 em ordem alfabética.
 
 | Exemplo | Assunto |
@@ -43,6 +43,7 @@ em ordem alfabética.
 | [`certificado-cliente`](certificado-cliente/) | autenticação TLS com certificado |
 | [`codificador-mp3`](codificador-mp3/) | executar um programa externo com `spawn` |
 | [`comunicacao-entre-janelas`](comunicacao-entre-janelas/) | duas janelas conversando pelo processo principal |
+| [`compactador-de-pasta`](compactador-de-pasta/) | rodar o `tar` e ver a saída em tempo real |
 | [`console-e-registros`](console-e-registros/) | onde cada mensagem de console aparece |
 | [`cookies`](cookies/) | ler, gravar e remover cookies da sessão |
 | [`corretor-ortografico`](corretor-ortografico/) | corretor nativo e sugestões no menu |

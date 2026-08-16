@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Compactador de pasta</title>
+  </head>
+  <body>
+    <h1>Compactador de pasta</h1>
+    <p class="introducao">
+      Escolha uma pasta e veja o <code>tar</code> trabalhar <strong>enquanto ele trabalha</strong>.
+      Cada linha que o programa escreve chega aqui na hora, por um canal de IPC que é um fluxo -
+      e não a resposta de uma pergunta.
+    </p>
+
+    <div class="botoes">
+      <button id="botao-escolher">Escolher a pasta</button>
+      <button id="botao-compactar" disabled>Compactar</button>
+      <button id="botao-revelar" disabled>Mostrar no Finder</button>
+    </div>
+
+    <p class="caminho">Pasta: <code id="pasta-escolhida">nenhuma</code></p>
+    <p id="retorno" class="retorno"></p>
+
+    <h2>Saída do programa <span id="contador-de-linhas">0</span> linhas</h2>
+    <div id="saida" class="saida"></div>
+
+    <p class="rodape">
+      As mesmas linhas aparecem no <strong>terminal</strong> onde o aplicativo foi iniciado. A
+      janela é um destino; o terminal é outro. Veja o exemplo
+      <code>console-e-registros</code> para o mapa completo.
+    </p>
+
+    <script type="module" src="/src/renderer.ts"></script>
+  </body>
+</html>

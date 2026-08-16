@@ -1,0 +1,107 @@
+body {
+  margin: 0;
+  padding: 24px;
+  font-family: system-ui, sans-serif;
+  color: #1d1d1f;
+  background: #f5f5f7;
+}
+
+h1 {
+  margin-top: 0;
+  font-size: 24px;
+}
+
+h2 {
+  margin: 20px 0 8px;
+  font-size: 13px;
+  color: #6e6e73;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.introducao {
+  max-width: 720px;
+  line-height: 1.6;
+}
+
+.botoes {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin: 18px 0 10px;
+}
+
+button {
+  padding: 9px 18px;
+  border: 1px solid #d2d2d7;
+  border-radius: 6px;
+  background: #ffffff;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+button:hover:not(:disabled) {
+  background: #0071e3;
+  border-color: #0071e3;
+  color: #ffffff;
+}
+
+button:disabled {
+  opacity: 0.45;
+  cursor: default;
+}
+
+.caminho,
+.retorno {
+  margin: 4px 0;
+  font-size: 14px;
+}
+
+.retorno {
+  min-height: 22px;
+  color: #0071e3;
+}
+
+.saida {
+  height: 300px;
+  padding: 10px 12px;
+  overflow-y: auto;
+  border: 1px solid #d2d2d7;
+  border-radius: 8px;
+  background: #1d1d1f;
+  color: #e2e8f0;
+  font-family: ui-monospace, monospace;
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+.linha {
+  white-space: pre-wrap;
+  word-break: break-all;
+}
+
+/* O tar -v escreve a lista de arquivos no stderr, e não no stdout. Marcar em
+   vermelho daria a impressão de erro, então o fluxo de erro fica em âmbar. */
+.linha.erro {
+  color: #f6ad55;
+}
+
+.linha.sistema {
+  color: #63b3ed;
+}
+
+code {
+  padding: 2px 6px;
+  border-radius: 4px;
+  background: #e8e8ed;
+  font-family: ui-monospace, monospace;
+  font-size: 13px;
+}
+
+.rodape {
+  max-width: 720px;
+  margin-top: 14px;
+  color: #6e6e73;
+  font-size: 14px;
+  line-height: 1.6;
+}

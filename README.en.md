@@ -30,7 +30,7 @@ the bridge between the two processes.
 
 ## The samples
 
-The collection has **26** samples. The first two are the foundation for all the others; the
+The collection has **27** samples. The first two are the foundation for all the others; the
 rest are in alphabetical order.
 
 | Sample | Topic |
@@ -44,6 +44,7 @@ rest are in alphabetical order.
 | [`certificado-cliente`](certificado-cliente/) | TLS client certificate authentication |
 | [`codificador-mp3`](codificador-mp3/) | running an external program with `spawn` |
 | [`comunicacao-entre-janelas`](comunicacao-entre-janelas/) | two windows talking through the main process |
+| [`compactador-de-pasta`](compactador-de-pasta/) | running `tar` and streaming its output live |
 | [`console-e-registros`](console-e-registros/) | where each console message actually shows up |
 | [`cookies`](cookies/) | reading, writing and removing session cookies |
 | [`corretor-ortografico`](corretor-ortografico/) | native spell checker and context-menu suggestions |
