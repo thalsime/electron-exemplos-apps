@@ -9,7 +9,7 @@ let janelaPrincipal: BrowserWindow | null = null
 // sem os hifens iniciais.
 app.commandLine.appendSwitch('ignore-gpu-blocklist')
 
-function criarJanela() {
+function criarJanela(): void {
   janelaPrincipal = new BrowserWindow({
     width: 800,
     height: 600,
