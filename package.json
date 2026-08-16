@@ -5,6 +5,7 @@
   "private": true,
   "license": "Apache-2.0",
   "workspaces": [
+    "bloqueio-de-suspensao",
     "camera",
     "captura-de-tela",
     "certificado-cliente",
@@ -17,7 +18,6 @@
     "notificacoes",
     "ola-mundo",
     "ola-mundo-objeto-compartilhado",
-    "power-save-blocker",
     "printing",
     "relatorio-de-falha",
     "service-worker/mock-response",
