@@ -21,6 +21,15 @@ app.whenReady().then(function () {
   // O identificador devolvido por start() pode ser zero, então a comparação é
   // com null e não pela veracidade do valor - o original usava `if (idDoBloqueio)`,
   // que ignoraria justamente o primeiro bloqueio criado.
+  //
+  // A anotação `number | null` não é enfeite: sem ela, `let idDoBloqueio = null` faz o
+  // TypeScript desistir e cair em `any` implícito - `TS7034: Variable 'idDoBloqueio'
+  // implicitly has type 'any' in some locations where its type cannot be determined`.
+  // Ou seja, o `any` voltaria por uma porta que não é a do IPC. É a regra 4 da
+  // convenção: onde a inferência não alcança, quem sabe a forma do valor é quem escreve.
+  //
+  // Este exemplo também não tem `src/ponte.d.ts` - tudo acontece no processo principal,
+  // sem página e sem canal.
   let idDoBloqueio: number | null = null
 
   function pararBloqueioAtivo(): void {
