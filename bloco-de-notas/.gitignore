@@ -1,0 +1,7 @@
+node_modules/
+dist/
+dist-electron/
+
+# Banco criado em tempo de execução, em app.getPath("userData").
+*.db
+*.db-journal

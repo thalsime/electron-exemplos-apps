@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Bloco de notas</title>
+  </head>
+  <body>
+    <nav id="menu">
+      <a href="#lista">Minhas notas</a>
+      <a href="#editor">Editor</a>
+      <button id="botao-nova">Nova nota</button>
+    </nav>
+
+    <p id="situacao" class="situacao"></p>
+
+    <section id="tela-lista" class="tela">
+      <h1>Minhas notas</h1>
+      <p class="introducao">
+        As notas ficam num banco SQLite, na pasta de dados do aplicativo. Elas sobrevivem ao
+        fechar o programa, e a lista e o editor convivem nesta mesma janela.
+      </p>
+      <div id="lista-de-notas" class="lista"></div>
+      <p class="rodape"><strong id="contagem">0</strong> notas gravadas.</p>
+    </section>
+
+    <section id="tela-editor" class="tela">
+      <input id="campo-titulo" type="text" placeholder="Título da nota" />
+      <textarea id="campo-texto" spellcheck="true" placeholder="Escreva aqui..."></textarea>
+
+      <div class="botoes">
+        <button id="botao-salvar">Salvar</button>
+        <button id="botao-exportar">Exportar como texto</button>
+        <button id="botao-pdf">Salvar como PDF</button>
+      </div>
+
+      <p class="dica">
+        Clique com o botão direito sobre uma palavra sublinhada para ver as sugestões do corretor.
+        Fora de uma palavra errada, o mesmo menu mostra recortar, copiar e colar.
+      </p>
+    </section>
+
+    <script type="module" src="/src/renderer.ts"></script>
+  </body>
+</html>
