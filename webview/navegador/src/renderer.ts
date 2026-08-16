@@ -30,6 +30,15 @@ const PAGINA_INICIAL = 'https://github.com/'
 let carregando = false
 let considerarMaiusculas = false
 
+// Esta função é a razão de este arquivo não ter um único `as` nem um único `!` em 343
+// linhas, sendo o maior renderizador do acervo. Ela pede o tipo esperado, devolve esse
+// tipo, e falha alto quando o elemento não existe - em vez de afirmar ao compilador algo
+// que ninguém verificou.
+//
+// O contraste está no `janela-sem-moldura`, que faz o mesmo trabalho com nove
+// `getElementById(...)!` e cinco `as HTMLInputElement`. Os dois exemplos ficaram como
+// estão de propósito: trocar um pelo outro seria refatorar, não tipar. Compare os dois
+// arquivos - a diferença de leitura é o argumento.
 function elemento<T extends HTMLElement>(seletor: string): T {
   const alvo = document.querySelector<T>(seletor)
   if (!alvo) throw new Error(`Elemento não encontrado: ${seletor}`)
