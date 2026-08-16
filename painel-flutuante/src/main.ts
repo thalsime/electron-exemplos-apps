@@ -164,17 +164,17 @@ function atualizarMenuDaBandeja(): void {
 
 ipcMain.handle('painel:estado-atual', (): EstadoDaApresentacao => estado)
 
-ipcMain.on('painel:alternar-apresentacao', () => {
+ipcMain.on('painel:alternar-apresentacao', (): void => {
   alternarApresentacao(!estado.emApresentacao)
 })
 
-ipcMain.on('painel:mover-slide', (_evento, passo: number) => {
+ipcMain.on('painel:mover-slide', (_evento, passo: number): void => {
   moverSlide(passo)
 })
 
 // O painel não tem barra de título, então os controles de janela precisam
 // existir em código - é o mesmo problema do exemplo `janela-sem-moldura`.
-ipcMain.on('painel:ocultar', () => {
+ipcMain.on('painel:ocultar', (): void => {
   painel?.hide()
   atualizarMenuDaBandeja()
 })
