@@ -6,13 +6,13 @@
 // assíncrono; o que devolve `void` executa ali mesmo, no processo do renderizador. O
 // contrato conta essa diferença antes de o aluno abrir o preload.
 export interface ApiRegistros {
-  emitirNoMain: () => Promise<void>
-  emitirNoPreload: () => void
-  abrirDevTools: () => Promise<void>
+  emitirNoMain: () => Promise<void>;
+  emitirNoPreload: () => void;
+  abrirDevTools: () => Promise<void>;
 }
 
 declare global {
   interface Window {
-    apiRegistros: ApiRegistros
+    apiRegistros: ApiRegistros;
   }
 }
