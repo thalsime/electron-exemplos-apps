@@ -1,6 +1,6 @@
-import { contextBridge, ipcRenderer } from 'electron'
-import type { LinhaDeSaida, ResultadoDaCompactacao } from './main'
-import type { ApiCompactador } from './ponte'
+import { contextBridge, ipcRenderer } from 'electron';
+import type { LinhaDeSaida, ResultadoDaCompactacao } from './main';
+import type { ApiCompactador } from './ponte';
 
 // Repare nos dois formatos de comunicação convivendo:
 //   - `invoke` para pedir algo e esperar a resposta (escolher pasta, compactar)
@@ -19,9 +19,9 @@ const apiCompactador: ApiCompactador = {
 
   aoReceberLinha: (ouvinte: (linha: LinhaDeSaida) => void): void => {
     ipcRenderer.on('compactador:linha', (_evento, linha: LinhaDeSaida) => {
-      ouvinte(linha)
-    })
+      ouvinte(linha);
+    });
   },
-}
+};
 
-contextBridge.exposeInMainWorld('apiCompactador', apiCompactador)
+contextBridge.exposeInMainWorld('apiCompactador', apiCompactador);
