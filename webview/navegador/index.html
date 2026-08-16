@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Navegador com webview</title>
+  </head>
+  <body>
+    <div id="controles">
+      <button id="voltar" title="Voltar" disabled="true">&#9664;</button>
+      <button id="avancar" title="Avançar" disabled="true">&#9654;</button>
+      <button id="inicio" title="Página inicial">&#8962;</button>
+      <button id="recarregar" title="Recarregar">&#10227;</button>
+
+      <form id="formulario-endereco">
+        <div id="coluna-central">
+          <input id="endereco" type="text" value="https://github.com/" />
+        </div>
+        <input type="submit" value="Ir" />
+      </form>
+
+      <button id="zoom" title="Ajustar o zoom">&#128270;</button>
+      <button id="buscar" title="Buscar na página">&#128294;</button>
+    </div>
+
+    <div id="caixa-zoom">
+      <form id="formulario-zoom">
+        <input id="texto-zoom" type="text" />
+        <input type="submit" value="&#128270;" />
+        <button id="aumentar-zoom">&#10133;</button>
+        <button id="diminuir-zoom">&#10134;</button>
+      </form>
+    </div>
+
+    <div id="caixa-busca">
+      <form id="formulario-busca">
+        <input id="texto-busca" type="text" />
+        <div id="resultados-busca"></div>
+        <input type="submit" style="position:absolute; visibility:hidden" />
+        <button id="diferenciar-maiusculas">aA</button>
+        <button id="buscar-anterior">&#60;</button>
+        <button id="buscar-proximo">&#62;</button>
+      </form>
+    </div>
+
+    <webview src="https://github.com/" style="width:640px; height:480px"></webview>
+
+    <div id="webview-triste">
+      <div id="icone-webview-triste">&#9762;</div>
+      <h2 id="rotulo-travou">A página travou</h2>
+      <h2 id="rotulo-encerrado">O processo foi encerrado</h2>
+
+      <p>
+        Algo deu errado ao exibir esta página. Para continuar, recarregue ou vá para outro
+        endereço.
+      </p>
+    </div>
+
+    <script type="module" src="/src/renderer.ts"></script>
+  </body>
+</html>

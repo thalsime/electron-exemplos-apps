@@ -9,14 +9,14 @@ input {
   outline: none;
 }
 
-#controls {
+#controles {
   padding: 3px;
   border-bottom: solid 1px #ccc;
   background-color: #eee;
 }
 
-#controls button,
-#controls input {
+#controles button,
+#controles input {
   font-size: 14px;
   line-height: 24px;
   border-radius: 2px;
@@ -44,44 +44,44 @@ input[type="submit"]:active {
 
 /* These glyphs are on the small side, make them look more natural when
 compared to the back/forward buttons */
-#controls #home,
-#controls #terminate {
+#controles #inicio,
+#controles #terminate {
   font-size: 24px;
 }
 
-#controls #reload {
+#controles #recarregar {
   font-size: 20px;
 }
 
-#controls #zoom,
-#controls #find {
+#controles #zoom,
+#controles #buscar {
   font-size: 18px;
 }
 
-#location {
+#endereco {
   border: solid 1px #ccc;
   padding: 2px;
   width: 100%;
   -webkit-box-sizing: border-box;
 }
 
-#controls {
+#controles {
   display: -webkit-flex;
   -webit-flex-direction: column;
 }
 
-#controls #location-form {
+#controles #formulario-endereco {
   -webkit-flex: 1;
   display: -webkit-flex;
   -webit-flex-direction: column;
 }
 
-#controls #center-column {
+#controles #coluna-central {
   -webkit-flex: 1;
 }
 
-#zoom-box,
-#find-box {
+#caixa-zoom,
+#caixa-busca {
   background-color: #eee;
   border: solid 1px #ccc;
   border-top: solid 1px #eee;
@@ -96,21 +96,21 @@ compared to the back/forward buttons */
   display: none;
 }
 
-#zoom-box #zoom-form,
-#find-box #find-form {
+#caixa-zoom #formulario-zoom,
+#caixa-busca #formulario-busca {
   -webkit-flex: 1;
   display: -webkit-flex;
   -webit-flex-direction: row;
 }
 
-#zoom-box input,
-#zoom-box button,
-#find-box button {
+#caixa-zoom input,
+#caixa-zoom button,
+#caixa-busca button {
   border-radius: 2px;
 }
 
-#zoom-box #zoom-text,
-#find-box #find-text {
+#caixa-zoom #texto-zoom,
+#caixa-busca #texto-busca {
   border: solid 1px #ccc;
   margin-right: 0px;
   padding: 2px;
@@ -118,39 +118,39 @@ compared to the back/forward buttons */
   -webkit-flex: 1;
 }
 
-#zoom-box {
+#caixa-zoom {
   left: 5px;
   width: 125px;
   z-index: 1;
 }
 
-#zoom-box input[type="submit"] {
+#caixa-zoom input[type="submit"] {
   font-size: 14px;
   margin: 2px 0px;
   padding: 0 2px 3px 2px;
   width: 22px;
 }
 
-#zoom-box button {
+#caixa-zoom button {
   font-size: 12px;
   margin: 2px 0px;
   padding: 0px 1px 0px 0px;
   width: 20px;
 }
 
-#find-box {
+#caixa-busca {
   right: 5px;
   width: 280px;
   z-index: 2;
 }
 
-#find-box #find-text {
+#caixa-busca #texto-busca {
   border-right-style: none;
   border-top-left-radius: 2px;
   border-bottom-left-radius: 2px;
 }
 
-#find-box #find-results {
+#caixa-busca #resultados-busca {
   color: #888;
   background-color: #fff;
   border: solid 1px #ccc;
@@ -162,19 +162,19 @@ compared to the back/forward buttons */
   text-align: center;
 }
 
-#find-box #match-case {
+#caixa-busca #diferenciar-maiusculas {
   margin: 2px 0px;
   font-size: 10px;
   width: 28px;
 }
 
-#find-box #find-backward,
-#find-box #find-forward {
+#caixa-busca #buscar-anterior,
+#caixa-busca #buscar-proximo {
   font-size: 14px;
   width: 24px;
 }
 
-#sad-webview,
+#webview-triste,
 webview {
   position: absolute;
   bottom: 0;
@@ -182,7 +182,7 @@ webview {
 }
 
 /* The reload button turns into a spinning trobber */
-.loading #reload {
+.carregando #recarregar {
   -webkit-animation: spinner-animation .5s infinite linear;
   -webkit-transform-origin: 50% 55.5%;
 }
@@ -193,46 +193,46 @@ webview {
 }
 
 /* Due to http://crbug.com/156219 we can't use display: none */
-#sad-webview,
-.exited webview {
+#webview-triste,
+.encerrou webview {
   visibility: hidden;
   visibility: hidden;
 }
 
-.exited #sad-webview {
+.encerrou #webview-triste {
   visibility: visible;
   background: #343f51;
   text-align: center;
   color: #fff;
 }
 
-#sad-webview h2 {
+#webview-triste h2 {
   font-size: 14px;
 }
 
-#sad-webview p {
+#webview-triste p {
   font-size: 11px;
 }
 
-#sad-webview-icon {
+#icone-webview-triste {
   font-size: 96px;
   margin-bottom: 10px;
 }
 
 /* Variant of the crashed page when the process is intentionally killed (in that
 case we use a different background color and label). */
-.exited #sad-webview #killed-label {
+.encerrou #webview-triste #rotulo-encerrado {
   display: none;
 }
 
-.killed #sad-webview {
+.morto #webview-triste {
   background: #393058;
 }
 
-.killed #sad-webview #killed-label {
+.morto #webview-triste #rotulo-encerrado {
   display: block;
 }
 
-.killed #sad-webview #crashed-label {
+.morto #webview-triste #rotulo-travou {
   display: none;
 }

@@ -24,7 +24,7 @@
     "relatorio-de-falha",
     "service-worker/resposta-simulada",
     "webgl",
-    "webview/browser"
+    "webview/navegador"
   ],
   "scripts": {
     "postinstall": "install-electron",
