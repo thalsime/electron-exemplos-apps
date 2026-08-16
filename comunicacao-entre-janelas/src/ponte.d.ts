@@ -1,4 +1,4 @@
-import type { MensagemRecebida } from './main'
+import type { MensagemRecebida } from './main';
 
 // O contrato da ponte fica num arquivo só dele: o preload implementa, a página consome,
 // e é contra esta mesma descrição que o compilador confere os dois. Aqui isso rende o
@@ -8,12 +8,12 @@ import type { MensagemRecebida } from './main'
 // resposta, e `aoReceber` só registra um ouvinte. É o desenho de quem conversa por
 // recado, e não por pergunta.
 export interface ApiJanelas {
-  enviar: (texto: string) => void
-  aoReceber: (ouvinte: (mensagem: MensagemRecebida) => void) => void
+  enviar: (texto: string) => void;
+  aoReceber: (ouvinte: (mensagem: MensagemRecebida) => void) => void;
 }
 
 declare global {
   interface Window {
-    apiJanelas: ApiJanelas
+    apiJanelas: ApiJanelas;
   }
 }
