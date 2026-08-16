@@ -50,7 +50,7 @@ function criarJanela(papel: Papel, posicaoX: number): BrowserWindow {
 
 // O coração do exemplo. A mensagem sobe do renderizador para cá, e é AQUI que
 // se decide para onde ela vai. As janelas nunca se falam diretamente.
-ipcMain.on('janelas:enviar', (evento, texto: string) => {
+ipcMain.on('janelas:enviar', (evento, texto: string): void => {
   const remetente = BrowserWindow.fromWebContents(evento.sender)
 
   for (const janela of janelas.values()) {
@@ -60,12 +60,15 @@ ipcMain.on('janelas:enviar', (evento, texto: string) => {
       continue
     }
 
+    // O `satisfies` é o que amarra este objeto ao contrato. `webContents.send` recebe
+    // `...args: any[]`, então sem ele qualquer formato passaria daqui - e o erro só
+    // apareceria na outra janela, com um campo vindo `undefined`.
     janela.webContents.send('janelas:receber', {
       texto,
       // O destinatário quer saber de quem veio, e quem sabe isso é o
       // intermediário: o remetente não se identifica na mensagem.
       de: papelDaJanela(remetente),
-    })
+    } satisfies MensagemRecebida)
   }
 })
 
