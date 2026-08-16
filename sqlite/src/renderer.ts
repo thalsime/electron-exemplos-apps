@@ -1,16 +1,8 @@
 import './estilo.css'
-import type { Aluno } from './main'
 
-declare global {
-  interface Window {
-    apiSqlite: {
-      listar: () => Promise<Aluno[]>
-      inserir: (aluno: Omit<Aluno, 'id'>) => Promise<number>
-      atualizar: (aluno: Aluno) => Promise<void>
-      remover: (id: number) => Promise<void>
-    }
-  }
-}
+// Quem descreve `window.apiSqlite` é o src/ponte.d.ts, o mesmo arquivo contra o qual o
+// preload se confere. A página não importa mais `Aluno`: o tipo de cada item de
+// `alunos`, e o do objeto entregue a `inserir`, vêm por inferência do contrato.
 
 // Quando há id, o formulário está editando; quando não há, está criando. É a
 // única variável de estado da tela.
