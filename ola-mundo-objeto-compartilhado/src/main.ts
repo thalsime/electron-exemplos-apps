@@ -12,11 +12,15 @@ let janelaPrincipal: BrowserWindow | null = null
 // O objeto continua vivendo no processo principal, como no original. O que mudou
 // é o caminho até ele: o renderizador não alcança mais o Main por conta própria,
 // então o valor é entregue por um canal declarado aqui e exposto pelo preload.
-ipcMain.handle('objeto-compartilhado:obter-minha-variavel', () => {
+//
+// O retorno do handler é anotado porque é o que o outro processo vai receber, e o
+// Electron declara este ouvinte devolvendo `Promise<any> | any`: sem o `: string`
+// aqui, trocar a variável por um número não quebraria nada em tempo de compilação.
+ipcMain.handle('objeto-compartilhado:obter-minha-variavel', (): string => {
   return global.objetoCompartilhado.minhaVariavel
 })
 
-function criarJanela() {
+function criarJanela(): void {
   janelaPrincipal = new BrowserWindow({
     width: 800,
     height: 600,
