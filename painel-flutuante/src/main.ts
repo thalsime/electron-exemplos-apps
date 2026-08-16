@@ -1,36 +1,36 @@
-import { app, BrowserWindow, Menu, Tray, ipcMain, powerSaveBlocker } from 'electron'
-import path from 'path'
+import { app, BrowserWindow, Menu, Tray, ipcMain, powerSaveBlocker } from 'electron';
+import path from 'path';
 
 // O estado que as duas janelas precisam enxergar igual. Ele vive aqui, no
 // processo principal, e não em nenhuma das duas: o painel manda mudar, a janela
 // de conteúdo é avisada do resultado.
 export interface EstadoDaApresentacao {
-  emApresentacao: boolean
-  slide: number
-  totalDeSlides: number
+  emApresentacao: boolean;
+  slide: number;
+  totalDeSlides: number;
 }
 
-const TOTAL_DE_SLIDES = 5
+const TOTAL_DE_SLIDES = 5;
 
 const estado: EstadoDaApresentacao = {
   emApresentacao: false,
   slide: 1,
   totalDeSlides: TOTAL_DE_SLIDES,
-}
+};
 
-let janelaDeConteudo: BrowserWindow | null = null
-let painel: BrowserWindow | null = null
-let iconeDaBandeja: Tray | null = null
+let janelaDeConteudo: BrowserWindow | null = null;
+let painel: BrowserWindow | null = null;
+let iconeDaBandeja: Tray | null = null;
 
 // O identificador devolvido por start() pode ser zero, então a comparação com
 // null é obrigatória - um `if (idDoBloqueio)` daria falso no primeiro bloqueio.
-let idDoBloqueio: number | null = null
+let idDoBloqueio: number | null = null;
 
 function paginaDaJanela(janela: BrowserWindow, arquivo: string): void {
   if (process.env.VITE_DEV_SERVER_URL) {
-    janela.loadURL(`${process.env.VITE_DEV_SERVER_URL}${arquivo}`)
+    janela.loadURL(`${process.env.VITE_DEV_SERVER_URL}${arquivo}`);
   } else {
-    janela.loadFile(path.join(__dirname, '../dist', arquivo))
+    janela.loadFile(path.join(__dirname, '../dist', arquivo));
   }
 }
 
@@ -43,13 +43,13 @@ function criarJanelaDeConteudo(): void {
       contextIsolation: true,
       nodeIntegration: false,
     },
-  })
+  });
 
-  paginaDaJanela(janelaDeConteudo, 'index.html')
+  paginaDaJanela(janelaDeConteudo, 'index.html');
 
   janelaDeConteudo.on('closed', () => {
-    janelaDeConteudo = null
-  })
+    janelaDeConteudo = null;
+  });
 }
 
 function criarPainel(): void {
@@ -72,13 +72,13 @@ function criarPainel(): void {
       contextIsolation: true,
       nodeIntegration: false,
     },
-  })
+  });
 
-  paginaDaJanela(painel, 'painel.html')
+  paginaDaJanela(painel, 'painel.html');
 
   painel.on('closed', () => {
-    painel = null
-  })
+    painel = null;
+  });
 }
 
 // Um lugar só para avisar quem precisa saber. As duas janelas recebem o mesmo
@@ -86,29 +86,29 @@ function criarPainel(): void {
 // duas telas de discordarem.
 function anunciarEstado(): void {
   for (const janela of [janelaDeConteudo, painel]) {
-    janela?.webContents.send('painel:estado', estado)
+    janela?.webContents.send('painel:estado', estado);
   }
-  atualizarMenuDaBandeja()
+  atualizarMenuDaBandeja();
 }
 
 function alternarApresentacao(ligar: boolean): void {
-  estado.emApresentacao = ligar
+  estado.emApresentacao = ligar;
 
   if (ligar && idDoBloqueio === null) {
     // 'prevent-display-sleep' impede a tela de apagar. É mais forte do que
     // 'prevent-app-suspension', que só evita a suspensão do processo - numa
     // apresentação, a tela apagando já estraga tudo.
-    idDoBloqueio = powerSaveBlocker.start('prevent-display-sleep')
-    console.log(`Bloqueio de suspensão ligado, id ${idDoBloqueio}`)
+    idDoBloqueio = powerSaveBlocker.start('prevent-display-sleep');
+    console.log(`Bloqueio de suspensão ligado, id ${idDoBloqueio}`);
   }
 
   if (!ligar && idDoBloqueio !== null) {
-    powerSaveBlocker.stop(idDoBloqueio)
-    console.log(`Bloqueio de suspensão desligado, id ${idDoBloqueio}`)
-    idDoBloqueio = null
+    powerSaveBlocker.stop(idDoBloqueio);
+    console.log(`Bloqueio de suspensão desligado, id ${idDoBloqueio}`);
+    idDoBloqueio = null;
   }
 
-  anunciarEstado()
+  anunciarEstado();
 }
 
 // O painel manda a INTENÇÃO ("avance"), e não o número calculado. A diferença
@@ -116,23 +116,23 @@ function alternarApresentacao(ligar: boolean): void {
 // estado desatualizado, perdendo um passo. Quem sabe o número certo é quem
 // guarda o estado - o processo principal.
 function moverSlide(passo: number): void {
-  estado.slide = Math.min(Math.max(estado.slide + passo, 1), TOTAL_DE_SLIDES)
-  anunciarEstado()
+  estado.slide = Math.min(Math.max(estado.slide + passo, 1), TOTAL_DE_SLIDES);
+  anunciarEstado();
 }
 
 function alternarPainel(): void {
   if (!painel) {
-    criarPainel()
-    return
+    criarPainel();
+    return;
   }
 
   if (painel.isVisible()) {
-    painel.hide()
+    painel.hide();
   } else {
-    painel.show()
+    painel.show();
   }
 
-  atualizarMenuDaBandeja()
+  atualizarMenuDaBandeja();
 }
 
 function atualizarMenuDaBandeja(): void {
@@ -155,36 +155,36 @@ function atualizarMenuDaBandeja(): void {
       { type: 'separator' },
       { label: 'Encerrar', role: 'quit' },
     ]),
-  )
+  );
 
   iconeDaBandeja?.setToolTip(
     estado.emApresentacao ? 'Em apresentação - a tela não vai apagar' : 'Painel flutuante',
-  )
+  );
 }
 
-ipcMain.handle('painel:estado-atual', (): EstadoDaApresentacao => estado)
+ipcMain.handle('painel:estado-atual', (): EstadoDaApresentacao => estado);
 
 ipcMain.on('painel:alternar-apresentacao', (): void => {
-  alternarApresentacao(!estado.emApresentacao)
-})
+  alternarApresentacao(!estado.emApresentacao);
+});
 
 ipcMain.on('painel:mover-slide', (_evento, passo: number): void => {
-  moverSlide(passo)
-})
+  moverSlide(passo);
+});
 
 // O painel não tem barra de título, então os controles de janela precisam
 // existir em código - é o mesmo problema do exemplo `janela-sem-moldura`.
 ipcMain.on('painel:ocultar', (): void => {
-  painel?.hide()
-  atualizarMenuDaBandeja()
-})
+  painel?.hide();
+  atualizarMenuDaBandeja();
+});
 
 app.whenReady().then(() => {
-  iconeDaBandeja = new Tray(path.join(__dirname, '..', 'icone-bandeja.png'))
-  criarJanelaDeConteudo()
-  criarPainel()
-  atualizarMenuDaBandeja()
-})
+  iconeDaBandeja = new Tray(path.join(__dirname, '..', 'icone-bandeja.png'));
+  criarJanelaDeConteudo();
+  criarPainel();
+  atualizarMenuDaBandeja();
+});
 
 // ATENÇÃO: este exemplo NÃO registra `window-all-closed`, e isso contraria o
 // resto do acervo de propósito. Aqui o aplicativo continua vivo na bandeja
