@@ -50,7 +50,7 @@ jobs:
           - explorador-de-arquivos
           - janela-sem-moldura
           - ola-mundo
-          - helloworld-sharedobj
+          - ola-mundo-objeto-compartilhado
           - menus
           - mini-code-editor
           - mp3-encoder
