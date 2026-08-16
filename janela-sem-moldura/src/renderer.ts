@@ -1,19 +1,8 @@
 import './style.css'
 import { adicionarBarra, focarBarras, removerBarra, ajustarConteudo } from './barra-de-titulo'
 
-declare global {
-  interface Window {
-    janelaApi: {
-      close: () => Promise<void>
-      minimizar: () => Promise<void>
-      maximizar: () => Promise<void>
-      restaurar: () => Promise<void>
-      definirTelaCheia: (flag: boolean) => Promise<void>
-      estaEmTelaCheia: () => Promise<boolean>
-      estaMaximizada: () => Promise<boolean>
-    }
-  }
-}
+// Quem descreve `window.janelaApi` é o src/ponte.d.ts, o mesmo arquivo contra o qual o
+// preload se confere.
 
 function atualizarCaixas(): void {
   var top_checkbox = document.getElementById("caixa-superior") as HTMLInputElement;
