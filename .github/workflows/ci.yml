@@ -56,7 +56,7 @@ jobs:
           - codificador-mp3
           - notificacoes
           - bloqueio-de-suspensao
-          - printing
+          - impressao
           - service-worker/mock-response
           - spell-check
           - tray

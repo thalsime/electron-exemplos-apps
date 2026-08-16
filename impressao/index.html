@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Impressão</title>
+    <style>
+      body { font-family: system-ui, sans-serif; margin: 1rem; }
+      .campo { margin-bottom: 0.6rem; }
+      .campo > label { display: inline-block; width: 130px; }
+      #acoes { margin-top: 1rem; }
+      #registro { margin-top: 1rem; color: #333; }
+    </style>
+  </head>
+  <body>
+    <h2>Opções de impressão e de PDF</h2>
+
+    <div class="campo">
+      <label for="orientacao">Orientação</label>
+      <select id="orientacao">
+        <option value="retrato" selected>Retrato</option>
+        <option value="paisagem">Paisagem</option>
+      </select>
+    </div>
+
+    <div class="campo">
+      <label for="tamanho-da-pagina">Tamanho da página</label>
+      <!-- Os valores são da API printToPDF e ficam como estão. -->
+      <select id="tamanho-da-pagina">
+        <option selected>A4</option>
+        <option>A3</option>
+        <option>Letter</option>
+        <option>Legal</option>
+        <option>Tabloid</option>
+      </select>
+    </div>
+
+    <div class="campo">
+      <label for="margens">Margens</label>
+      <select id="margens">
+        <option value="default" selected>Padrão</option>
+        <option value="none">Nenhuma</option>
+        <option value="printableArea">Área imprimível</option>
+      </select>
+    </div>
+
+    <div class="campo">
+      <label for="imprimir-fundo">Fundo</label>
+      <input id="imprimir-fundo" type="checkbox" />
+      <span>Imprimir cores e imagens de fundo</span>
+    </div>
+
+    <div id="acoes">
+      <button id="botao-previa">Abrir prévia</button>
+      <button id="botao-imprimir">Imprimir</button>
+      <button id="botao-salvar-pdf">Salvar como PDF</button>
+      <button id="botao-ver-pdf">Ver PDF</button>
+    </div>
+
+    <div id="registro"></div>
+
+    <script type="module" src="/src/renderer.ts"></script>
+  </body>
+</html>

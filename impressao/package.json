@@ -1,5 +1,5 @@
 {
-  "name": "printing-demo",
+  "name": "impressao",
   "version": "1.1.0",
   "description": "Impressão e geração de PDF a partir de uma segunda janela controlada por IPC",
   "main": "dist-electron/main.js",

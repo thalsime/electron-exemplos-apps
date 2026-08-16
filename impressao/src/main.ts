@@ -3,10 +3,10 @@ import fs from 'node:fs/promises'
 import path from 'path'
 
 export interface OpcoesDeImpressao {
-  landscape: boolean
-  pageSize: 'A3' | 'A4' | 'Legal' | 'Letter' | 'Tabloid'
-  marginType: 'default' | 'none' | 'printableArea'
-  printBackground: boolean
+  paisagem: boolean
+  tamanhoDaPagina: 'A3' | 'A4' | 'Legal' | 'Letter' | 'Tabloid'
+  tipoDeMargem: 'default' | 'none' | 'printableArea'
+  imprimirFundo: boolean
 }
 
 let janelaPrincipal: BrowserWindow | null = null
@@ -72,14 +72,14 @@ function criarJanela(): void {
   })
 }
 
-ipcMain.handle('printing:abrir-previa', () => {
+ipcMain.handle('impressao:abrir-previa', () => {
   abrirPrevia()
 })
 
 // `webContents.print` é a ÚNICA das APIs deste exemplo que continua com
 // callback: ela não virou Promise. Envolvê-la aqui é o que dá ao renderizador
 // uma interface uniforme.
-ipcMain.handle('printing:imprimir', async (): Promise<string> => {
+ipcMain.handle('impressao:imprimir', async (): Promise<string> => {
   if (!janelaDeImpressao || janelaDeImpressao.isDestroyed()) {
     return 'A janela de impressão não está aberta.'
   }
@@ -91,7 +91,7 @@ ipcMain.handle('printing:imprimir', async (): Promise<string> => {
 })
 
 ipcMain.handle(
-  'printing:salvar-pdf',
+  'impressao:salvar-pdf',
   async (_evento, opcoes: OpcoesDeImpressao): Promise<string> => {
     if (!janelaDeImpressao || janelaDeImpressao.isDestroyed()) {
       return 'A janela de impressão não está aberta.'
@@ -112,10 +112,10 @@ ipcMain.handle(
       // lugar ao objeto `margins`, e `printSelectionOnly`, que foi removida sem
       // substituta - por isso o campo correspondente saiu da interface.
       const pdf = await janelaDeImpressao.webContents.printToPDF({
-        landscape: opcoes.landscape,
-        pageSize: opcoes.pageSize,
-        margins: { marginType: opcoes.marginType },
-        printBackground: opcoes.printBackground,
+        landscape: opcoes.paisagem,
+        pageSize: opcoes.tamanhoDaPagina,
+        margins: { marginType: opcoes.tipoDeMargem },
+        printBackground: opcoes.imprimirFundo,
       })
 
       await fs.writeFile(escolha.filePath, pdf)
@@ -127,7 +127,7 @@ ipcMain.handle(
   },
 )
 
-ipcMain.handle('printing:abrir-pdf', async (): Promise<string> => {
+ipcMain.handle('impressao:abrir-pdf', async (): Promise<string> => {
   if (!ultimoPDF) return 'Salve o PDF antes de visualizá-lo.'
 
   // `shell.openItem` foi removida. A substituta, `openPath`, é uma Promise que
