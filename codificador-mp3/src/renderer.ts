@@ -1,15 +1,9 @@
 import './app.css'
-import type { LinhaDeRegistro, PedidoDeCodificacao } from './main'
+import type { LinhaDeRegistro } from './main'
 
-declare global {
-  interface Window {
-    apiMp3: {
-      caminhoDoArquivo: (arquivo: File) => string
-      codificar: (pedido: PedidoDeCodificacao) => Promise<void>
-      aoReceberRegistro: (ouvinte: (linha: LinhaDeRegistro) => void) => void
-    }
-  }
-}
+// Quem descreve `window.apiMp3` é o src/ponte.d.ts, o mesmo arquivo contra o qual o
+// preload se confere. `PedidoDeCodificacao` sumiu dos imports daqui junto com a
+// declaração duplicada: o objeto montado lá embaixo é conferido pelo contrato.
 
 // O formulário era uma Backbone.View montada com jQuery. Aqui é HTML no próprio
 // index.html e DOM nativo: o exemplo trata de executar um processo externo, e as

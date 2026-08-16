@@ -1,7 +1,10 @@
 import { contextBridge, ipcRenderer, webUtils } from 'electron'
 import type { LinhaDeRegistro, PedidoDeCodificacao } from './main'
+import type { ApiMp3 } from './ponte'
 
-contextBridge.exposeInMainWorld('apiMp3', {
+// O tipo é aplicado à variável porque `exposeInMainWorld(apiKey: string, api: any)` não
+// confere nada: sem esta anotação, a ponte poderia divergir do contrato em silêncio.
+const apiMp3: ApiMp3 = {
   // O <input type="file"> devolve um objeto File, e o navegador esconde o
   // caminho real por segurança: `input.value` traz "C:\fakepath\arquivo.wav".
   // O exemplo original contornava isso pela propriedade `path` que o Electron
@@ -17,4 +20,6 @@ contextBridge.exposeInMainWorld('apiMp3', {
   aoReceberRegistro: (ouvinte: (linha: LinhaDeRegistro) => void): void => {
     ipcRenderer.on('mp3:registro', (_evento, linha: LinhaDeRegistro) => ouvinte(linha))
   },
-})
+}
+
+contextBridge.exposeInMainWorld('apiMp3', apiMp3)
