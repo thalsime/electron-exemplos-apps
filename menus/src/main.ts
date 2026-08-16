@@ -95,14 +95,14 @@ function abrirMenuDeContexto(tipo: string): Promise<string | null> {
 
     if (tipo === 'itens') {
       const submenu = new Menu()
-      for (const rotulo of ['box1', 'box2', 'box3', 'box4']) {
+      for (const rotulo of ['caixa1', 'caixa2', 'caixa3', 'caixa4']) {
         submenu.append(new MenuItem({ type: 'checkbox', label: rotulo }))
       }
       menu.append(new MenuItem({
-        label: 'MenuItem1',
-        click: () => { escolha = 'MenuItem1' },
+        label: 'ItemDeMenu1',
+        click: () => { escolha = 'ItemDeMenu1' },
       }))
-      menu.append(new MenuItem({ label: 'MenuItem2', type: 'checkbox', checked: true }))
+      menu.append(new MenuItem({ label: 'ItemDeMenu2', type: 'checkbox', checked: true }))
       menu.append(new MenuItem({ label: 'Disco', submenu }))
     } else if (tipo === 'frutas') {
       for (const fruta of FRUTAS) {
