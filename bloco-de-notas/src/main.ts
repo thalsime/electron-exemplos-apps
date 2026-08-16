@@ -20,6 +20,13 @@ export interface Nota {
 
 export type NotaNova = Pick<Nota, 'titulo' | 'texto'>
 
+// Os quatro comandos que o menu de aplicação manda à página. Este tipo morava no
+// preload, e por isso os quatro `webContents.send` aqui embaixo - que são quem EMITE o
+// comando - passavam uma string solta, sem conferência: `send` recebe `...args: any[]`,
+// e um comando escrito errado chegaria à página e cairia fora do mapa de ações, em
+// silêncio. Declarado aqui, o `satisfies` de cada envio fecha esse caminho.
+export type ComandoDoMenu = 'nova' | 'salvar' | 'exportar' | 'pdf'
+
 const IDIOMAS = ['pt-BR']
 
 let janelaPrincipal: BrowserWindow | null = null
@@ -130,22 +137,22 @@ function instalarMenuDeAplicacao(): void {
         {
           label: 'Nova nota',
           accelerator: 'CmdOrCtrl+N',
-          click: () => janelaPrincipal?.webContents.send('notas:comando', 'nova'),
+          click: () => janelaPrincipal?.webContents.send('notas:comando', 'nova' satisfies ComandoDoMenu),
         },
         {
           label: 'Salvar',
           accelerator: 'CmdOrCtrl+S',
-          click: () => janelaPrincipal?.webContents.send('notas:comando', 'salvar'),
+          click: () => janelaPrincipal?.webContents.send('notas:comando', 'salvar' satisfies ComandoDoMenu),
         },
         { type: 'separator' },
         {
           label: 'Exportar como texto...',
-          click: () => janelaPrincipal?.webContents.send('notas:comando', 'exportar'),
+          click: () => janelaPrincipal?.webContents.send('notas:comando', 'exportar' satisfies ComandoDoMenu),
         },
         {
           label: 'Salvar como PDF...',
           accelerator: 'CmdOrCtrl+P',
-          click: () => janelaPrincipal?.webContents.send('notas:comando', 'pdf'),
+          click: () => janelaPrincipal?.webContents.send('notas:comando', 'pdf' satisfies ComandoDoMenu),
         },
       ],
     },

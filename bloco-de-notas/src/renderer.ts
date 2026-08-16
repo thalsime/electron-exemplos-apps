@@ -1,20 +1,9 @@
 import './estilo.css'
-import type { Nota } from './main'
-import type { ComandoDoMenu } from './preload'
+import type { ComandoDoMenu, Nota } from './main'
 
-declare global {
-  interface Window {
-    apiNotas: {
-      listar: () => Promise<Nota[]>
-      criar: (nota: { titulo: string; texto: string }) => Promise<number>
-      atualizar: (nota: Nota) => Promise<void>
-      remover: (id: number) => Promise<void>
-      exportar: (nota: Nota) => Promise<string | null>
-      salvarPDF: () => Promise<string | null>
-      aoReceberComando: (ouvinte: (comando: ComandoDoMenu) => void) => void
-    }
-  }
-}
+// Quem descreve `window.apiNotas` é o src/ponte.d.ts, o mesmo arquivo contra o qual o
+// preload se confere. Os dois tipos continuam importados porque `notaAberta`, `abrirNota`
+// e o mapa de ações do menu os usam - o import não era só para a declaração.
 
 // As duas telas vivem na mesma janela, e a troca é por `location.hash` - o
 // mesmo mecanismo do exemplo `telas-no-mesmo-renderizador`.
