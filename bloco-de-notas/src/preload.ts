@@ -1,12 +1,10 @@
 import { contextBridge, ipcRenderer } from 'electron'
-import type { Nota, NotaNova } from './main'
+import type { ComandoDoMenu, Nota, NotaNova } from './main'
+import type { ApiNotas } from './ponte'
 
-export type ComandoDoMenu = 'nova' | 'salvar' | 'exportar' | 'pdf'
-
-// Repare no que NÃO está aqui: nada de menu de contexto. Ele é montado inteiro
-// no processo principal, a partir do evento nativo - justamente para não
-// competir com o corretor ortográfico. Ver o README.
-contextBridge.exposeInMainWorld('apiNotas', {
+// O tipo é aplicado à variável porque `exposeInMainWorld(apiKey: string, api: any)` não
+// confere nada: sem esta anotação, a ponte poderia divergir do contrato em silêncio.
+const apiNotas: ApiNotas = {
   listar: (): Promise<Nota[]> => ipcRenderer.invoke('notas:listar'),
   criar: (nota: NotaNova): Promise<number> => ipcRenderer.invoke('notas:criar', nota),
   atualizar: (nota: Nota): Promise<void> => ipcRenderer.invoke('notas:atualizar', nota),
@@ -20,4 +18,6 @@ contextBridge.exposeInMainWorld('apiNotas', {
       ouvinte(comando)
     })
   },
-})
+}
+
+contextBridge.exposeInMainWorld('apiNotas', apiNotas)
