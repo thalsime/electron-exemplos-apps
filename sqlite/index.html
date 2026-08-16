@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <title>SQLite</title>
+  </head>
+  <body>
+    <h1>Cadastro de alunos em SQLite</h1>
+    <p class="introducao">
+      As quatro operações do CRUD sobre um banco SQLite de verdade, pelo módulo
+      <code>node:sqlite</code> que já vem no Node - <strong>sem nenhuma dependência instalada</strong>.
+      Toda consulta roda no processo principal: esta página nunca vê SQL.
+    </p>
+
+    <form id="formulario">
+      <input id="campo-nome" type="text" placeholder="Nome" />
+      <input id="campo-curso" type="text" placeholder="Curso" />
+      <input id="campo-nota" type="number" step="0.1" min="0" max="10" placeholder="Nota" />
+      <button type="submit">Salvar</button>
+      <button type="button" id="botao-cancelar">Cancelar edição</button>
+    </form>
+
+    <p id="retorno" class="retorno"></p>
+
+    <table>
+      <thead>
+        <tr>
+          <th>id</th>
+          <th>nome</th>
+          <th>curso</th>
+          <th>nota</th>
+          <th>ações</th>
+        </tr>
+      </thead>
+      <tbody id="corpo-da-tabela"></tbody>
+    </table>
+
+    <p class="rodape">
+      <strong id="contagem">0</strong> registros na tabela. O arquivo do banco fica na pasta de
+      dados do aplicativo, e sobrevive ao fechar e reabrir.
+    </p>
+
+    <script type="module" src="/src/renderer.ts"></script>
+  </body>
+</html>

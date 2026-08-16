@@ -1,0 +1,9 @@
+node_modules/
+dist/
+dist-electron/
+
+# Banco de dados criado em tempo de execução, em app.getPath("userData").
+# Se algum dia o caminho mudar para a pasta do exemplo, o arquivo não pode
+# ser versionado: ele é estado do usuário, não código.
+*.db
+*.db-journal
