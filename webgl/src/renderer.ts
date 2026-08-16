@@ -40,7 +40,11 @@ document.addEventListener('DOMContentLoaded', function () {
   iniciar()
   animar()
 
-  function iniciar() {
+  // As oito funções abaixo declaram o retorno, embora todas devolvam `void` e o
+  // compilador já soubesse disso. O ganho é de leitura: `iniciarBotaoFechar` devolve um
+  // elemento, e num arquivo em que tudo o mais é efeito colateral, a única função com
+  // valor de retorno precisa se distinguir das outras à primeira vista.
+  function iniciar(): void {
     recipiente = document.createElement('div')
     document.body.appendChild(recipiente)
 
@@ -81,14 +85,14 @@ document.addEventListener('DOMContentLoaded', function () {
     return elementoFechar
   }
 
-  function criarCena(geometria: unknown) {
+  function criarCena(geometria: unknown): void {
     malha = new THREE.Mesh(geometria, new THREE.MeshFaceMaterial())
     malha.position.set(-10, -10, 0)
     malha.scale.set(1, 1, 1)
     cena.add(malha)
   }
 
-  function aoPressionarMouse(evento: MouseEvent) {
+  function aoPressionarMouse(evento: MouseEvent): void {
     // o clique precisa continuar chegando ao botão de fechar
     if (evento.target === elementoFechar) return
 
@@ -96,15 +100,15 @@ document.addEventListener('DOMContentLoaded', function () {
     document.body.requestPointerLock()
   }
 
-  function aoSoltarMouse() {
+  function aoSoltarMouse(): void {
     document.exitPointerLock()
   }
 
-  function aoGirarRoda(evento: WheelEvent) {
+  function aoGirarRoda(evento: WheelEvent): void {
     camera.position.z += evento.deltaY / 120 * 3
   }
 
-  function aoMoverMouse(evento: MouseEvent) {
+  function aoMoverMouse(evento: MouseEvent): void {
     mouseX = (evento.clientX - metadeDaJanelaX)
     mouseY = (evento.clientY - metadeDaJanelaY)
     if (document.pointerLockElement) {
@@ -113,12 +117,12 @@ document.addEventListener('DOMContentLoaded', function () {
     }
   }
 
-  function animar() {
+  function animar(): void {
     requestAnimationFrame(animar)
     renderizar()
   }
 
-  function renderizar() {
+  function renderizar(): void {
     if (malha) {
       malha.rotation.set(-(mouseY + movimentoY) / metadeDaJanelaY + 0,
                          -(mouseX + movimentoX) / metadeDaJanelaX, 0)
