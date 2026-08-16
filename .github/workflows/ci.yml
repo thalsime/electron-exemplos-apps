@@ -61,7 +61,7 @@ jobs:
           - corretor-ortografico
           - bandeja
           - webgl
-          - webview/browser
+          - webview/navegador
 
     steps:
       - name: Obter o código

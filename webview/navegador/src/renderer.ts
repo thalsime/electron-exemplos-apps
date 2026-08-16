@@ -37,13 +37,13 @@ function elemento<T extends HTMLElement>(seletor: string): T {
 }
 
 const webview = (): WebviewTag => elemento<WebviewTag>('webview')
-const campoBusca = (): HTMLInputElement => elemento<HTMLInputElement>('#find-text')
-const campoZoom = (): HTMLInputElement => elemento<HTMLInputElement>('#zoom-text')
+const campoBusca = (): HTMLInputElement => elemento<HTMLInputElement>('#texto-busca')
+const campoZoom = (): HTMLInputElement => elemento<HTMLInputElement>('#texto-zoom')
 
 // --- disposição na tela -----------------------------------------------------
 
 function ajustarLayout(): void {
-  const controles = elemento('#controls')
+  const controles = elemento('#controles')
   const largura = document.documentElement.clientWidth
   const altura = document.documentElement.clientHeight - controles.offsetHeight
 
@@ -51,7 +51,7 @@ function ajustarLayout(): void {
   alvo.style.width = `${largura}px`
   alvo.style.height = `${altura}px`
 
-  const triste = elemento('#sad-webview')
+  const triste = elemento('#webview-triste')
   triste.style.width = `${largura}px`
   triste.style.height = `${(altura * 2) / 3}px`
   triste.style.paddingTop = `${altura / 3}px`
@@ -60,11 +60,11 @@ function ajustarLayout(): void {
 // --- estado de falha da página ---------------------------------------------
 
 function limparEstadoDeFalha(): void {
-  document.body.classList.remove('exited', 'crashed', 'killed')
+  document.body.classList.remove('encerrou', 'travou', 'morto')
 }
 
-function marcarFalha(classe: 'crashed' | 'killed'): void {
-  document.body.classList.add('exited', classe)
+function marcarFalha(classe: 'travou' | 'morto'): void {
+  document.body.classList.add('encerrou', classe)
 }
 
 // --- navegação --------------------------------------------------------------
@@ -110,12 +110,12 @@ function diminuirZoom(): void {
 function abrirCaixaDeZoom(): void {
   const campo = campoZoom()
   campo.value = Number(webview().getZoomFactor().toFixed(6)).toString()
-  elemento('#zoom-box').style.display = 'flex'
+  elemento('#caixa-zoom').style.display = 'flex'
   campo.select()
 }
 
 function fecharCaixaDeZoom(): void {
-  elemento('#zoom-box').style.display = 'none'
+  elemento('#caixa-zoom').style.display = 'none'
 }
 
 // --- busca na página --------------------------------------------------------
@@ -124,23 +124,23 @@ function buscar(opcoes: { forward?: boolean } = {}): void {
   const texto = campoBusca().value
   if (texto === '') {
     webview().stopFindInPage('clearSelection')
-    elemento('#find-results').textContent = ''
+    elemento('#resultados-busca').textContent = ''
     return
   }
   webview().findInPage(texto, { matchCase: considerarMaiusculas, ...opcoes })
 }
 
 function abrirCaixaDeBusca(): void {
-  elemento('#find-box').style.display = 'block'
+  elemento('#caixa-busca').style.display = 'block'
   campoBusca().select()
 }
 
 function fecharCaixaDeBusca(): void {
-  const caixa = elemento('#find-box')
+  const caixa = elemento('#caixa-busca')
   caixa.style.display = 'none'
   caixa.style.left = ''
   caixa.style.opacity = ''
-  elemento('#find-results').textContent = ''
+  elemento('#resultados-busca').textContent = ''
 }
 
 function fecharCaixas(): void {
@@ -161,12 +161,12 @@ function caixaCobreOcorrencia(caixa: DOMRect, ocorrencia: Electron.Rectangle): b
 // antes vinham soltos no evento agora ficam agrupados em `event.result`.
 function aoEncontrarNaPagina(evento: Electron.FoundInPageEvent): void {
   const resultado = evento.result
-  elemento('#find-results').textContent =
+  elemento('#resultados-busca').textContent =
     `${resultado.activeMatchOrdinal} de ${resultado.matches}`
 
   if (!resultado.finalUpdate || !resultado.selectionArea) return
 
-  const caixa = elemento('#find-box')
+  const caixa = elemento('#caixa-busca')
   caixa.style.left = ''
   caixa.style.opacity = ''
 
@@ -187,14 +187,14 @@ function aoEncontrarNaPagina(evento: Electron.FoundInPageEvent): void {
 function aoTerminarCarga(): void {
   limparEstadoDeFalha()
   const alvo = webview()
-  elemento<HTMLInputElement>('#location').value = alvo.getURL()
-  elemento<HTMLButtonElement>('#back').disabled = !alvo.canGoBack()
-  elemento<HTMLButtonElement>('#forward').disabled = !alvo.canGoForward()
+  elemento<HTMLInputElement>('#endereco').value = alvo.getURL()
+  elemento<HTMLButtonElement>('#voltar').disabled = !alvo.canGoBack()
+  elemento<HTMLButtonElement>('#avancar').disabled = !alvo.canGoForward()
   fecharCaixas()
 }
 
 function aoIniciarCarga(): void {
-  document.body.classList.add('loading')
+  document.body.classList.add('carregando')
   carregando = true
   limparEstadoDeFalha()
 }
@@ -251,20 +251,20 @@ window.addEventListener('DOMContentLoaded', () => {
   const alvo = webview()
   ajustarLayout()
 
-  elemento('#back').addEventListener('click', () => alvo.goBack())
-  elemento('#forward').addEventListener('click', () => alvo.goForward())
-  elemento('#home').addEventListener('click', () => navegarPara(PAGINA_INICIAL))
-  elemento('#reload').addEventListener('click', () => {
+  elemento('#voltar').addEventListener('click', () => alvo.goBack())
+  elemento('#avancar').addEventListener('click', () => alvo.goForward())
+  elemento('#inicio').addEventListener('click', () => navegarPara(PAGINA_INICIAL))
+  elemento('#recarregar').addEventListener('click', () => {
     if (carregando) alvo.stop()
     else alvo.reload()
   })
-  elemento('#reload').addEventListener('animationiteration', () => {
-    if (!carregando) document.body.classList.remove('loading')
+  elemento('#recarregar').addEventListener('animationiteration', () => {
+    if (!carregando) document.body.classList.remove('carregando')
   })
 
-  elemento('#location-form').addEventListener('submit', (evento) => {
+  elemento('#formulario-endereco').addEventListener('submit', (evento) => {
     evento.preventDefault()
-    navegarPara(elemento<HTMLInputElement>('#location').value)
+    navegarPara(elemento<HTMLInputElement>('#endereco').value)
   })
 
   alvo.addEventListener('did-start-loading', aoIniciarCarga)
@@ -274,31 +274,31 @@ window.addEventListener('DOMContentLoaded', () => {
   alvo.addEventListener('found-in-page', aoEncontrarNaPagina)
 
   // `close` com tipo 'abnormal' ou 'killed' deu lugar a dois eventos próprios.
-  alvo.addEventListener('crashed', () => marcarFalha('crashed'))
-  alvo.addEventListener('render-process-gone', () => marcarFalha('killed'))
+  alvo.addEventListener('crashed', () => marcarFalha('travou'))
+  alvo.addEventListener('render-process-gone', () => marcarFalha('morto'))
 
   elemento('#zoom').addEventListener('click', () => {
-    if (elemento('#zoom-box').style.display === 'flex') fecharCaixaDeZoom()
+    if (elemento('#caixa-zoom').style.display === 'flex') fecharCaixaDeZoom()
     else abrirCaixaDeZoom()
   })
 
-  elemento('#zoom-form').addEventListener('submit', (evento) => {
+  elemento('#formulario-zoom').addEventListener('submit', (evento) => {
     evento.preventDefault()
     const fator = Math.min(ZOOM_MAXIMO, Math.max(ZOOM_MINIMO, Number(campoZoom().value)))
     aplicarZoom(fator)
   })
 
-  elemento('#zoom-in').addEventListener('click', (evento) => {
+  elemento('#aumentar-zoom').addEventListener('click', (evento) => {
     evento.preventDefault()
     aumentarZoom()
   })
-  elemento('#zoom-out').addEventListener('click', (evento) => {
+  elemento('#diminuir-zoom').addEventListener('click', (evento) => {
     evento.preventDefault()
     diminuirZoom()
   })
 
-  elemento('#find').addEventListener('click', () => {
-    if (elemento('#find-box').style.display === 'block') {
+  elemento('#buscar').addEventListener('click', () => {
+    if (elemento('#caixa-busca').style.display === 'block') {
       alvo.stopFindInPage('clearSelection')
       fecharCaixaDeBusca()
     } else {
@@ -316,25 +316,25 @@ window.addEventListener('DOMContentLoaded', () => {
     }
   })
 
-  elemento('#match-case').addEventListener('click', (evento) => {
+  elemento('#diferenciar-maiusculas').addEventListener('click', (evento) => {
     evento.preventDefault()
     considerarMaiusculas = !considerarMaiusculas
-    const botao = elemento('#match-case')
+    const botao = elemento('#diferenciar-maiusculas')
     botao.style.color = considerarMaiusculas ? 'blue' : 'black'
     botao.style.fontWeight = considerarMaiusculas ? 'bold' : ''
     buscar()
   })
 
-  elemento('#find-backward').addEventListener('click', (evento) => {
+  elemento('#buscar-anterior').addEventListener('click', (evento) => {
     evento.preventDefault()
     buscar({ forward: false })
   })
-  elemento('#find-forward').addEventListener('click', (evento) => {
+  elemento('#buscar-proximo').addEventListener('click', (evento) => {
     evento.preventDefault()
     buscar({ forward: true })
   })
 
-  elemento('#find-form').addEventListener('submit', (evento) => {
+  elemento('#formulario-busca').addEventListener('submit', (evento) => {
     evento.preventDefault()
     buscar()
   })
