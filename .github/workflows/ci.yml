@@ -54,6 +54,7 @@ jobs:
           - menus
           - mini-editor-de-codigo
           - codificador-mp3
+          - console-e-registros
           - notificacoes
           - bloqueio-de-suspensao
           - impressao

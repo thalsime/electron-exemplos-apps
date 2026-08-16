@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Console e registros</title>
+  </head>
+  <body>
+    <h1>Onde essa mensagem vai aparecer?</h1>
+    <p class="introducao">
+      Os três botões abaixo emitem <strong>exatamente as mesmas cinco mensagens</strong>, cada um
+      a partir de um lugar diferente do aplicativo. O que muda é o destino.
+    </p>
+
+    <div class="botoes">
+      <button id="botao-emitir-main">Emitir no processo principal</button>
+      <button id="botao-emitir-preload">Emitir no preload</button>
+      <button id="botao-emitir-renderizador">Emitir na página</button>
+    </div>
+
+    <p id="retorno" class="retorno"></p>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Emitido em</th>
+          <th>Terminal</th>
+          <th>DevTools da janela</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><code>main.ts</code></td>
+          <td class="sim">sempre</td>
+          <td class="nao">nunca</td>
+        </tr>
+        <tr>
+          <td><code>preload.ts</code></td>
+          <td class="talvez">só com <code>ELECTRON_ENABLE_LOGGING=1</code></td>
+          <td class="sim">sempre</td>
+        </tr>
+        <tr>
+          <td><code>renderer.ts</code></td>
+          <td class="talvez">só com <code>ELECTRON_ENABLE_LOGGING=1</code></td>
+          <td class="sim">sempre</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="botoes">
+      <button id="botao-abrir-devtools">Abrir o DevTools desta janela</button>
+    </div>
+
+    <p class="nota">
+      O <code>console.debug</code> some no DevTools até o nível <strong>Verbose</strong> estar
+      ligado no seletor de níveis do console. Ele não foi engolido: está filtrado.
+    </p>
+
+    <script type="module" src="/src/renderer.ts"></script>
+  </body>
+</html>

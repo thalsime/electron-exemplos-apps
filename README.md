@@ -29,7 +29,7 @@ cada API.
 
 ## Os exemplos
 
-O acervo tem **21** exemplos. Os dois primeiros são a base de todos os outros; os demais estão
+O acervo tem **22** exemplos. Os dois primeiros são a base de todos os outros; os demais estão
 em ordem alfabética.
 
 | Exemplo | Assunto |
@@ -42,6 +42,7 @@ em ordem alfabética.
 | [`captura-de-tela`](captura-de-tela/) | gravar a tela com `getDisplayMedia` |
 | [`certificado-cliente`](certificado-cliente/) | autenticação TLS com certificado |
 | [`codificador-mp3`](codificador-mp3/) | executar um programa externo com `spawn` |
+| [`console-e-registros`](console-e-registros/) | onde cada mensagem de console aparece |
 | [`cookies`](cookies/) | ler, gravar e remover cookies da sessão |
 | [`corretor-ortografico`](corretor-ortografico/) | corretor nativo e sugestões no menu |
 | [`explorador-de-arquivos`](explorador-de-arquivos/) | navegar pelo sistema de arquivos |
