@@ -16,6 +16,12 @@ const visitadas = new Set<Tela>()
 // O endereço é texto livre: o usuário pode digitar "#qualquer-coisa". Esta
 // função é o portão de entrada que separa o que é tela válida do que não é, e
 // o `valor is Tela` avisa o compilador de que, depois dela, o valor está seguro.
+//
+// Vale reparar no que esta função É: uma FRONTEIRA. De um lado, texto que veio de fora e
+// não se pode confiar; do outro, um valor que o resto do arquivo trata como `Tela` sem
+// verificar de novo. O exemplo `sqlite` tem a função gêmea desta, o `paraAluno`, que faz
+// o mesmo com as linhas que voltam do banco. São dois lugares diferentes com o mesmo
+// desenho: onde o dado não tipado entra, alguém confere uma vez e dá o nome.
 function ehTelaValida(valor: string): valor is Tela {
   return (TELAS as readonly string[]).includes(valor)
 }
