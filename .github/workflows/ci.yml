@@ -61,6 +61,7 @@ jobs:
           - comunicacao-entre-janelas
           - compactador-de-pasta
           - notificacoes
+          - bloco-de-notas
           - bloqueio-de-suspensao
           - painel-flutuante
           - impressao

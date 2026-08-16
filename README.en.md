@@ -30,7 +30,7 @@ the bridge between the two processes.
 
 ## The samples
 
-The collection has **29** samples. The first two are the foundation for all the others; the
+The collection has **30** samples. The first two are the foundation for all the others; the
 rest are in alphabetical order.
 
 | Sample | Topic |
@@ -38,6 +38,7 @@ rest are in alphabetical order.
 | [`ola-mundo`](ola-mundo/) | the minimal app: one window, one page |
 | [`ola-mundo-objeto-compartilhado`](ola-mundo-objeto-compartilhado/) | preload, `contextBridge` and IPC |
 | [`bandeja`](bandeja/) | system tray icon and menu |
+| [`bloco-de-notas`](bloco-de-notas/) | notes in SQLite, with spell check, menus and PDF |
 | [`bloqueio-de-suspensao`](bloqueio-de-suspensao/) | keeping the computer awake |
 | [`camera`](camera/) | video capture with `getUserMedia` |
 | [`captura-de-tela`](captura-de-tela/) | screen capture with `getDisplayMedia` |

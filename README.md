@@ -29,7 +29,7 @@ cada API.
 
 ## Os exemplos
 
-O acervo tem **29** exemplos. Os dois primeiros são a base de todos os outros; os demais estão
+O acervo tem **30** exemplos. Os dois primeiros são a base de todos os outros; os demais estão
 em ordem alfabética.
 
 | Exemplo | Assunto |
@@ -37,6 +37,7 @@ em ordem alfabética.
 | [`ola-mundo`](ola-mundo/) | o aplicativo mínimo: uma janela e uma página |
 | [`ola-mundo-objeto-compartilhado`](ola-mundo-objeto-compartilhado/) | preload, `contextBridge` e IPC |
 | [`bandeja`](bandeja/) | ícone e menu na bandeja do sistema |
+| [`bloco-de-notas`](bloco-de-notas/) | notas em SQLite, com corretor, menus e PDF |
 | [`bloqueio-de-suspensao`](bloqueio-de-suspensao/) | impedir que o computador durma |
 | [`camera`](camera/) | captura de vídeo com `getUserMedia` |
 | [`captura-de-tela`](captura-de-tela/) | gravar a tela com `getDisplayMedia` |

@@ -1,0 +1,176 @@
+body {
+  margin: 0;
+  font-family: system-ui, sans-serif;
+  color: #1d1d1f;
+  background: #f5f5f7;
+}
+
+#menu {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 10px 20px;
+  background: #ffffff;
+  border-bottom: 1px solid #d2d2d7;
+}
+
+#menu a {
+  padding: 7px 14px;
+  border-radius: 6px;
+  color: #424245;
+  font-size: 14px;
+  text-decoration: none;
+}
+
+#menu a:hover {
+  background: #f5f5f7;
+}
+
+#menu button {
+  margin-left: auto;
+}
+
+button {
+  padding: 7px 16px;
+  border: 1px solid #d2d2d7;
+  border-radius: 6px;
+  background: #ffffff;
+  font-size: 13px;
+  cursor: pointer;
+}
+
+button:hover {
+  background: #0071e3;
+  border-color: #0071e3;
+  color: #ffffff;
+}
+
+.perigo:hover {
+  background: #b3261e;
+  border-color: #b3261e;
+}
+
+.situacao {
+  margin: 0;
+  padding: 6px 20px;
+  font-size: 13px;
+  color: #0071e3;
+  background: #ffffff;
+  border-bottom: 1px solid #d2d2d7;
+  min-height: 20px;
+}
+
+.tela {
+  display: none;
+  padding: 22px 20px;
+}
+
+.tela.ativa {
+  display: block;
+}
+
+h1 {
+  margin-top: 0;
+  font-size: 22px;
+}
+
+.introducao {
+  max-width: 680px;
+  line-height: 1.6;
+}
+
+.lista {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 12px;
+  margin-top: 16px;
+}
+
+.cartao {
+  padding: 14px;
+  border: 1px solid #d2d2d7;
+  border-radius: 10px;
+  background: #ffffff;
+}
+
+.cartao h3 {
+  margin: 0 0 6px;
+  font-size: 15px;
+}
+
+.cartao p {
+  margin: 0 0 8px;
+  font-size: 13px;
+  line-height: 1.5;
+  color: #424245;
+}
+
+.data {
+  display: block;
+  margin-bottom: 10px;
+  font-size: 12px;
+  color: #6e6e73;
+}
+
+.acoes {
+  display: flex;
+  gap: 6px;
+}
+
+#campo-titulo {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid #d2d2d7;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: 600;
+  box-sizing: border-box;
+}
+
+#campo-texto {
+  width: 100%;
+  height: 360px;
+  margin-top: 10px;
+  padding: 12px;
+  border: 1px solid #d2d2d7;
+  border-radius: 8px;
+  font-family: inherit;
+  font-size: 14px;
+  line-height: 1.6;
+  resize: vertical;
+  box-sizing: border-box;
+}
+
+.botoes {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 12px;
+}
+
+.dica,
+.rodape {
+  max-width: 680px;
+  margin-top: 14px;
+  color: #6e6e73;
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+/* O PDF sai da própria janela: esconder a navegação e os botões deixa só o
+   conteúdo da nota na página impressa. */
+@media print {
+  #menu,
+  .situacao,
+  .botoes,
+  .dica,
+  #tela-lista {
+    display: none;
+  }
+
+  #campo-titulo,
+  #campo-texto {
+    border: none;
+    height: auto;
+  }
+}
