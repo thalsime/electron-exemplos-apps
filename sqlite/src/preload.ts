@@ -1,6 +1,6 @@
-import { contextBridge, ipcRenderer } from 'electron'
-import type { Aluno, NovoAluno } from './main'
-import type { ApiSqlite } from './ponte'
+import { contextBridge, ipcRenderer } from 'electron';
+import type { Aluno, NovoAluno } from './main';
+import type { ApiSqlite } from './ponte';
 
 // A ponte expõe quatro verbos, e nenhum deles aceita SQL. Esse é o ponto: se a
 // página pudesse mandar um comando pronto, a fronteira não existiria de fato -
@@ -13,6 +13,6 @@ const apiSqlite: ApiSqlite = {
   inserir: (aluno: NovoAluno): Promise<number> => ipcRenderer.invoke('sqlite:inserir', aluno),
   atualizar: (aluno: Aluno): Promise<void> => ipcRenderer.invoke('sqlite:atualizar', aluno),
   remover: (id: number): Promise<void> => ipcRenderer.invoke('sqlite:remover', id),
-}
+};
 
-contextBridge.exposeInMainWorld('apiSqlite', apiSqlite)
+contextBridge.exposeInMainWorld('apiSqlite', apiSqlite);

@@ -1,4 +1,4 @@
-import type { Aluno, NovoAluno } from './main'
+import type { Aluno, NovoAluno } from './main';
 
 // O contrato da ponte fica num arquivo só dele: o preload implementa, a página consome,
 // e é contra esta mesma descrição que o compilador confere os dois.
@@ -11,14 +11,14 @@ import type { Aluno, NovoAluno } from './main'
 // nomeado diz isso; um `Omit<Aluno, 'id'>` escrito à mão diria o mesmo, mas seria mais
 // uma cópia a manter em sincronia.
 export interface ApiSqlite {
-  listar: () => Promise<Aluno[]>
-  inserir: (aluno: NovoAluno) => Promise<number>
-  atualizar: (aluno: Aluno) => Promise<void>
-  remover: (id: number) => Promise<void>
+  listar: () => Promise<Aluno[]>;
+  inserir: (aluno: NovoAluno) => Promise<number>;
+  atualizar: (aluno: Aluno) => Promise<void>;
+  remover: (id: number) => Promise<void>;
 }
 
 declare global {
   interface Window {
-    apiSqlite: ApiSqlite
+    apiSqlite: ApiSqlite;
   }
 }

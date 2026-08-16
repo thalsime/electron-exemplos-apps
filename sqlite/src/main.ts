@@ -1,30 +1,30 @@
-import { app, BrowserWindow, ipcMain } from 'electron'
-import { DatabaseSync } from 'node:sqlite'
-import path from 'path'
+import { app, BrowserWindow, ipcMain } from 'electron';
+import { DatabaseSync } from 'node:sqlite';
+import path from 'path';
 
 // O formato que trafega no IPC. Declarado aqui e reimportado com `import type`
 // no preload e no renderizador, para que as três pontas concordem.
 export interface Aluno {
-  id: number
-  nome: string
-  curso: string
-  nota: number
+  id: number;
+  nome: string;
+  curso: string;
+  nota: number;
 }
 
-export type NovoAluno = Omit<Aluno, 'id'>
+export type NovoAluno = Omit<Aluno, 'id'>;
 
-let janelaPrincipal: BrowserWindow | null = null
-let banco: DatabaseSync | null = null
+let janelaPrincipal: BrowserWindow | null = null;
+let banco: DatabaseSync | null = null;
 
 // O banco fica em `app.getPath('userData')`, a pasta que o sistema reserva para
 // os dados deste aplicativo. Guardar dentro da pasta do projeto seria cômodo e
 // errado: em produção o aplicativo mora num diretório somente leitura, e o
 // arquivo acabaria versionado por engano.
 function abrirBanco(): DatabaseSync {
-  const arquivo = path.join(app.getPath('userData'), 'alunos.db')
-  const bd = new DatabaseSync(arquivo)
+  const arquivo = path.join(app.getPath('userData'), 'alunos.db');
+  const bd = new DatabaseSync(arquivo);
 
-  console.log(`Banco em ${arquivo}`)
+  console.log(`Banco em ${arquivo}`);
 
   // `exec` roda comando sem retorno. O `IF NOT EXISTS` é o que permite abrir o
   // aplicativo pela segunda vez sem apagar nada.
@@ -35,19 +35,19 @@ function abrirBanco(): DatabaseSync {
       curso TEXT    NOT NULL,
       nota  REAL    NOT NULL DEFAULT 0
     )
-  `)
+  `);
 
   // Semente só na primeira execução, para a tela não abrir vazia.
-  const total = bd.prepare('SELECT COUNT(*) AS quantidade FROM alunos').get()
+  const total = bd.prepare('SELECT COUNT(*) AS quantidade FROM alunos').get();
 
   if (Number(total?.quantidade ?? 0) === 0) {
-    const inserir = bd.prepare('INSERT INTO alunos (nome, curso, nota) VALUES (?, ?, ?)')
-    inserir.run('Ana Souza', 'Desenvolvimento de Sistemas', 8.5)
-    inserir.run('Bruno Lima', 'Desenvolvimento de Sistemas', 7)
-    inserir.run('Carla Dias', 'Redes de Computadores', 9.2)
+    const inserir = bd.prepare('INSERT INTO alunos (nome, curso, nota) VALUES (?, ?, ?)');
+    inserir.run('Ana Souza', 'Desenvolvimento de Sistemas', 8.5);
+    inserir.run('Bruno Lima', 'Desenvolvimento de Sistemas', 7);
+    inserir.run('Carla Dias', 'Redes de Computadores', 9.2);
   }
 
-  return bd
+  return bd;
 }
 
 function criarJanela(): void {
@@ -59,17 +59,17 @@ function criarJanela(): void {
       contextIsolation: true,
       nodeIntegration: false,
     },
-  })
+  });
 
   if (process.env.VITE_DEV_SERVER_URL) {
-    janelaPrincipal.loadURL(process.env.VITE_DEV_SERVER_URL)
+    janelaPrincipal.loadURL(process.env.VITE_DEV_SERVER_URL);
   } else {
-    janelaPrincipal.loadFile(path.join(__dirname, '../dist/index.html'))
+    janelaPrincipal.loadFile(path.join(__dirname, '../dist/index.html'));
   }
 
   janelaPrincipal.on('closed', () => {
-    janelaPrincipal = null
-  })
+    janelaPrincipal = null;
+  });
 }
 
 // As quatro operações do CRUD. Repare que TODAS ficam aqui, no processo
@@ -87,13 +87,13 @@ function paraAluno(linha: Record<string, unknown>): Aluno {
     nome: String(linha.nome),
     curso: String(linha.curso),
     nota: Number(linha.nota),
-  }
+  };
 }
 
 ipcMain.handle('sqlite:listar', (): Aluno[] => {
-  const linhas = banco!.prepare('SELECT id, nome, curso, nota FROM alunos ORDER BY nome').all()
-  return linhas.map(paraAluno)
-})
+  const linhas = banco!.prepare('SELECT id, nome, curso, nota FROM alunos ORDER BY nome').all();
+  return linhas.map(paraAluno);
+});
 
 ipcMain.handle('sqlite:inserir', (_evento, aluno: NovoAluno): number => {
   // `prepare` com `?` é o que separa comando de dado. Concatenar o valor dentro
@@ -101,32 +101,32 @@ ipcMain.handle('sqlite:inserir', (_evento, aluno: NovoAluno): number => {
   // bastaria para quebrar o comando.
   const resultado = banco!
     .prepare('INSERT INTO alunos (nome, curso, nota) VALUES (?, ?, ?)')
-    .run(aluno.nome, aluno.curso, aluno.nota)
+    .run(aluno.nome, aluno.curso, aluno.nota);
 
-  return Number(resultado.lastInsertRowid)
-})
+  return Number(resultado.lastInsertRowid);
+});
 
 ipcMain.handle('sqlite:atualizar', (_evento, aluno: Aluno): void => {
   banco!
     .prepare('UPDATE alunos SET nome = ?, curso = ?, nota = ? WHERE id = ?')
-    .run(aluno.nome, aluno.curso, aluno.nota, aluno.id)
-})
+    .run(aluno.nome, aluno.curso, aluno.nota, aluno.id);
+});
 
 ipcMain.handle('sqlite:remover', (_evento, id: number): void => {
-  banco!.prepare('DELETE FROM alunos WHERE id = ?').run(id)
-})
+  banco!.prepare('DELETE FROM alunos WHERE id = ?').run(id);
+});
 
 app.whenReady().then(() => {
-  banco = abrirBanco()
-  criarJanela()
-})
+  banco = abrirBanco();
+  criarJanela();
+});
 
 app.on('window-all-closed', () => {
   // Fechar o banco explicitamente é boa prática: garante que tudo foi gravado
   // antes de o processo morrer.
-  banco?.close()
-  app.quit()
-})
+  banco?.close();
+  app.quit();
+});
 
 // ---------------------------------------------------------------------------
 // O MESMO CRUD EM POSTGRES, para comparação - deliberadamente comentado
