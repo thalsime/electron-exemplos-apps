@@ -1,18 +1,12 @@
 import './estilo.css'
-import type { RecursosDaPlataforma } from './main'
 
-declare global {
-  interface Window {
-    apiIcone: {
-      recursos: () => Promise<RecursosDaPlataforma>
-      definirContador: (quantidade: number) => Promise<void>
-      limparContador: () => Promise<void>
-      trocarIcone: (nome: string) => Promise<void>
-    }
-  }
-}
+// Quem descreve `window.apiIcone` é o src/ponte.d.ts, o mesmo arquivo contra o qual o
+// preload se confere. O tipo de `recursos`, lá embaixo, chega por inferência.
 
-const NOMES_DE_PLATAFORMA: Record<string, string> = {
+// As chaves deste mapa não são texto qualquer: são os identificadores de plataforma que
+// o Node reconhece. `Record<string, string>` aceitaria `darwim` sem reclamar;
+// `NodeJS.Platform` recusa. É `Partial` porque só três das plataformas têm nome aqui.
+const NOMES_DE_PLATAFORMA: Partial<Record<NodeJS.Platform, string>> = {
   darwin: 'macOS',
   win32: 'Windows',
   linux: 'Linux',
