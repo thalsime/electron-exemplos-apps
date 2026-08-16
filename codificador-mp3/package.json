@@ -1,5 +1,5 @@
 {
-  "name": "mp3-encoder-demo",
+  "name": "codificador-mp3",
   "version": "1.1.0",
   "description": "Codificação de WAV para MP3 executando um binário externo pelo processo principal",
   "main": "dist-electron/main.js",

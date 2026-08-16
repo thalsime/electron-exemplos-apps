@@ -1,12 +1,12 @@
 import './app.css'
-import type { LinhaDeLog, PedidoDeCodificacao } from './main'
+import type { LinhaDeRegistro, PedidoDeCodificacao } from './main'
 
 declare global {
   interface Window {
-    mp3Api: {
+    apiMp3: {
       caminhoDoArquivo: (arquivo: File) => string
       codificar: (pedido: PedidoDeCodificacao) => Promise<void>
-      aoReceberLog: (ouvinte: (linha: LinhaDeLog) => void) => void
+      aoReceberRegistro: (ouvinte: (linha: LinhaDeRegistro) => void) => void
     }
   }
 }
@@ -22,8 +22,8 @@ function elemento<T extends HTMLElement>(seletor: string): T {
   return alvo
 }
 
-function registrar(linha: LinhaDeLog): void {
-  const destino = elemento('#logs')
+function registrar(linha: LinhaDeRegistro): void {
+  const destino = elemento('#registros')
   const item = document.createElement('div')
   item.className = linha.tipo
   // textContent, e não innerHTML: o texto vem da saída de um processo externo.
@@ -33,26 +33,26 @@ function registrar(linha: LinhaDeLog): void {
 }
 
 window.addEventListener('DOMContentLoaded', () => {
-  window.mp3Api.aoReceberLog(registrar)
+  window.apiMp3.aoReceberRegistro(registrar)
 
-  elemento('#form').addEventListener('submit', (evento) => {
+  elemento('#formulario').addEventListener('submit', (evento) => {
     evento.preventDefault()
 
     const campo = elemento<HTMLInputElement>('#arquivo')
     const arquivo = campo.files?.[0]
     if (!arquivo) {
-      registrar({ texto: 'Escolha um arquivo .wav primeiro.', tipo: 'error' })
+      registrar({ texto: 'Escolha um arquivo .wav primeiro.', tipo: 'erro' })
       return
     }
 
-    const origem = window.mp3Api.caminhoDoArquivo(arquivo)
+    const origem = window.apiMp3.caminhoDoArquivo(arquivo)
     if (!origem) {
-      registrar({ texto: 'Não foi possível obter o caminho do arquivo.', tipo: 'error' })
+      registrar({ texto: 'Não foi possível obter o caminho do arquivo.', tipo: 'erro' })
       return
     }
 
-    const bitrate = Number(elemento<HTMLInputElement>('#bitrate').value) || 128
-    void window.mp3Api.codificar({ origem, bitrate })
+    const taxaDeBits = Number(elemento<HTMLInputElement>('#taxa-de-bits').value) || 128
+    void window.apiMp3.codificar({ origem, taxaDeBits })
   })
 })
 
