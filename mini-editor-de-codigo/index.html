@@ -2,7 +2,7 @@
 <html>
   <head>
     <meta charset="UTF-8" />
-    <title>Mini Code Editor</title>
+    <title>Mini editor de código</title>
 
     <!-- O CodeMirror 5 declara `var CodeMirror` em script clássico: precisa vir
          por tag <script>, e não por import de módulo. Fica em public/, servido
@@ -17,18 +17,18 @@
     <link rel="stylesheet" href="/cm/theme/lesser-dark.css" />
   </head>
   <body>
-    <div class="buttons">
-      <button id="new"><img src="/img/16x16/file_add.png" alt="" />New</button>
-      <button id="open"><img src="/img/16x16/file.png" alt="" />Open</button>
-      <button id="save"><img src="/img/16x16/diskette.png" alt="" />Save</button>
-      <button id="save-as"><img src="/img/16x16/diskette.png" alt="" />Save as</button>
+    <div class="botoes">
+      <button id="novo"><img src="/img/16x16/file_add.png" alt="" />Novo</button>
+      <button id="abrir"><img src="/img/16x16/file.png" alt="" />Abrir</button>
+      <button id="salvar"><img src="/img/16x16/diskette.png" alt="" />Salvar</button>
+      <button id="salvar-como"><img src="/img/16x16/diskette.png" alt="" />Salvar como</button>
     </div>
 
     <div id="editor"></div>
 
     <div class="info">
-      <label>Filename: </label><span id="title"></span>
-      <label>Mode: </label><span id="mode"></span>
+      <label>Arquivo: </label><span id="titulo"></span>
+      <label>Modo: </label><span id="modo"></span>
     </div>
 
     <script type="module" src="/src/renderer.ts"></script>

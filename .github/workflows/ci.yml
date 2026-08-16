@@ -52,7 +52,7 @@ jobs:
           - ola-mundo
           - ola-mundo-objeto-compartilhado
           - menus
-          - mini-code-editor
+          - mini-editor-de-codigo
           - mp3-encoder
           - notifications
           - power-save-blocker
