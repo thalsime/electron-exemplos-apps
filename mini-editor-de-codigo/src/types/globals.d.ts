@@ -8,14 +8,14 @@
 // editor de código para demonstrar.
 
 interface CodeMirrorEditor {
-  setOption(nome: string, valor: unknown): void
-  setValue(texto: string): void
-  getValue(): string
-  getSelection(): string
-  replaceSelection(texto: string): void
-  refresh(): void
-  getScrollerElement(): HTMLElement
-  focus(): void
+  setOption(nome: string, valor: unknown): void;
+  setValue(texto: string): void;
+  getValue(): string;
+  getSelection(): string;
+  replaceSelection(texto: string): void;
+  refresh(): void;
+  getScrollerElement(): HTMLElement;
+  focus(): void;
 }
 
 declare function CodeMirror(
