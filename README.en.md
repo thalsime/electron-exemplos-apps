@@ -2,9 +2,10 @@
 
 # Electron Sample Apps
 
-Twenty sample applications demonstrating the
-[Electron APIs](https://www.electronjs.org/docs/latest/api/app), one topic each. All of them in
-Portuguese, written in TypeScript on Vite, running on current Electron.
+Thirty sample applications demonstrating the
+[Electron APIs](https://github.com/electron/electron/blob/v42.6.0/docs/api/app.md), one topic
+each - plus five that combine several. All of them in Portuguese, written in TypeScript on
+Vite, running on Electron 42.6.0.
 
 This is a teaching fork of
 [hokein/electron-sample-apps](https://github.com/hokein/electron-sample-apps), prepared for
@@ -30,41 +31,77 @@ the bridge between the two processes.
 
 ## The samples
 
-The collection has **30** samples. The first two are the foundation for all the others; the
-rest are in alphabetical order.
+These two first. They are the foundation for all the others.
 
 | Sample | Topic |
 |---|---|
 | [`ola-mundo`](ola-mundo/) | the minimal app: one window, one page |
 | [`ola-mundo-objeto-compartilhado`](ola-mundo-objeto-compartilhado/) | preload, `contextBridge` and IPC |
-| [`bandeja`](bandeja/) | system tray icon and menu |
-| [`bloco-de-notas`](bloco-de-notas/) | notes in SQLite, with spell check, menus and PDF |
-| [`bloqueio-de-suspensao`](bloqueio-de-suspensao/) | keeping the computer awake |
+
+The rest are grouped by **level of understanding**, from the simplest to the densest, and in
+alphabetical order within each level. What moves a sample up a level is not how much code it
+has: it is how much API it asks you to hold at once.
+
+### Level 1 - a single topic, entirely inside the page
+
+| Sample | Topic |
+|---|---|
 | [`camera`](camera/) | video capture with `getUserMedia` |
-| [`captura-de-tela`](captura-de-tela/) | screen capture with `getDisplayMedia` |
+
+### Level 2 - one Electron API, small surface
+
+| Sample | Topic |
+|---|---|
+| [`bandeja`](bandeja/) | system tray icon and menu |
+| [`bloqueio-de-suspensao`](bloqueio-de-suspensao/) | keeping the computer awake |
 | [`certificado-cliente`](certificado-cliente/) | TLS client certificate authentication |
-| [`codificador-mp3`](codificador-mp3/) | running an external program with `spawn` |
-| [`comunicacao-entre-janelas`](comunicacao-entre-janelas/) | two windows talking through the main process |
-| [`compactador-de-pasta`](compactador-de-pasta/) | running `tar` and streaming its output live |
 | [`console-e-registros`](console-e-registros/) | where each console message actually shows up |
+| [`notificacoes`](notificacoes/) | operating system notifications |
+| [`service-worker/resposta-simulada`](service-worker/resposta-simulada/) | intercepting requests with a Service Worker |
+| [`telas-no-mesmo-renderizador`](telas-no-mesmo-renderizador/) | several screens in a single window, no router |
+
+### Level 3 - an IPC bridge with several verbs, or an external library
+
+| Sample | Topic |
+|---|---|
+| [`comunicacao-entre-janelas`](comunicacao-entre-janelas/) | two windows talking through the main process |
+| [`icone-do-aplicativo`](icone-do-aplicativo/) | replacing the default icon, with badge and variants |
+| [`menus`](menus/) | application menu and context menus |
+| [`relatorio-de-falha`](relatorio-de-falha/) | `crashReporter` and crash reports |
+| [`webgl`](webgl/) | 3D model with WebGL and three.js |
+
+### Level 4 - structured data crossing the bridge, or several APIs at once
+
+| Sample | Topic |
+|---|---|
 | [`cookies`](cookies/) | reading, writing and removing session cookies |
 | [`corretor-ortografico`](corretor-ortografico/) | native spell checker and context-menu suggestions |
-| [`explorador-de-arquivos`](explorador-de-arquivos/) | browsing the file system |
-| [`gravador-de-tela`](gravador-de-tela/) | recording the screen or camera to a file |
-| [`icone-do-aplicativo`](icone-do-aplicativo/) | replacing the default icon, with badge and variants |
 | [`impressao`](impressao/) | printing and PDF generation |
 | [`janela-sem-moldura`](janela-sem-moldura/) | frameless window with custom controls |
-| [`menus`](menus/) | application menu and context menus |
-| [`mini-editor-de-codigo`](mini-editor-de-codigo/) | code editor with syntax highlighting and file access |
-| [`navegador-com-sessao`](navegador-com-sessao/) | `<webview>`, cookies, Service Worker and crash reports |
-| [`notificacoes`](notificacoes/) | operating system notifications |
-| [`painel-flutuante`](painel-flutuante/) | frameless always-on-top panel driving another window |
-| [`relatorio-de-falha`](relatorio-de-falha/) | `crashReporter` and crash reports |
-| [`service-worker/resposta-simulada`](service-worker/resposta-simulada/) | intercepting requests with a Service Worker |
 | [`sqlite`](sqlite/) | local CRUD with `node:sqlite`, no dependency |
-| [`telas-no-mesmo-renderizador`](telas-no-mesmo-renderizador/) | several screens in a single window, no router |
-| [`webgl`](webgl/) | 3D model with WebGL and three.js |
 | [`webview/navegador`](webview/navegador/) | mini browser built on the `<webview>` tag |
+
+### Level 5 - work outside the browser: external process, disk, media
+
+| Sample | Topic |
+|---|---|
+| [`captura-de-tela`](captura-de-tela/) | screen capture with `getDisplayMedia` |
+| [`codificador-mp3`](codificador-mp3/) | running an external program with `spawn` |
+| [`explorador-de-arquivos`](explorador-de-arquivos/) | browsing the file system |
+| [`mini-editor-de-codigo`](mini-editor-de-codigo/) | code editor with syntax highlighting and file access |
+
+### Combined samples
+
+Five applications that integrate four to six topics into one coherent program. They come after
+the single-topic ones: each assumes what it combines.
+
+| Sample | Topic | Brings together |
+|---|---|---|
+| [`bloco-de-notas`](bloco-de-notas/) | notes in SQLite, with spell check, menus and PDF | `sqlite`, `telas-no-mesmo-renderizador`, `corretor-ortografico`, `menus`, `impressao`, files |
+| [`compactador-de-pasta`](compactador-de-pasta/) | running `tar` and streaming its output live | `spawn`, file dialogs, streaming IPC, `notificacoes` |
+| [`gravador-de-tela`](gravador-de-tela/) | recording the screen or camera to a file | `captura-de-tela`, `camera`, `bloqueio-de-suspensao`, `bandeja`, `icone-do-aplicativo`, files |
+| [`navegador-com-sessao`](navegador-com-sessao/) | `<webview>`, cookies, Service Worker and crash reports | `webview/navegador`, `cookies`, `service-worker`, `relatorio-de-falha`, two windows |
+| [`painel-flutuante`](painel-flutuante/) | frameless always-on-top panel driving another window | `janela-sem-moldura`, `bandeja`, `bloqueio-de-suspensao`, `comunicacao-entre-janelas` |
 
 ## How to run
 
@@ -169,8 +206,15 @@ PascalCase. The bridge type's name derives from the key already exposed, without
 ## Requirements
 
 - Node.js 24 or later
-- macOS, Windows or Linux. **The collection has only been validated on macOS** - two samples
-  have platform limitations documented in their own READMEs
+- macOS, Windows or Linux. **The collection has only been validated on macOS.** Samples whose
+  behaviour changes from one system to another carry a `Diferenças de plataforma` section in
+  their own README; `notificacoes` and `corretor-ortografico` document real macOS limitations
+  that should not be "fixed" in code
+
+The stack is pinned and declared once, at the root: **Electron 42.6.0**, TypeScript 7.0.2 and
+Vite 8. Links to the Electron documentation in this repository point at the **`v42.6.0` tag**
+on GitHub rather than the official site: `electronjs.org` publishes only the latest release,
+which over time stops matching what the collection actually uses.
 
 ## License
 

@@ -2,9 +2,10 @@
 
 # Exemplos de aplicativos Electron
 
-Vinte aplicativos de exemplo que demonstram as
-[APIs do Electron](https://www.electronjs.org/docs/latest/api/app), um por assunto. Todos em
-português, em TypeScript sobre Vite, rodando no Electron atual.
+Trinta aplicativos de exemplo que demonstram as
+[APIs do Electron](https://github.com/electron/electron/blob/v42.6.0/docs/api/app.md), um por
+assunto - mais cinco que combinam vários. Todos em português, em TypeScript sobre Vite,
+rodando no Electron 42.6.0.
 
 Este é um fork didático de
 [hokein/electron-sample-apps](https://github.com/hokein/electron-sample-apps), preparado para
@@ -29,41 +30,77 @@ cada API.
 
 ## Os exemplos
 
-O acervo tem **30** exemplos. Os dois primeiros são a base de todos os outros; os demais estão
-em ordem alfabética.
+Estes dois primeiro. São a base de todos os outros.
 
 | Exemplo | Assunto |
 |---|---|
 | [`ola-mundo`](ola-mundo/) | o aplicativo mínimo: uma janela e uma página |
 | [`ola-mundo-objeto-compartilhado`](ola-mundo-objeto-compartilhado/) | preload, `contextBridge` e IPC |
-| [`bandeja`](bandeja/) | ícone e menu na bandeja do sistema |
-| [`bloco-de-notas`](bloco-de-notas/) | notas em SQLite, com corretor, menus e PDF |
-| [`bloqueio-de-suspensao`](bloqueio-de-suspensao/) | impedir que o computador durma |
+
+Os demais estão agrupados por **nível de entendimento**, do mais simples ao mais denso, e em
+ordem alfabética dentro de cada nível. O que faz um exemplo subir de nível não é o tamanho do
+código: é quanta API ele exige entender de uma vez.
+
+### Nível 1 - um assunto só, inteiro dentro da página
+
+| Exemplo | Assunto |
+|---|---|
 | [`camera`](camera/) | captura de vídeo com `getUserMedia` |
-| [`captura-de-tela`](captura-de-tela/) | gravar a tela com `getDisplayMedia` |
+
+### Nível 2 - uma API do Electron, de superfície pequena
+
+| Exemplo | Assunto |
+|---|---|
+| [`bandeja`](bandeja/) | ícone e menu na bandeja do sistema |
+| [`bloqueio-de-suspensao`](bloqueio-de-suspensao/) | impedir que o computador durma |
 | [`certificado-cliente`](certificado-cliente/) | autenticação TLS com certificado |
-| [`codificador-mp3`](codificador-mp3/) | executar um programa externo com `spawn` |
-| [`comunicacao-entre-janelas`](comunicacao-entre-janelas/) | duas janelas conversando pelo processo principal |
-| [`compactador-de-pasta`](compactador-de-pasta/) | rodar o `tar` e ver a saída em tempo real |
 | [`console-e-registros`](console-e-registros/) | onde cada mensagem de console aparece |
+| [`notificacoes`](notificacoes/) | notificações do sistema operacional |
+| [`service-worker/resposta-simulada`](service-worker/resposta-simulada/) | interceptar requisições com Service Worker |
+| [`telas-no-mesmo-renderizador`](telas-no-mesmo-renderizador/) | várias telas numa janela só, sem roteador |
+
+### Nível 3 - ponte IPC com vários verbos, ou biblioteca externa
+
+| Exemplo | Assunto |
+|---|---|
+| [`comunicacao-entre-janelas`](comunicacao-entre-janelas/) | duas janelas conversando pelo processo principal |
+| [`icone-do-aplicativo`](icone-do-aplicativo/) | trocar o ícone padrão, com contador e variantes |
+| [`menus`](menus/) | menu de aplicação e menus de contexto |
+| [`relatorio-de-falha`](relatorio-de-falha/) | `crashReporter` e relatório de falha |
+| [`webgl`](webgl/) | modelo 3D com WebGL e three.js |
+
+### Nível 4 - dados estruturados atravessando a ponte, ou várias APIs juntas
+
+| Exemplo | Assunto |
+|---|---|
 | [`cookies`](cookies/) | ler, gravar e remover cookies da sessão |
 | [`corretor-ortografico`](corretor-ortografico/) | corretor nativo e sugestões no menu |
-| [`explorador-de-arquivos`](explorador-de-arquivos/) | navegar pelo sistema de arquivos |
-| [`gravador-de-tela`](gravador-de-tela/) | gravar a tela ou a câmera e salvar o vídeo |
-| [`icone-do-aplicativo`](icone-do-aplicativo/) | trocar o ícone padrão, com contador e variantes |
 | [`impressao`](impressao/) | imprimir e gerar PDF |
 | [`janela-sem-moldura`](janela-sem-moldura/) | janela sem barra de título, com controles próprios |
-| [`menus`](menus/) | menu de aplicação e menus de contexto |
-| [`mini-editor-de-codigo`](mini-editor-de-codigo/) | editor com destaque de sintaxe e arquivos |
-| [`navegador-com-sessao`](navegador-com-sessao/) | `<webview>`, cookies, Service Worker e relatório de falha |
-| [`notificacoes`](notificacoes/) | notificações do sistema operacional |
-| [`painel-flutuante`](painel-flutuante/) | painel sem moldura, sempre no topo, comandando outra janela |
-| [`relatorio-de-falha`](relatorio-de-falha/) | `crashReporter` e relatório de falha |
-| [`service-worker/resposta-simulada`](service-worker/resposta-simulada/) | interceptar requisições com Service Worker |
 | [`sqlite`](sqlite/) | CRUD local com `node:sqlite`, sem dependência |
-| [`telas-no-mesmo-renderizador`](telas-no-mesmo-renderizador/) | várias telas numa janela só, sem roteador |
-| [`webgl`](webgl/) | modelo 3D com WebGL e three.js |
 | [`webview/navegador`](webview/navegador/) | navegador em miniatura com a tag `<webview>` |
+
+### Nível 5 - trabalho fora do navegador: processo externo, disco, mídia
+
+| Exemplo | Assunto |
+|---|---|
+| [`captura-de-tela`](captura-de-tela/) | gravar a tela com `getDisplayMedia` |
+| [`codificador-mp3`](codificador-mp3/) | executar um programa externo com `spawn` |
+| [`explorador-de-arquivos`](explorador-de-arquivos/) | navegar pelo sistema de arquivos |
+| [`mini-editor-de-codigo`](mini-editor-de-codigo/) | editor com destaque de sintaxe e arquivos |
+
+### Exemplos combinados
+
+Cinco aplicativos que integram de quatro a seis assuntos num programa coeso. Vêm depois dos
+temáticos: cada um supõe o que combina.
+
+| Exemplo | Assunto | Reúne |
+|---|---|---|
+| [`bloco-de-notas`](bloco-de-notas/) | notas em SQLite, com corretor, menus e PDF | `sqlite`, `telas-no-mesmo-renderizador`, `corretor-ortografico`, `menus`, `impressao`, arquivos |
+| [`compactador-de-pasta`](compactador-de-pasta/) | rodar o `tar` e ver a saída em tempo real | `spawn`, diálogos de arquivo, IPC de fluxo, `notificacoes` |
+| [`gravador-de-tela`](gravador-de-tela/) | gravar a tela ou a câmera e salvar o vídeo | `captura-de-tela`, `camera`, `bloqueio-de-suspensao`, `bandeja`, `icone-do-aplicativo`, arquivos |
+| [`navegador-com-sessao`](navegador-com-sessao/) | `<webview>`, cookies, Service Worker e relatório de falha | `webview/navegador`, `cookies`, `service-worker`, `relatorio-de-falha`, duas janelas |
+| [`painel-flutuante`](painel-flutuante/) | painel sem moldura, sempre no topo, comandando outra janela | `janela-sem-moldura`, `bandeja`, `bloqueio-de-suspensao`, `comunicacao-entre-janelas` |
 
 ## Como executar
 
@@ -180,8 +217,15 @@ vira `ApiNotas`.
 ## Requisitos
 
 - Node.js 24 ou superior
-- macOS, Windows ou Linux. **O acervo foi validado apenas no macOS** - dois exemplos têm
-  limitações de plataforma documentadas nos READMEs deles
+- macOS, Windows ou Linux. **O acervo foi validado apenas no macOS.** Os exemplos cujo
+  comportamento muda de um sistema para outro trazem uma seção `Diferenças de plataforma` no
+  README próprio; o `notificacoes` e o `corretor-ortografico` documentam limitações reais do
+  macOS, que não devem ser "consertadas" no código
+
+A stack é fixa e declarada uma vez só, na raiz: **Electron 42.6.0**, TypeScript 7.0.2 e
+Vite 8. Os links para a documentação do Electron neste repositório apontam para a **tag
+`v42.6.0`** no GitHub, e não para o site oficial: o `electronjs.org` publica apenas a versão
+mais recente, que com o tempo deixa de corresponder ao que o acervo usa.
 
 ## Licença
 
