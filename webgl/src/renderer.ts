@@ -13,115 +13,116 @@ import modeloUrl from './html5rocks.json?url'
 document.addEventListener('DOMContentLoaded', function () {
   if (!Detector.webgl) Detector.addGetWebGLMessage()
 
-  const SCREEN_WIDTH = window.innerWidth
-  const SCREEN_HEIGHT = window.innerHeight
+  const LARGURA_DA_TELA = window.innerWidth
+  const ALTURA_DA_TELA = window.innerHeight
 
-  let container: HTMLDivElement
+  let recipiente: HTMLDivElement
   let camera: THREE.PerspectiveCamera
-  let scene: THREE.Scene
-  let webglRenderer: THREE.WebGLRenderer
-  let zmesh: THREE.Mesh | null = null
+  let cena: THREE.Scene
+  let renderizadorWebGL: THREE.WebGLRenderer
+  let malha: THREE.Mesh | null = null
 
   let mouseX = 0, mouseY = 0
-  let mousemoveX = 0, mousemoveY = 0
+  let movimentoX = 0, movimentoY = 0
 
-  const windowHalfX = window.innerWidth / 2
-  const windowHalfY = window.innerHeight / 2
+  const metadeDaJanelaX = window.innerWidth / 2
+  const metadeDaJanelaY = window.innerHeight / 2
 
-  document.addEventListener('mousedown', onDocumentMouseDown, false)
-  document.addEventListener('mouseup', onDocumentMouseUp, false)
-  document.addEventListener('mousemove', onDocumentMouseMove, false)
+  document.addEventListener('mousedown', aoPressionarMouse, false)
+  document.addEventListener('mouseup', aoSoltarMouse, false)
+  document.addEventListener('mousemove', aoMoverMouse, false)
   // O evento mousewheel e a propriedade wheelDelta foram substituídos pelo evento
   // wheel padronizado, cujo deltaY tem o sinal invertido em relação ao antigo.
-  document.addEventListener('wheel', onDocumentMouseWheel, false)
+  document.addEventListener('wheel', aoGirarRoda, false)
 
-  const closeEl = initCloseBtn()
+  const elementoFechar = iniciarBotaoFechar()
 
-  init()
-  animate()
+  iniciar()
+  animar()
 
-  function init() {
-    container = document.createElement('div')
-    document.body.appendChild(container)
+  function iniciar() {
+    recipiente = document.createElement('div')
+    document.body.appendChild(recipiente)
 
-    // camera
-    camera = new THREE.PerspectiveCamera(75, SCREEN_WIDTH / SCREEN_HEIGHT, 1, 100000)
+    // câmera
+    camera = new THREE.PerspectiveCamera(75, LARGURA_DA_TELA / ALTURA_DA_TELA, 1, 100000)
     camera.position.z = 75
 
-    //scene
-    scene = new THREE.Scene()
+    // cena
+    cena = new THREE.Scene()
 
-    // lights
-    const ambient = new THREE.AmbientLight(0xffffff)
-    scene.add(ambient)
+    // luz ambiente
+    const luzAmbiente = new THREE.AmbientLight(0xffffff)
+    cena.add(luzAmbiente)
 
-    // more lights
-    const directionalLight = new THREE.DirectionalLight(0xffeedd)
-    directionalLight.position.set(0, -70, 100).normalize()
-    scene.add(directionalLight)
+    // luz direcional
+    const luzDirecional = new THREE.DirectionalLight(0xffeedd)
+    luzDirecional.position.set(0, -70, 100).normalize()
+    cena.add(luzDirecional)
 
-    // renderer
-    webglRenderer = new THREE.WebGLRenderer()
-    webglRenderer.setSize(SCREEN_WIDTH, SCREEN_HEIGHT)
-    webglRenderer.domElement.style.position = 'relative'
-    container.appendChild(webglRenderer.domElement)
+    // renderizador
+    renderizadorWebGL = new THREE.WebGLRenderer()
+    renderizadorWebGL.setSize(LARGURA_DA_TELA, ALTURA_DA_TELA)
+    renderizadorWebGL.domElement.style.position = 'relative'
+    recipiente.appendChild(renderizadorWebGL.domElement)
 
-    // load ascii model
-    const jsonLoader = new THREE.JSONLoader()
-    jsonLoader.load(modeloUrl, function (geometry) { createScene(geometry) })
+    // carrega o modelo em texto
+    const carregadorJSON = new THREE.JSONLoader()
+    carregadorJSON.load(modeloUrl, function (geometria) { criarCena(geometria) })
   }
 
-  function initCloseBtn(): Element | null {
-    const closeEl = document.querySelector('.close')
-    if (closeEl) {
-      closeEl.addEventListener('click', function () {
+  function iniciarBotaoFechar(): Element | null {
+    const elementoFechar = document.querySelector('.fechar')
+    if (elementoFechar) {
+      elementoFechar.addEventListener('click', function () {
         window.close()
       })
     }
-    return closeEl
+    return elementoFechar
   }
 
-  function createScene(geometry: unknown) {
-    zmesh = new THREE.Mesh(geometry, new THREE.MeshFaceMaterial())
-    zmesh.position.set(-10, -10, 0)
-    zmesh.scale.set(1, 1, 1)
-    scene.add(zmesh)
+  function criarCena(geometria: unknown) {
+    malha = new THREE.Mesh(geometria, new THREE.MeshFaceMaterial())
+    malha.position.set(-10, -10, 0)
+    malha.scale.set(1, 1, 1)
+    cena.add(malha)
   }
 
-  function onDocumentMouseDown(event: MouseEvent) {
-    if (event.target === closeEl) return // it should deliver click to close button
+  function aoPressionarMouse(evento: MouseEvent) {
+    // o clique precisa continuar chegando ao botão de fechar
+    if (evento.target === elementoFechar) return
 
     // Os prefixos de fornecedor do requestPointerLock deixaram de ser necessários.
     document.body.requestPointerLock()
   }
 
-  function onDocumentMouseUp() {
+  function aoSoltarMouse() {
     document.exitPointerLock()
   }
 
-  function onDocumentMouseWheel(event: WheelEvent) {
-    camera.position.z += event.deltaY / 120 * 3
+  function aoGirarRoda(evento: WheelEvent) {
+    camera.position.z += evento.deltaY / 120 * 3
   }
 
-  function onDocumentMouseMove(event: MouseEvent) {
-    mouseX = (event.clientX - windowHalfX)
-    mouseY = (event.clientY - windowHalfY)
+  function aoMoverMouse(evento: MouseEvent) {
+    mouseX = (evento.clientX - metadeDaJanelaX)
+    mouseY = (evento.clientY - metadeDaJanelaY)
     if (document.pointerLockElement) {
-      mousemoveX += event.movementX || 0
-      mousemoveY += event.movementY || 0
+      movimentoX += evento.movementX || 0
+      movimentoY += evento.movementY || 0
     }
   }
 
-  function animate() {
-    requestAnimationFrame(animate)
-    render()
+  function animar() {
+    requestAnimationFrame(animar)
+    renderizar()
   }
 
-  function render() {
-    if (zmesh) {
-      zmesh.rotation.set(-(mouseY + mousemoveY) / windowHalfY + 0,
-                         -(mouseX + mousemoveX) / windowHalfX, 0)
+  function renderizar() {
+    if (malha) {
+      malha.rotation.set(-(mouseY + movimentoY) / metadeDaJanelaY + 0,
+                         -(mouseX + movimentoX) / metadeDaJanelaX, 0)
     }
-    webglRenderer.render(scene, camera)
+    renderizadorWebGL.render(cena, camera)
   }
 })
