@@ -1,5 +1,5 @@
 {
-  "name": "service-worker-demo",
+  "name": "resposta-simulada",
   "version": "1.0.2",
   "description": "Registro de Service Worker e resposta simulada pelo handler de fetch",
   "main": "dist-electron/main.js",
