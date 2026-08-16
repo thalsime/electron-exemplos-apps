@@ -1,7 +1,10 @@
 import { contextBridge, ipcRenderer } from 'electron'
 import type { ArquivoGravado, FonteDeCaptura } from './main'
+import type { ApiGravador } from './ponte'
 
-contextBridge.exposeInMainWorld('apiGravador', {
+// O tipo é aplicado à variável porque `exposeInMainWorld(apiKey: string, api: any)` não
+// confere nada: sem esta anotação, a ponte poderia divergir do contrato em silêncio.
+const apiGravador: ApiGravador = {
   listarFontes: (): Promise<FonteDeCaptura[]> => ipcRenderer.invoke('gravador:listar-fontes'),
 
   escolherFonte: (id: string): Promise<boolean> =>
@@ -18,4 +21,6 @@ contextBridge.exposeInMainWorld('apiGravador', {
   aoPedirAlternancia: (ouvinte: () => void): void => {
     ipcRenderer.on('gravador:alternar', () => ouvinte())
   },
-})
+}
+
+contextBridge.exposeInMainWorld('apiGravador', apiGravador)

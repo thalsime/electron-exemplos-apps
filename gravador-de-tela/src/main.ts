@@ -116,7 +116,7 @@ ipcMain.handle('gravador:escolher-fonte', (_evento, id: string): boolean => {
   return fonteEscolhida !== null
 })
 
-ipcMain.on('gravador:marcar', (_evento, ativa: boolean) => {
+ipcMain.on('gravador:marcar', (_evento, ativa: boolean): void => {
   marcarGravacao(ativa)
 })
 
