@@ -1,15 +1,8 @@
 import type { OpcoesDeImpressao } from './main'
 
-declare global {
-  interface Window {
-    apiImpressao: {
-      abrirPrevia: () => Promise<void>
-      imprimir: () => Promise<string>
-      salvarPDF: (opcoes: OpcoesDeImpressao) => Promise<string>
-      abrirPDF: () => Promise<string>
-    }
-  }
-}
+// Quem descreve `window.apiImpressao` é o src/ponte.d.ts, o mesmo arquivo contra o qual
+// o preload se confere. `OpcoesDeImpressao` continua importado aqui porque
+// `opcoesDoFormulario` o usa no retorno - o import não era só para a declaração.
 
 function elemento<T extends HTMLElement>(seletor: string): T {
   const alvo = document.querySelector<T>(seletor)
