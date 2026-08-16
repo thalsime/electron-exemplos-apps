@@ -1,5 +1,5 @@
-import { defineConfig } from 'vite'
-import electron from 'vite-plugin-electron'
+import { defineConfig } from 'vite';
+import electron from 'vite-plugin-electron';
 
 // Este exemplo não tem renderizador: a única janela nasce com show: false e nunca
 // carrega página. Sem index.html nem entrada configurada, o vite-plugin-electron
@@ -14,4 +14,4 @@ export default defineConfig({
       },
     ]),
   ],
-})
+});
