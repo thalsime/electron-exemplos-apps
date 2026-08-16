@@ -1,5 +1,5 @@
 {
-  "name": "spellchecker-demo",
+  "name": "corretor-ortografico",
   "version": "1.2.0",
   "description": "Corretor ortográfico nativo do Electron com sugestões no menu de contexto",
   "main": "dist-electron/main.js",

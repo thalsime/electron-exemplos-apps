@@ -11,6 +11,7 @@
     "certificado-cliente",
     "codificador-mp3",
     "cookies",
+    "corretor-ortografico",
     "explorador-de-arquivos",
     "impressao",
     "janela-sem-moldura",
@@ -21,7 +22,6 @@
     "ola-mundo-objeto-compartilhado",
     "relatorio-de-falha",
     "service-worker/resposta-simulada",
-    "spell-check",
     "tray",
     "webgl",
     "webview/browser"
