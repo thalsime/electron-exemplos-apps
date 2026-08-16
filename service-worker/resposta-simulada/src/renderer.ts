@@ -6,6 +6,13 @@
 // servido, então precisa chegar ao navegador na raiz, com o nome intacto e sem
 // hash de build. É o que o Vite garante para o conteúdo de `public/`.
 
+// Este exemplo não tem `src/ponte.d.ts` - não há preload nem canal -, mas ele guarda o
+// caso mais claro da regra 6 do acervo: `detalhe` e `erro` são `unknown`, e não `any`.
+//
+// A diferença é que `unknown` obriga a estreitar antes de usar. É por isso que a linha
+// abaixo passa por `String(detalhe)` em vez de acessar uma propriedade direto: o
+// compilador não deixa. Com `any` no lugar, um `detalhe.message` compilaria - e
+// quebraria em execução no dia em que a promessa rejeitasse com uma string.
 function registrar(mensagem: string, detalhe?: unknown): void {
   const linha = document.createElement('p')
   linha.textContent = detalhe === undefined ? mensagem : `${mensagem} ${String(detalhe)}`
