@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Gravador de tela</title>
+  </head>
+  <body>
+    <h1>Gravador de tela e câmera</h1>
+    <p class="introducao">
+      Escolha a câmera ou uma tela, grave e salve o vídeo em disco. Enquanto a gravação estiver
+      em curso, a tela do computador <strong>não apaga</strong> e o ícone do aplicativo mostra
+      um distintivo - porque a janela costuma estar escondida na hora de gravar.
+    </p>
+
+    <div class="botoes">
+      <button id="botao-camera">Usar a câmera</button>
+      <button id="botao-fontes">Listar telas e janelas</button>
+      <button id="botao-gravar" disabled>Gravar</button>
+    </div>
+
+    <p id="situacao" class="situacao">Escolha uma fonte para começar.</p>
+
+    <video id="previa" muted playsinline></video>
+
+    <h2>Fontes disponíveis</h2>
+    <div id="fontes" class="fontes"></div>
+
+    <p class="rodape">
+      A gravação também pode ser iniciada e parada pelo ícone na bandeja, com a janela fechada.
+    </p>
+
+    <script type="module" src="/src/renderer.ts"></script>
+  </body>
+</html>

@@ -1,0 +1,18 @@
+{
+  "name": "gravador-de-tela",
+  "version": "1.0.0",
+  "description": "Grava a tela ou a câmera, com bandeja, bloqueio de suspensão e contador no ícone",
+  "main": "dist-electron/main.js",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc --noEmit && vite build"
+  },
+  "devDependencies": {
+    "@types/node": "^26.1.2",
+    "electron": "42.6.0",
+    "typescript": "7.0.2",
+    "vite": "^8.1.3",
+    "vite-plugin-electron": "^1.1.0",
+    "vite-plugin-electron-renderer": "^1.0.0"
+  }
+}

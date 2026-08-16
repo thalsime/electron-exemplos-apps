@@ -29,7 +29,7 @@ cada API.
 
 ## Os exemplos
 
-O acervo tem **28** exemplos. Os dois primeiros são a base de todos os outros; os demais estão
+O acervo tem **29** exemplos. Os dois primeiros são a base de todos os outros; os demais estão
 em ordem alfabética.
 
 | Exemplo | Assunto |
@@ -48,6 +48,7 @@ em ordem alfabética.
 | [`cookies`](cookies/) | ler, gravar e remover cookies da sessão |
 | [`corretor-ortografico`](corretor-ortografico/) | corretor nativo e sugestões no menu |
 | [`explorador-de-arquivos`](explorador-de-arquivos/) | navegar pelo sistema de arquivos |
+| [`gravador-de-tela`](gravador-de-tela/) | gravar a tela ou a câmera e salvar o vídeo |
 | [`icone-do-aplicativo`](icone-do-aplicativo/) | trocar o ícone padrão, com contador e variantes |
 | [`impressao`](impressao/) | imprimir e gerar PDF |
 | [`janela-sem-moldura`](janela-sem-moldura/) | janela sem barra de título, com controles próprios |

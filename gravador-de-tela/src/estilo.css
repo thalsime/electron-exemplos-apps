@@ -1,0 +1,123 @@
+body {
+  margin: 0;
+  padding: 24px;
+  font-family: system-ui, sans-serif;
+  color: #1d1d1f;
+  background: #f5f5f7;
+}
+
+h1 {
+  margin-top: 0;
+  font-size: 24px;
+}
+
+h2 {
+  margin: 20px 0 8px;
+  font-size: 13px;
+  color: #6e6e73;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.introducao {
+  max-width: 720px;
+  line-height: 1.6;
+}
+
+.botoes {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin: 18px 0 8px;
+}
+
+button {
+  padding: 9px 18px;
+  border: 1px solid #d2d2d7;
+  border-radius: 6px;
+  background: #ffffff;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+button:hover:not(:disabled) {
+  background: #0071e3;
+  border-color: #0071e3;
+  color: #ffffff;
+}
+
+button:disabled {
+  opacity: 0.45;
+  cursor: default;
+}
+
+/* Durante a gravação o botão fica vermelho e pulsa, para não haver dúvida do
+   estado quando a janela reaparece. */
+.gravando #botao-gravar {
+  border-color: #b3261e;
+  background: #b3261e;
+  color: #ffffff;
+  animation: pulsar 1.4s ease-in-out infinite;
+}
+
+@keyframes pulsar {
+  50% {
+    opacity: 0.6;
+  }
+}
+
+.situacao {
+  min-height: 22px;
+  font-size: 14px;
+  color: #0071e3;
+}
+
+video {
+  display: block;
+  width: 100%;
+  max-width: 640px;
+  height: 320px;
+  border-radius: 10px;
+  background: #1d1d1f;
+  object-fit: contain;
+}
+
+.gravando video {
+  outline: 3px solid #b3261e;
+}
+
+.fontes {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.fonte {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  width: 190px;
+  padding: 8px;
+  text-align: left;
+}
+
+.fonte img {
+  width: 100%;
+  border-radius: 6px;
+  background: #1d1d1f;
+}
+
+.fonte span {
+  overflow: hidden;
+  font-size: 12px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.rodape {
+  max-width: 720px;
+  margin-top: 16px;
+  color: #6e6e73;
+  font-size: 14px;
+  line-height: 1.6;
+}
