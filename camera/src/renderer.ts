@@ -6,6 +6,12 @@ import './app.css'
 // navegador comum. Não há preload, não há IPC e não há nada do Electron aqui -
 // o que o Electron faz é apenas hospedar a página numa janela de aplicativo.
 //
+// Isso vale também para a tipagem, e é a razão de este exemplo não ter um
+// `src/ponte.d.ts`. `transmissao` chega como `MediaStream` e `getUserMedia` como
+// `Promise<MediaStream>` sem que ninguém declare nada: os tipos vêm do `lib.dom` que
+// acompanha o TypeScript, do mesmo jeito que viriam numa página fora do Electron. É o
+// oposto do IPC, onde o Electron entrega `any` e o contrato precisa ser reconstruído.
+
 // A permissão é do sistema operacional, não do código: no macOS a primeira
 // execução abre o diálogo de acesso à câmera, e a resposta fica gravada em
 // Ajustes do Sistema. Negada uma vez, ela não é perguntada de novo - o `catch`
