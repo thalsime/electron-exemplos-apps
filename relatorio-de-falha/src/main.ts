@@ -5,6 +5,14 @@ import path from 'path'
 const PORTA_COLETOR = 9999
 const URL_COLETOR = `http://127.0.0.1:${PORTA_COLETOR}`
 
+// O contrato do que trafega no canal é declarado aqui, e não no preload, porque é
+// aqui que o dado nasce: quem monta cada relatório é o handler lá embaixo. O preload
+// e a página importam este mesmo tipo, então mudar um campo quebra os três de uma vez.
+export interface RelatorioDeFalha {
+  id: string
+  data: string
+}
+
 // O crashReporter é iniciado UMA vez, e só aqui. No exemplo original ele também
 // era iniciado no renderizador; hoje isso é desnecessário, porque a configuração
 // feita no processo principal já vale para os renderizadores que ele cria.
@@ -57,7 +65,7 @@ function criarJanela(): void {
 
 // A lista de relatórios só existe no processo principal. O renderizador pede por
 // IPC em vez de alcançar a API direto, que é a troca do antigo módulo remote.
-ipcMain.handle('crash-report:listar-relatorios', () => {
+ipcMain.handle('crash-report:listar-relatorios', (): RelatorioDeFalha[] => {
   return crashReporter.getUploadedReports().map((relatorio) => ({
     id: relatorio.id,
     // Date não atravessa o IPC preservando o tipo: vai como texto já formatado.
