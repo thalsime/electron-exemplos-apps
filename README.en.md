@@ -83,7 +83,7 @@ To produce a production build of a sample, run `npm run build` inside its folder
 |-- index.html          the page
 |-- package.json        main points to dist-electron/main.js
 |-- tsconfig.json
-|-- vite.config.ts
+|-- vite.config.mts     the .mts extension marks the file as an ES module
 +-- src/
     |-- main.ts         main process
     |-- preload.ts      the bridge, when the sample needs one

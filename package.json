@@ -28,8 +28,8 @@
   ],
   "scripts": {
     "postinstall": "install-electron",
-    "verificar-tipos": "for d in */tsconfig.json; do [ -f \"$d\" ] || continue; p=\"${d%/tsconfig.json}\"; if [ -f \"$p/vite.config.ts\" ]; then echo \"[pulado] $p (projeto Vite: verificado no job próprio do CI)\"; continue; fi; echo \"[tsc] $p\"; tsc --noEmit -p \"$d\" || exit 1; done",
-    "compilar-tudo": "for d in */tsconfig.json; do [ -f \"$d\" ] || continue; p=\"${d%/tsconfig.json}\"; if [ -f \"$p/vite.config.ts\" ]; then echo \"[pulado] $p (projeto Vite: compilado por vite build)\"; continue; fi; echo \"[tsc] $p\"; tsc -p \"$d\" || exit 1; done"
+    "verificar-tipos": "for d in */tsconfig.json; do [ -f \"$d\" ] || continue; p=\"${d%/tsconfig.json}\"; if [ -f \"$p/vite.config.mts\" ] || [ -f \"$p/vite.config.ts\" ]; then echo \"[pulado] $p (projeto Vite: verificado no job próprio do CI)\"; continue; fi; echo \"[tsc] $p\"; tsc --noEmit -p \"$d\" || exit 1; done",
+    "compilar-tudo": "for d in */tsconfig.json; do [ -f \"$d\" ] || continue; p=\"${d%/tsconfig.json}\"; if [ -f \"$p/vite.config.mts\" ] || [ -f \"$p/vite.config.ts\" ]; then echo \"[pulado] $p (projeto Vite: compilado por vite build)\"; continue; fi; echo \"[tsc] $p\"; tsc -p \"$d\" || exit 1; done"
   },
   "devDependencies": {
     "@types/node": "^26.1.2",
