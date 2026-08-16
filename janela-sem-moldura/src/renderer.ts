@@ -1,5 +1,5 @@
-import './style.css'
-import { adicionarBarra, focarBarras, removerBarra, ajustarConteudo } from './barra-de-titulo'
+import './style.css';
+import { adicionarBarra, focarBarras, removerBarra, ajustarConteudo } from './barra-de-titulo';
 
 // Quem descreve `window.janelaApi` é o src/ponte.d.ts, o mesmo arquivo contra o qual o
 // preload se confere.
@@ -36,22 +36,22 @@ function configurarCaixa(checkboxId: string, titlebar_name: string, titlebar_ico
 
     ajustarConteudo();
     atualizarCaixas();
-  }
+  };
 }
 
 window.onfocus = function() {
   console.log("janela em foco");
   focarBarras(true);
-}
+};
 
 window.onblur = function() {
   console.log("janela sem foco");
   focarBarras(false);
-}
+};
 
 window.onresize = function() {
   ajustarConteudo();
-}
+};
 
 window.onload = function() {
   configurarCaixa("caixa-superior", "barra-superior", "barra-superior.png", "Barra superior");
@@ -63,32 +63,32 @@ window.onload = function() {
   // duas consultas de estado eram síncronas com o remote e agora são aguardadas.
   document.getElementById("botao-fechar-janela")!.onclick = function() {
     window.janelaApi.close();
-  }
+  };
   document.getElementById("botao-minimizar-janela")!.onclick = function() {
     window.janelaApi.minimizar();
-  }
+  };
   document.getElementById("botao-maximizar-janela")!.onclick = function() {
     window.janelaApi.maximizar();
-  }
+  };
   document.getElementById("unbotao-maximizar-janela")!.onclick = function() {
     window.janelaApi.restaurar();
-  }
+  };
   document.getElementById("botao-tela-cheia")!.onclick = async function() {
     window.janelaApi.definirTelaCheia(!(await window.janelaApi.estaEmTelaCheia()));
-  }
+  };
   document.getElementById("botao-alternar-maximizada")!.onclick = async function() {
     (await window.janelaApi.estaMaximizada()) ? window.janelaApi.restaurar() : window.janelaApi.maximizar();
-  }
+  };
 
   document.getElementById("min")!.onclick = function() {
     window.janelaApi.minimizar();
-  }
+  };
   document.getElementById("max")!.onclick = async function() {
     (await window.janelaApi.estaMaximizada()) ? window.janelaApi.restaurar() : window.janelaApi.maximizar();
-  }
+  };
   document.getElementById("exit")!.onclick = function() {
     window.janelaApi.close();
-  }
+  };
 
   ajustarConteudo();
-}
+};

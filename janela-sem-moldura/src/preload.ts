@@ -1,5 +1,5 @@
-import { contextBridge, ipcRenderer } from 'electron'
-import type { JanelaApi } from './ponte'
+import { contextBridge, ipcRenderer } from 'electron';
+import type { JanelaApi } from './ponte';
 
 // A página só enxerga estas sete operações, uma para cada uso que o exemplo fazia
 // do módulo remote. As consultas que antes eram síncronas devolvem promessa.
@@ -15,6 +15,6 @@ const janelaApi: JanelaApi = {
     ipcRenderer.invoke('janela:definir-tela-cheia', flag),
   estaEmTelaCheia: (): Promise<boolean> => ipcRenderer.invoke('janela:esta-em-tela-cheia'),
   estaMaximizada: (): Promise<boolean> => ipcRenderer.invoke('janela:esta-maximizada'),
-}
+};
 
-contextBridge.exposeInMainWorld('janelaApi', janelaApi)
+contextBridge.exposeInMainWorld('janelaApi', janelaApi);

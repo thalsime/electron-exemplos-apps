@@ -28,10 +28,10 @@ function criarBotao(button_id: string, button_name: string, normal_image_url: st
   button.appendChild(button_img);
   button.onmouseover = function() {
     atualizarImagem(button_id, hover_image_url);
-  }
+  };
   button.onmouseout = function() {
     atualizarImagem(button_id, normal_image_url);
-  }
+  };
   button.onclick = click_func;
   return button;
 }
