@@ -1,14 +1,9 @@
 import './estilo.css'
-import type { MensagemRecebida } from './main'
 
-declare global {
-  interface Window {
-    apiJanelas: {
-      enviar: (texto: string) => void
-      aoReceber: (ouvinte: (mensagem: MensagemRecebida) => void) => void
-    }
-  }
-}
+// Quem descreve `window.apiJanelas` é o src/ponte.d.ts, o mesmo arquivo contra o qual o
+// preload se confere. O tipo de `mensagem`, lá no ouvinte do fim do arquivo, chega por
+// inferência a partir do contrato - por isso nem `MensagemRecebida` precisa ser
+// importado aqui.
 
 // As duas janelas rodam este mesmo arquivo. O papel vem na consulta do
 // endereço, posta pelo processo principal ao carregar a página.
