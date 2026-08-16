@@ -1,6 +1,6 @@
-import { defineConfig } from 'vite'
-import electron from 'vite-plugin-electron'
-import renderer from 'vite-plugin-electron-renderer'
+import { defineConfig } from 'vite';
+import electron from 'vite-plugin-electron';
+import renderer from 'vite-plugin-electron-renderer';
 
 // O Service Worker é API web padrão e roda inteiro no renderizador: não há
 // preload nem IPC aqui. O arquivo do worker fica em `public/`, que o Vite copia
@@ -15,4 +15,4 @@ export default defineConfig({
     ]),
     renderer(),
   ],
-})
+});
