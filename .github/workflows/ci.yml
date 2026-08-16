@@ -48,6 +48,7 @@ jobs:
           - relatorio-de-falha
           - captura-de-tela
           - explorador-de-arquivos
+          - icone-do-aplicativo
           - janela-sem-moldura
           - ola-mundo
           - ola-mundo-objeto-compartilhado
