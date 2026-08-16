@@ -1,7 +1,7 @@
 import { contextBridge, ipcRenderer, webUtils } from 'electron'
-import type { LinhaDeLog, PedidoDeCodificacao } from './main'
+import type { LinhaDeRegistro, PedidoDeCodificacao } from './main'
 
-contextBridge.exposeInMainWorld('mp3Api', {
+contextBridge.exposeInMainWorld('apiMp3', {
   // O <input type="file"> devolve um objeto File, e o navegador esconde o
   // caminho real por segurança: `input.value` traz "C:\fakepath\arquivo.wav".
   // O exemplo original contornava isso pela propriedade `path` que o Electron
@@ -14,7 +14,7 @@ contextBridge.exposeInMainWorld('mp3Api', {
 
   // O andamento chega do processo principal ao longo da execução, e não de uma
   // vez no fim: o codificador escreve no stdout enquanto trabalha.
-  aoReceberLog: (ouvinte: (linha: LinhaDeLog) => void): void => {
-    ipcRenderer.on('mp3:log', (_evento, linha: LinhaDeLog) => ouvinte(linha))
+  aoReceberRegistro: (ouvinte: (linha: LinhaDeRegistro) => void): void => {
+    ipcRenderer.on('mp3:registro', (_evento, linha: LinhaDeRegistro) => ouvinte(linha))
   },
 })

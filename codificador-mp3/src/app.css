@@ -3,14 +3,14 @@ body {
   margin: 1rem;
 }
 
-#form label {
+#formulario label {
   display: inline-block;
   width: 70px;
 }
 
-#form > div { margin-bottom: 0.5rem; }
+#formulario > div { margin-bottom: 0.5rem; }
 
-#logs {
+#registros {
   margin-top: 1rem;
   padding: 0.5rem;
   border: 1px solid #ccc;
@@ -22,5 +22,5 @@ body {
   white-space: pre-wrap;
 }
 
-.error { color: red; }
-.good { color: green; }
+.erro { color: red; }
+.sucesso { color: green; }

@@ -53,7 +53,7 @@ jobs:
           - ola-mundo-objeto-compartilhado
           - menus
           - mini-editor-de-codigo
-          - mp3-encoder
+          - codificador-mp3
           - notifications
           - power-save-blocker
           - printing

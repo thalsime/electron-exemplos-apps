@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Codificador MP3</title>
+  </head>
+  <body>
+    <h1>Codificador MP3 de demonstração</h1>
+    <h2>Escolha um arquivo .wav</h2>
+
+    <form id="formulario">
+      <div>
+        <label for="arquivo">Arquivo:</label>
+        <input id="arquivo" type="file" accept=".wav,.wave" />
+      </div>
+      <div>
+        <label for="taxa-de-bits">Taxa de bits:</label>
+        <input id="taxa-de-bits" type="number" value="128" min="32" max="320" step="8" />
+      </div>
+      <div><input type="submit" value="Codificar!" /></div>
+    </form>
+
+    <div id="registros"></div>
+    <script type="module" src="/src/renderer.ts"></script>
+  </body>
+</html>

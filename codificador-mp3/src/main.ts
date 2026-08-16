@@ -5,12 +5,12 @@ import path from 'path'
 
 export interface PedidoDeCodificacao {
   origem: string
-  bitrate: number
+  taxaDeBits: number
 }
 
-export interface LinhaDeLog {
+export interface LinhaDeRegistro {
   texto: string
-  tipo: 'info' | 'good' | 'error'
+  tipo: 'info' | 'sucesso' | 'erro'
 }
 
 let janelaPrincipal: BrowserWindow | null = null
@@ -47,8 +47,8 @@ function criarJanela(): void {
   })
 }
 
-function registrar(texto: string, tipo: LinhaDeLog['tipo'] = 'info'): void {
-  janelaPrincipal?.webContents.send('mp3:log', { texto, tipo } satisfies LinhaDeLog)
+function registrar(texto: string, tipo: LinhaDeRegistro['tipo'] = 'info'): void {
+  janelaPrincipal?.webContents.send('mp3:registro', { texto, tipo } satisfies LinhaDeRegistro)
 }
 
 // `child_process.spawn` rodava no renderizador, o que só era possível com
@@ -57,11 +57,11 @@ function registrar(texto: string, tipo: LinhaDeLog['tipo'] = 'info'): void {
 ipcMain.handle('mp3:codificar', (_evento, pedido: PedidoDeCodificacao): void => {
   const codificador = caminhoDoCodificador()
   if (!codificador) {
-    registrar(`Sem binário do shineenc para ${process.platform}.`, 'error')
+    registrar(`Sem binário do shineenc para ${process.platform}.`, 'erro')
     return
   }
   if (!existsSync(pedido.origem)) {
-    registrar(`Arquivo não encontrado: ${pedido.origem}`, 'error')
+    registrar(`Arquivo não encontrado: ${pedido.origem}`, 'erro')
     return
   }
 
@@ -70,7 +70,7 @@ ipcMain.handle('mp3:codificar', (_evento, pedido: PedidoDeCodificacao): void => 
   try {
     chmodSync(codificador, 0o755)
   } catch {
-    registrar('Não foi possível marcar o codificador como executável.', 'error')
+    registrar('Não foi possível marcar o codificador como executável.', 'erro')
     return
   }
 
@@ -79,13 +79,13 @@ ipcMain.handle('mp3:codificar', (_evento, pedido: PedidoDeCodificacao): void => 
 
   registrar(`Codificando para ${alvo}`)
 
-  const processo = spawn(codificador, ['-b', String(pedido.bitrate), pedido.origem, alvo])
+  const processo = spawn(codificador, ['-b', String(pedido.taxaDeBits), pedido.origem, alvo])
 
   processo.stdout.on('data', (dados: Buffer) => registrar(dados.toString()))
-  processo.stderr.on('data', (dados: Buffer) => registrar(dados.toString(), 'error'))
-  processo.on('error', (erro) => registrar(`Falha ao executar: ${erro.message}`, 'error'))
+  processo.stderr.on('data', (dados: Buffer) => registrar(dados.toString(), 'erro'))
+  processo.on('error', (erro) => registrar(`Falha ao executar: ${erro.message}`, 'erro'))
   processo.on('exit', (codigo) => {
-    registrar(`Processo encerrado com código ${codigo}`, codigo === 0 ? 'good' : 'error')
+    registrar(`Processo encerrado com código ${codigo}`, codigo === 0 ? 'sucesso' : 'erro')
   })
 })
 
