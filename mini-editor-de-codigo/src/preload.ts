@@ -1,6 +1,6 @@
-import { clipboard, contextBridge, ipcRenderer } from 'electron'
-import type { AcaoDeEdicao, ArquivoAberto, ComandoDoMenu } from './main'
-import type { ApiEditor } from './ponte'
+import { clipboard, contextBridge, ipcRenderer } from 'electron';
+import type { AcaoDeEdicao, ArquivoAberto, ComandoDoMenu } from './main';
+import type { ApiEditor } from './ponte';
 
 // O `clipboard` do Electron não é alcançável pela página com contextIsolation
 // ligado, então passa por aqui. As funções de arquivo e de menu vão ao processo
@@ -21,11 +21,11 @@ const apiEditor: ApiEditor = {
   // O menu de aplicação vive no processo principal e avisa a página por aqui:
   // é ela que sabe o conteúdo do editor e se há arquivo associado.
   aoReceberComando: (ouvinte: (comando: ComandoDoMenu) => void): void => {
-    ipcRenderer.on('editor:comando', (_evento, comando: ComandoDoMenu) => ouvinte(comando))
+    ipcRenderer.on('editor:comando', (_evento, comando: ComandoDoMenu) => ouvinte(comando));
   },
 
   lerAreaDeTransferencia: (): string => clipboard.readText(),
   escreverNaAreaDeTransferencia: (texto: string): void => clipboard.writeText(texto),
-}
+};
 
-contextBridge.exposeInMainWorld('apiEditor', apiEditor)
+contextBridge.exposeInMainWorld('apiEditor', apiEditor);

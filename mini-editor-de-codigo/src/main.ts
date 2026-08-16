@@ -1,18 +1,18 @@
-import { app, BrowserWindow, dialog, ipcMain, Menu, MenuItem } from 'electron'
-import fs from 'node:fs/promises'
-import path from 'path'
+import { app, BrowserWindow, dialog, ipcMain, Menu, MenuItem } from 'electron';
+import fs from 'node:fs/promises';
+import path from 'path';
 
-export type AcaoDeEdicao = 'copiar' | 'recortar' | 'colar'
+export type AcaoDeEdicao = 'copiar' | 'recortar' | 'colar';
 
 // O que o diálogo de abertura devolve à página. Esta forma estava escrita por extenso
 // em três lugares - aqui, no preload e no renderizador -, três cópias que ninguém
 // comparava. Com um nome só, mudar um campo quebra as três pontas de uma vez.
 export interface ArquivoAberto {
-  caminho: string
-  conteudo: string
+  caminho: string;
+  conteudo: string;
 }
 
-const janelas = new Set<BrowserWindow>()
+const janelas = new Set<BrowserWindow>();
 
 function criarJanela(): BrowserWindow {
   const janela = new BrowserWindow({
@@ -23,92 +23,92 @@ function criarJanela(): BrowserWindow {
       nodeIntegration: false,
       preload: path.join(__dirname, 'preload.js'),
     },
-  })
+  });
 
   if (process.env.VITE_DEV_SERVER_URL) {
-    janela.loadURL(process.env.VITE_DEV_SERVER_URL)
+    janela.loadURL(process.env.VITE_DEV_SERVER_URL);
   } else {
-    janela.loadFile(path.join(__dirname, '../dist/index.html'))
+    janela.loadFile(path.join(__dirname, '../dist/index.html'));
   }
 
-  janelas.add(janela)
-  janela.on('closed', () => janelas.delete(janela))
-  return janela
+  janelas.add(janela);
+  janela.on('closed', () => janelas.delete(janela));
+  return janela;
 }
 
 function janelaDoEvento(evento: Electron.IpcMainInvokeEvent): BrowserWindow | null {
-  return BrowserWindow.fromWebContents(evento.sender)
+  return BrowserWindow.fromWebContents(evento.sender);
 }
 
 // showOpenDialog e showSaveDialog passaram de callback para Promise, e o retorno
 // virou um objeto com `canceled` e o caminho - no lugar do caminho solto que o
 // exemplo original recebia.
 ipcMain.handle('editor:abrir', async (evento): Promise<ArquivoAberto | null> => {
-  const janela = janelaDoEvento(evento)
+  const janela = janelaDoEvento(evento);
   const escolha = janela
     ? await dialog.showOpenDialog(janela, { properties: ['openFile'] })
-    : await dialog.showOpenDialog({ properties: ['openFile'] })
+    : await dialog.showOpenDialog({ properties: ['openFile'] });
 
-  const caminho = escolha.filePaths[0]
-  if (escolha.canceled || !caminho) return null
+  const caminho = escolha.filePaths[0];
+  if (escolha.canceled || !caminho) return null;
 
-  return { caminho, conteudo: await fs.readFile(caminho, 'utf8') }
-})
+  return { caminho, conteudo: await fs.readFile(caminho, 'utf8') };
+});
 
 ipcMain.handle('editor:salvar-como', async (evento, conteudo: string): Promise<string | null> => {
-  const janela = janelaDoEvento(evento)
+  const janela = janelaDoEvento(evento);
   const escolha = janela
     ? await dialog.showSaveDialog(janela, {})
-    : await dialog.showSaveDialog({})
+    : await dialog.showSaveDialog({});
 
-  if (escolha.canceled || !escolha.filePath) return null
+  if (escolha.canceled || !escolha.filePath) return null;
 
-  await fs.writeFile(escolha.filePath, conteudo, 'utf8')
-  return escolha.filePath
-})
+  await fs.writeFile(escolha.filePath, conteudo, 'utf8');
+  return escolha.filePath;
+});
 
 ipcMain.handle('editor:salvar', async (_evento, caminho: string, conteudo: string): Promise<void> => {
-  await fs.writeFile(caminho, conteudo, 'utf8')
-})
+  await fs.writeFile(caminho, conteudo, 'utf8');
+});
 
 ipcMain.handle('editor:nova-janela', (): void => {
-  criarJanela()
-})
+  criarJanela();
+});
 
 // Menu e MenuItem só existem no processo principal. A página informa se há texto
 // selecionado, recebe de volta a ação escolhida e a executa sobre o editor - que
 // é onde o CodeMirror vive.
 ipcMain.handle('editor:menu-de-contexto', (evento, temSelecao: boolean): Promise<AcaoDeEdicao | null> => {
   return new Promise((resolver) => {
-    const janela = janelaDoEvento(evento)
+    const janela = janelaDoEvento(evento);
     if (!janela) {
-      resolver(null)
-      return
+      resolver(null);
+      return;
     }
 
-    let escolha: AcaoDeEdicao | null = null
-    const menu = new Menu()
+    let escolha: AcaoDeEdicao | null = null;
+    const menu = new Menu();
 
     menu.append(new MenuItem({
       label: 'Copiar',
       enabled: temSelecao,
       click: () => { escolha = 'copiar' },
-    }))
+    }));
     menu.append(new MenuItem({
       label: 'Recortar',
       enabled: temSelecao,
       click: () => { escolha = 'recortar' },
-    }))
+    }));
     menu.append(new MenuItem({
       label: 'Colar',
       click: () => { escolha = 'colar' },
-    }))
+    }));
 
-    menu.popup({ window: janela, callback: () => resolver(escolha) })
-  })
-})
+    menu.popup({ window: janela, callback: () => resolver(escolha) });
+  });
+});
 
-export type ComandoDoMenu = 'novo' | 'abrir' | 'salvar' | 'salvar-como'
+export type ComandoDoMenu = 'novo' | 'abrir' | 'salvar' | 'salvar-como';
 
 // O exemplo original não tinha menu de aplicação: as três ações viviam só nos
 // botões, e "salvar como" não existia como opção - ficava escondida dentro do
@@ -132,26 +132,26 @@ function criarMenuDaAplicacao(): void {
       { type: 'separator' },
       { role: process.platform === 'darwin' ? 'close' : 'quit' },
     ],
-  }
+  };
 
-  const modelo: Electron.MenuItemConstructorOptions[] = [arquivo, { role: 'editMenu' }]
+  const modelo: Electron.MenuItemConstructorOptions[] = [arquivo, { role: 'editMenu' }];
 
   if (process.platform === 'darwin') {
-    modelo.unshift({ role: 'appMenu' })
+    modelo.unshift({ role: 'appMenu' });
   }
 
-  Menu.setApplicationMenu(Menu.buildFromTemplate(modelo))
+  Menu.setApplicationMenu(Menu.buildFromTemplate(modelo));
 }
 
 function enviarComando(comando: ComandoDoMenu): void {
-  BrowserWindow.getFocusedWindow()?.webContents.send('editor:comando', comando)
+  BrowserWindow.getFocusedWindow()?.webContents.send('editor:comando', comando);
 }
 
 app.whenReady().then(() => {
-  criarMenuDaAplicacao()
-  criarJanela()
-})
+  criarMenuDaAplicacao();
+  criarJanela();
+});
 
 app.on('window-all-closed', () => {
-  app.quit()
-})
+  app.quit();
+});
