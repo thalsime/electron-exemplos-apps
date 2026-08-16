@@ -30,7 +30,7 @@ the bridge between the two processes.
 
 ## The samples
 
-The collection has **25** samples. The first two are the foundation for all the others; the
+The collection has **26** samples. The first two are the foundation for all the others; the
 rest are in alphabetical order.
 
 | Sample | Topic |
@@ -54,6 +54,7 @@ rest are in alphabetical order.
 | [`menus`](menus/) | application menu and context menus |
 | [`mini-editor-de-codigo`](mini-editor-de-codigo/) | code editor with syntax highlighting and file access |
 | [`notificacoes`](notificacoes/) | operating system notifications |
+| [`painel-flutuante`](painel-flutuante/) | frameless always-on-top panel driving another window |
 | [`relatorio-de-falha`](relatorio-de-falha/) | `crashReporter` and crash reports |
 | [`service-worker/resposta-simulada`](service-worker/resposta-simulada/) | intercepting requests with a Service Worker |
 | [`sqlite`](sqlite/) | local CRUD with `node:sqlite`, no dependency |

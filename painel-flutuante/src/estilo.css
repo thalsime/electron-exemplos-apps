@@ -1,0 +1,154 @@
+body {
+  margin: 0;
+  font-family: system-ui, sans-serif;
+  color: #1d1d1f;
+}
+
+/* ---------- janela de conteúdo ---------- */
+
+.conteudo {
+  padding: 28px;
+  background: #f5f5f7;
+  transition: background 0.3s;
+}
+
+/* Em apresentação a janela escurece, para o efeito ser visível de longe. */
+.conteudo.apresentando {
+  background: #10131a;
+  color: #f5f5f7;
+}
+
+#palco {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 300px;
+  border: 1px solid #d2d2d7;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.6);
+}
+
+.apresentando #palco {
+  border-color: #2d3748;
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.etiqueta {
+  margin: 0;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  opacity: 0.6;
+}
+
+#numero-do-slide {
+  margin: 4px 0 0;
+  font-size: 84px;
+  font-weight: 700;
+  line-height: 1;
+}
+
+#titulo-do-slide {
+  margin: 8px 0 0;
+  font-size: 22px;
+}
+
+.aviso {
+  margin-top: 20px;
+  font-size: 14px;
+}
+
+.rodape {
+  max-width: 640px;
+  margin-top: 10px;
+  font-size: 14px;
+  line-height: 1.6;
+  opacity: 0.7;
+}
+
+/* ---------- painel sem moldura ---------- */
+
+.painel {
+  overflow: hidden;
+  border-radius: 10px;
+  background: #1d1d1f;
+  color: #f5f5f7;
+  user-select: none;
+}
+
+#barra {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 12px;
+  background: #2d2d31;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+/* Esta é a linha que faz a janela sem moldura ser arrastável pela barra. */
+.arrastavel {
+  -webkit-app-region: drag;
+}
+
+/* Botão dentro de área arrastável precisa voltar a ser clicável, senão o
+   arraste engole o clique. */
+#barra button {
+  -webkit-app-region: no-drag;
+  width: 20px;
+  height: 20px;
+  padding: 0;
+  border: none;
+  border-radius: 4px;
+  background: transparent;
+  color: #f5f5f7;
+  cursor: pointer;
+}
+
+#barra button:hover {
+  background: #b3261e;
+}
+
+.corpo {
+  padding: 14px;
+}
+
+.corpo button {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #3f3f46;
+  border-radius: 8px;
+  background: #2d2d31;
+  color: #f5f5f7;
+  font-size: 13px;
+  cursor: pointer;
+}
+
+.corpo button:hover {
+  border-color: #63b3ed;
+}
+
+#botao-apresentar.ativo {
+  border-color: #f6ad55;
+  background: #7b341e;
+}
+
+.navegacao {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 12px;
+}
+
+.navegacao button {
+  flex: 1;
+}
+
+#indicador {
+  min-width: 52px;
+  font-size: 13px;
+  text-align: center;
+  opacity: 0.8;
+}

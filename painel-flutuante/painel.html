@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Painel</title>
+  </head>
+  <body class="painel">
+    <!-- Esta barra substitui a barra de título que a janela não tem. A classe
+         "arrastavel" liga o -webkit-app-region: drag no CSS. -->
+    <header id="barra" class="arrastavel">
+      <span>Controle</span>
+      <button id="botao-ocultar" title="Ocultar o painel">x</button>
+    </header>
+
+    <div class="corpo">
+      <button id="botao-apresentar">Entrar no modo apresentação</button>
+
+      <div class="navegacao">
+        <button id="botao-anterior">Anterior</button>
+        <span id="indicador">1 / 5</span>
+        <button id="botao-proximo">Próximo</button>
+      </div>
+    </div>
+
+    <script type="module" src="/src/painel.ts"></script>
+  </body>
+</html>
