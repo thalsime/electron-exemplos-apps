@@ -1,6 +1,6 @@
 declare global {
   interface Window {
-    menusApi: {
+    apiMenus: {
       abrirContexto: (tipo: 'itens' | 'frutas' | 'cores') => Promise<string | null>
     }
   }
@@ -20,7 +20,7 @@ function registrarArea(id: string, tipo: 'itens' | 'frutas' | 'cores'): void {
 
   area.addEventListener('contextmenu', async (evento) => {
     evento.preventDefault()
-    const escolha = await window.menusApi.abrirContexto(tipo)
+    const escolha = await window.apiMenus.abrirContexto(tipo)
     if (escolha === null) return
 
     // O efeito da escolha acontece aqui, no renderizador: o processo principal

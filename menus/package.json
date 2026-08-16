@@ -1,5 +1,5 @@
 {
-  "name": "menus-demo",
+  "name": "menus",
   "version": "1.1.0",
   "description": "Menu de aplicação e três menus de contexto pedidos pelo renderizador via IPC",
   "main": "dist-electron/main.js",
