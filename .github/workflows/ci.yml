@@ -49,7 +49,7 @@ jobs:
           - captura-de-tela
           - explorador-de-arquivos
           - janela-sem-moldura
-          - helloworld
+          - ola-mundo
           - helloworld-sharedobj
           - menus
           - mini-code-editor
