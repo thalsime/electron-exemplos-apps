@@ -1,7 +1,7 @@
-import { defineConfig } from 'vite'
-import electron from 'vite-plugin-electron'
-import renderer from 'vite-plugin-electron-renderer'
-import { resolve } from 'node:path'
+import { defineConfig } from 'vite';
+import electron from 'vite-plugin-electron';
+import renderer from 'vite-plugin-electron-renderer';
+import { resolve } from 'node:path';
 
 export default defineConfig({
   build: {
@@ -25,10 +25,10 @@ export default defineConfig({
         // Ponto de entrada do script Preload (Ponte), usado pelas duas janelas
         entry: 'src/preload.ts',
         onstart(options) {
-          options.reload()
+          options.reload();
         },
       },
     ]),
     renderer(),
   ],
-})
+});

@@ -1,4 +1,4 @@
-import type { EstadoDaApresentacao } from './main'
+import type { EstadoDaApresentacao } from './main';
 
 // O contrato da ponte fica num arquivo só dele: o preload implementa, as páginas
 // consomem, e é contra esta mesma descrição que o compilador confere todos.
@@ -11,15 +11,15 @@ import type { EstadoDaApresentacao } from './main'
 // resposta: o painel manda a INTENÇÃO, o processo principal calcula, e o resultado
 // volta pelo `aoMudarEstado` - para as duas janelas ao mesmo tempo.
 export interface ApiPainel {
-  estadoAtual: () => Promise<EstadoDaApresentacao>
-  alternarApresentacao: () => void
-  moverSlide: (passo: number) => void
-  ocultarPainel: () => void
-  aoMudarEstado: (ouvinte: (estado: EstadoDaApresentacao) => void) => void
+  estadoAtual: () => Promise<EstadoDaApresentacao>;
+  alternarApresentacao: () => void;
+  moverSlide: (passo: number) => void;
+  ocultarPainel: () => void;
+  aoMudarEstado: (ouvinte: (estado: EstadoDaApresentacao) => void) => void;
 }
 
 declare global {
   interface Window {
-    apiPainel: ApiPainel
+    apiPainel: ApiPainel;
   }
 }
