@@ -1,12 +1,10 @@
 import { contextBridge, ipcRenderer } from 'electron'
-import type { RelatorioDeFalha, ResumoDeCookie } from './main'
+import type { AvisoDeOutraJanela, RelatorioDeFalha, ResumoDeCookie } from './main'
+import type { ApiNavegador } from './ponte'
 
-export interface AvisoDeOutraJanela {
-  texto: string
-  daPropria: boolean
-}
-
-contextBridge.exposeInMainWorld('apiNavegador', {
+// O tipo é aplicado à variável porque `exposeInMainWorld(apiKey: string, api: any)` não
+// confere nada: sem esta anotação, a ponte poderia divergir do contrato em silêncio.
+const apiNavegador: ApiNavegador = {
   listarCookies: (): Promise<ResumoDeCookie[]> => ipcRenderer.invoke('navegador:listar-cookies'),
 
   limparCookies: (): Promise<void> => ipcRenderer.invoke('navegador:limpar-cookies'),
@@ -23,4 +21,6 @@ contextBridge.exposeInMainWorld('apiNavegador', {
       ouvinte(aviso)
     })
   },
-})
+}
+
+contextBridge.exposeInMainWorld('apiNavegador', apiNavegador)

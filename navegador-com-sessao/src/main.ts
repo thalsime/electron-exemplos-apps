@@ -13,6 +13,15 @@ export interface RelatorioDeFalha {
   data: string
 }
 
+// O recado que uma janela manda às outras. Esta interface morava no preload, e por isso
+// o ponto que MONTA o objeto - o `webContents.send` lá embaixo - não a usava: era um
+// literal anônimo que casava por coincidência. Declarada aqui, onde o recado nasce, o
+// `satisfies` do envio passa a conferi-lo.
+export interface AvisoDeOutraJanela {
+  texto: string
+  daPropria: boolean
+}
+
 const PORTA_COLETOR = 9998
 const URL_COLETOR = `http://127.0.0.1:${PORTA_COLETOR}`
 
@@ -118,7 +127,7 @@ ipcMain.handle('navegador:listar-relatorios', (): RelatorioDeFalha[] => {
 // A segunda janela é o mesmo navegador, com outro endereço. Quem a cria é o
 // processo principal, e é ele quem avisa as demais - as janelas não se
 // enxergam, como no exemplo `comunicacao-entre-janelas`.
-ipcMain.on('navegador:abrir-em-nova-janela', (evento, endereco: string) => {
+ipcMain.on('navegador:abrir-em-nova-janela', (evento, endereco: string): void => {
   const nova = criarJanela(endereco)
   const remetente = BrowserWindow.fromWebContents(evento.sender)
 
@@ -130,7 +139,7 @@ ipcMain.on('navegador:abrir-em-nova-janela', (evento, endereco: string) => {
     janela.webContents.send('navegador:aviso', {
       texto: `Outra janela abriu ${endereco}`,
       daPropria: janela === remetente,
-    })
+    } satisfies AvisoDeOutraJanela)
   }
 })
 

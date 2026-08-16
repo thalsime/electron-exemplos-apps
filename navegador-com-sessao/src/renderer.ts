@@ -1,18 +1,8 @@
 import './estilo.css'
-import type { RelatorioDeFalha, ResumoDeCookie } from './main'
-import type { AvisoDeOutraJanela } from './preload'
 
-declare global {
-  interface Window {
-    apiNavegador: {
-      listarCookies: () => Promise<ResumoDeCookie[]>
-      limparCookies: () => Promise<void>
-      listarRelatorios: () => Promise<RelatorioDeFalha[]>
-      abrirEmNovaJanela: (endereco: string) => void
-      aoReceberAviso: (ouvinte: (aviso: AvisoDeOutraJanela) => void) => void
-    }
-  }
-}
+// Quem descreve `window.apiNavegador` é o src/ponte.d.ts, o mesmo arquivo contra o qual
+// o preload se confere. Os três tipos saíram dos imports daqui junto com a declaração
+// duplicada: cookies, relatórios e avisos chegam tipados pelo contrato.
 
 interface PaginaInicial {
   titulo: string
