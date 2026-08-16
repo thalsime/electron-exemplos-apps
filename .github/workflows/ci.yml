@@ -7,6 +7,26 @@ on:
     branches: [main]
 
 jobs:
+  # Guarda da convenção `semi: always` da seção "Convenções de estilo" do README. Não
+  # instala nada: o script é Node puro, e o acervo não tem dependência npm própria - um
+  # guarda de estilo não é motivo para abrir essa exceção. Por isso também não há
+  # `npm ci` aqui, e este é o job mais rápido do fluxo.
+  verificar-estilo:
+    name: Convenção de ponto e vírgula
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Obter o código
+        uses: actions/checkout@v7
+
+      - name: Preparar o Node
+        uses: actions/setup-node@v7
+        with:
+          node-version: '24'
+
+      - name: Verificar que todo statement termina em ponto e vírgula
+        run: node .github/scripts/verificar-ponto-e-virgula.mjs
+
   verificar-tipos:
     name: Verificação de tipos
     runs-on: ubuntu-latest
