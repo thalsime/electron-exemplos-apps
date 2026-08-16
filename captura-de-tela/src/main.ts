@@ -1,22 +1,22 @@
-import { app, BrowserWindow, desktopCapturer, ipcMain, session } from 'electron'
-import type { DesktopCapturerSource } from 'electron'
-import path from 'path'
+import { app, BrowserWindow, desktopCapturer, ipcMain, session } from 'electron';
+import type { DesktopCapturerSource } from 'electron';
+import path from 'path';
 
 export interface FonteDeCaptura {
-  id: string
-  name: string
+  id: string;
+  name: string;
   /** Miniatura já em data URL, pronta para o atributo src de uma <img>. */
-  thumbnail: string
+  thumbnail: string;
 }
 
-let janelaPrincipal: BrowserWindow | null = null
+let janelaPrincipal: BrowserWindow | null = null;
 
 // As fontes ficam guardadas aqui entre a listagem e a escolha. O handler de
 // getDisplayMedia precisa devolver o objeto original do desktopCapturer, e não
 // apenas o id - por isso o renderizador informa qual escolheu e o main recupera
 // o objeto correspondente.
-let fontesConhecidas: DesktopCapturerSource[] = []
-let fonteEscolhida: DesktopCapturerSource | null = null
+let fontesConhecidas: DesktopCapturerSource[] = [];
+let fonteEscolhida: DesktopCapturerSource | null = null;
 
 function criarJanela(): void {
   janelaPrincipal = new BrowserWindow({
@@ -27,17 +27,17 @@ function criarJanela(): void {
       nodeIntegration: false,
       preload: path.join(__dirname, 'preload.js'),
     },
-  })
+  });
 
   if (process.env.VITE_DEV_SERVER_URL) {
-    janelaPrincipal.loadURL(process.env.VITE_DEV_SERVER_URL)
+    janelaPrincipal.loadURL(process.env.VITE_DEV_SERVER_URL);
   } else {
-    janelaPrincipal.loadFile(path.join(__dirname, '../dist/index.html'))
+    janelaPrincipal.loadFile(path.join(__dirname, '../dist/index.html'));
   }
 
   janelaPrincipal.on('closed', () => {
-    janelaPrincipal = null
-  })
+    janelaPrincipal = null;
+  });
 }
 
 // `desktopCapturer.getSources` saiu do renderizador e hoje só existe no processo
@@ -46,19 +46,19 @@ ipcMain.handle('captura:listar-fontes', async (): Promise<FonteDeCaptura[]> => {
   fontesConhecidas = await desktopCapturer.getSources({
     types: ['window', 'screen'],
     thumbnailSize: { width: 320, height: 180 },
-  })
+  });
 
   return fontesConhecidas.map((fonte) => ({
     id: fonte.id,
     name: fonte.name,
     thumbnail: fonte.thumbnail.toDataURL(),
-  }))
-})
+  }));
+});
 
 ipcMain.handle('captura:escolher-fonte', (_evento, id: string): boolean => {
-  fonteEscolhida = fontesConhecidas.find((fonte) => fonte.id === id) ?? null
-  return fonteEscolhida !== null
-})
+  fonteEscolhida = fontesConhecidas.find((fonte) => fonte.id === id) ?? null;
+  return fonteEscolhida !== null;
+});
 
 app.whenReady().then(() => {
   // Esta é a peça que substitui o antigo `chromeMediaSource: 'desktop'`.
@@ -70,17 +70,17 @@ app.whenReady().then(() => {
   // de `webkitGetUserMedia` - função que hoje nem existe mais.
   session.defaultSession.setDisplayMediaRequestHandler((_pedido, responder) => {
     if (fonteEscolhida) {
-      responder({ video: fonteEscolhida })
+      responder({ video: fonteEscolhida });
     } else {
       // Sem escolha registrada não há o que entregar. Responder com objeto
       // vazio faz o getDisplayMedia rejeitar no renderizador, que trata o erro.
-      responder({})
+      responder({});
     }
-  })
+  });
 
-  criarJanela()
-})
+  criarJanela();
+});
 
 app.on('window-all-closed', () => {
-  app.quit()
-})
+  app.quit();
+});

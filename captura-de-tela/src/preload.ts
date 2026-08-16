@@ -1,6 +1,6 @@
-import { contextBridge, ipcRenderer } from 'electron'
-import type { FonteDeCaptura } from './main'
-import type { CapturaApi } from './ponte'
+import { contextBridge, ipcRenderer } from 'electron';
+import type { FonteDeCaptura } from './main';
+import type { CapturaApi } from './ponte';
 
 // O desktopCapturer só existe no processo principal. A página recebe a lista
 // com as miniaturas já convertidas em data URL e informa qual fonte escolheu.
@@ -11,6 +11,6 @@ const capturaApi: CapturaApi = {
   listarFontes: (): Promise<FonteDeCaptura[]> => ipcRenderer.invoke('captura:listar-fontes'),
   escolherFonte: (id: string): Promise<boolean> =>
     ipcRenderer.invoke('captura:escolher-fonte', id),
-}
+};
 
-contextBridge.exposeInMainWorld('capturaApi', capturaApi)
+contextBridge.exposeInMainWorld('capturaApi', capturaApi);
