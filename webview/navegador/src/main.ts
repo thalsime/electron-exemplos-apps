@@ -1,7 +1,7 @@
-import { app, BrowserWindow } from 'electron'
-import path from 'path'
+import { app, BrowserWindow } from 'electron';
+import path from 'path';
 
-let janelaPrincipal: BrowserWindow | null = null
+let janelaPrincipal: BrowserWindow | null = null;
 
 function criarJanela(): void {
   janelaPrincipal = new BrowserWindow({
@@ -16,21 +16,21 @@ function criarJanela(): void {
       // mas ela segue suportada, e é justamente o que este exemplo demonstra.
       webviewTag: true,
     },
-  })
+  });
 
   if (process.env.VITE_DEV_SERVER_URL) {
-    janelaPrincipal.loadURL(process.env.VITE_DEV_SERVER_URL)
+    janelaPrincipal.loadURL(process.env.VITE_DEV_SERVER_URL);
   } else {
-    janelaPrincipal.loadFile(path.join(__dirname, '../dist/index.html'))
+    janelaPrincipal.loadFile(path.join(__dirname, '../dist/index.html'));
   }
 
   janelaPrincipal.on('closed', () => {
-    janelaPrincipal = null
-  })
+    janelaPrincipal = null;
+  });
 }
 
-app.whenReady().then(criarJanela)
+app.whenReady().then(criarJanela);
 
 app.on('window-all-closed', () => {
-  app.quit()
-})
+  app.quit();
+});

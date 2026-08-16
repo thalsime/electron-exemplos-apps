@@ -1,5 +1,5 @@
-import './browser.css'
-import type { WebviewTag } from 'electron'
+import './browser.css';
+import type { WebviewTag } from 'electron';
 
 // Este exemplo roda inteiro no renderizador: a tag <webview> é um elemento de
 // página, e sua API não passa pelo processo principal. Por isso não há preload
@@ -22,13 +22,13 @@ import type { WebviewTag } from 'electron'
 
 const NIVEIS_DE_ZOOM = [
   0.25, 0.33, 0.5, 0.67, 0.75, 0.9, 1, 1.1, 1.25, 1.5, 1.75, 2, 2.5, 3, 4, 5,
-]
-const ZOOM_MINIMO = 0.25
-const ZOOM_MAXIMO = 5
-const PAGINA_INICIAL = 'https://github.com/'
+];
+const ZOOM_MINIMO = 0.25;
+const ZOOM_MAXIMO = 5;
+const PAGINA_INICIAL = 'https://github.com/';
 
-let carregando = false
-let considerarMaiusculas = false
+let carregando = false;
+let considerarMaiusculas = false;
 
 // Esta função é a razão de este arquivo não ter um único `as` nem um único `!` em 343
 // linhas, sendo o maior renderizador do acervo. Ela pede o tipo esperado, devolve esse
@@ -40,121 +40,121 @@ let considerarMaiusculas = false
 // estão de propósito: trocar um pelo outro seria refatorar, não tipar. Compare os dois
 // arquivos - a diferença de leitura é o argumento.
 function elemento<T extends HTMLElement>(seletor: string): T {
-  const alvo = document.querySelector<T>(seletor)
-  if (!alvo) throw new Error(`Elemento não encontrado: ${seletor}`)
-  return alvo
+  const alvo = document.querySelector<T>(seletor);
+  if (!alvo) throw new Error(`Elemento não encontrado: ${seletor}`);
+  return alvo;
 }
 
-const webview = (): WebviewTag => elemento<WebviewTag>('webview')
-const campoBusca = (): HTMLInputElement => elemento<HTMLInputElement>('#texto-busca')
-const campoZoom = (): HTMLInputElement => elemento<HTMLInputElement>('#texto-zoom')
+const webview = (): WebviewTag => elemento<WebviewTag>('webview');
+const campoBusca = (): HTMLInputElement => elemento<HTMLInputElement>('#texto-busca');
+const campoZoom = (): HTMLInputElement => elemento<HTMLInputElement>('#texto-zoom');
 
 // --- disposição na tela -----------------------------------------------------
 
 function ajustarLayout(): void {
-  const controles = elemento('#controles')
-  const largura = document.documentElement.clientWidth
-  const altura = document.documentElement.clientHeight - controles.offsetHeight
+  const controles = elemento('#controles');
+  const largura = document.documentElement.clientWidth;
+  const altura = document.documentElement.clientHeight - controles.offsetHeight;
 
-  const alvo = webview()
-  alvo.style.width = `${largura}px`
-  alvo.style.height = `${altura}px`
+  const alvo = webview();
+  alvo.style.width = `${largura}px`;
+  alvo.style.height = `${altura}px`;
 
-  const triste = elemento('#webview-triste')
-  triste.style.width = `${largura}px`
-  triste.style.height = `${(altura * 2) / 3}px`
-  triste.style.paddingTop = `${altura / 3}px`
+  const triste = elemento('#webview-triste');
+  triste.style.width = `${largura}px`;
+  triste.style.height = `${(altura * 2) / 3}px`;
+  triste.style.paddingTop = `${altura / 3}px`;
 }
 
 // --- estado de falha da página ---------------------------------------------
 
 function limparEstadoDeFalha(): void {
-  document.body.classList.remove('encerrou', 'travou', 'morto')
+  document.body.classList.remove('encerrou', 'travou', 'morto');
 }
 
 function marcarFalha(classe: 'travou' | 'morto'): void {
-  document.body.classList.add('encerrou', classe)
+  document.body.classList.add('encerrou', classe);
 }
 
 // --- navegação --------------------------------------------------------------
 
 function navegarPara(url: string): void {
-  limparEstadoDeFalha()
-  webview().src = url
+  limparEstadoDeFalha();
+  webview().src = url;
 }
 
 // --- zoom -------------------------------------------------------------------
 
 function vizinhosDeZoom(fator: number): { menor: number; maior: number } {
-  let baixo = 0
-  let alto = NIVEIS_DE_ZOOM.length - 1
+  let baixo = 0;
+  let alto = NIVEIS_DE_ZOOM.length - 1;
   while (alto - baixo > 1) {
-    const meio = Math.floor((alto + baixo) / 2)
+    const meio = Math.floor((alto + baixo) / 2);
     if (NIVEIS_DE_ZOOM[meio] < fator) {
-      baixo = meio
+      baixo = meio;
     } else if (NIVEIS_DE_ZOOM[meio] > fator) {
-      alto = meio
+      alto = meio;
     } else {
-      return { menor: NIVEIS_DE_ZOOM[meio - 1], maior: NIVEIS_DE_ZOOM[meio + 1] }
+      return { menor: NIVEIS_DE_ZOOM[meio - 1], maior: NIVEIS_DE_ZOOM[meio + 1] };
     }
   }
-  return { menor: NIVEIS_DE_ZOOM[baixo], maior: NIVEIS_DE_ZOOM[alto] }
+  return { menor: NIVEIS_DE_ZOOM[baixo], maior: NIVEIS_DE_ZOOM[alto] };
 }
 
 // getZoomFactor deixou de receber callback e passou a devolver o valor direto,
 // o que simplificou estas três funções.
 function aplicarZoom(fator: number): void {
-  webview().setZoomFactor(fator)
-  campoZoom().value = fator.toString()
+  webview().setZoomFactor(fator);
+  campoZoom().value = fator.toString();
 }
 
 function aumentarZoom(): void {
-  aplicarZoom(vizinhosDeZoom(webview().getZoomFactor()).maior)
+  aplicarZoom(vizinhosDeZoom(webview().getZoomFactor()).maior);
 }
 
 function diminuirZoom(): void {
-  aplicarZoom(vizinhosDeZoom(webview().getZoomFactor()).menor)
+  aplicarZoom(vizinhosDeZoom(webview().getZoomFactor()).menor);
 }
 
 function abrirCaixaDeZoom(): void {
-  const campo = campoZoom()
-  campo.value = Number(webview().getZoomFactor().toFixed(6)).toString()
-  elemento('#caixa-zoom').style.display = 'flex'
-  campo.select()
+  const campo = campoZoom();
+  campo.value = Number(webview().getZoomFactor().toFixed(6)).toString();
+  elemento('#caixa-zoom').style.display = 'flex';
+  campo.select();
 }
 
 function fecharCaixaDeZoom(): void {
-  elemento('#caixa-zoom').style.display = 'none'
+  elemento('#caixa-zoom').style.display = 'none';
 }
 
 // --- busca na página --------------------------------------------------------
 
 function buscar(opcoes: { forward?: boolean } = {}): void {
-  const texto = campoBusca().value
+  const texto = campoBusca().value;
   if (texto === '') {
-    webview().stopFindInPage('clearSelection')
-    elemento('#resultados-busca').textContent = ''
-    return
+    webview().stopFindInPage('clearSelection');
+    elemento('#resultados-busca').textContent = '';
+    return;
   }
-  webview().findInPage(texto, { matchCase: considerarMaiusculas, ...opcoes })
+  webview().findInPage(texto, { matchCase: considerarMaiusculas, ...opcoes });
 }
 
 function abrirCaixaDeBusca(): void {
-  elemento('#caixa-busca').style.display = 'block'
-  campoBusca().select()
+  elemento('#caixa-busca').style.display = 'block';
+  campoBusca().select();
 }
 
 function fecharCaixaDeBusca(): void {
-  const caixa = elemento('#caixa-busca')
-  caixa.style.display = 'none'
-  caixa.style.left = ''
-  caixa.style.opacity = ''
-  elemento('#resultados-busca').textContent = ''
+  const caixa = elemento('#caixa-busca');
+  caixa.style.display = 'none';
+  caixa.style.left = '';
+  caixa.style.opacity = '';
+  elemento('#resultados-busca').textContent = '';
 }
 
 function fecharCaixas(): void {
-  fecharCaixaDeZoom()
-  fecharCaixaDeBusca()
+  fecharCaixaDeZoom();
+  fecharCaixaDeBusca();
 }
 
 function caixaCobreOcorrencia(caixa: DOMRect, ocorrencia: Electron.Rectangle): boolean {
@@ -163,30 +163,30 @@ function caixaCobreOcorrencia(caixa: DOMRect, ocorrencia: Electron.Rectangle): b
     caixa.right > ocorrencia.x &&
     caixa.top < ocorrencia.y + ocorrencia.height &&
     caixa.bottom > ocorrencia.y
-  )
+  );
 }
 
 // O evento `findupdate` foi substituído por `found-in-page`, e os dados que
 // antes vinham soltos no evento agora ficam agrupados em `event.result`.
 function aoEncontrarNaPagina(evento: Electron.FoundInPageEvent): void {
-  const resultado = evento.result
+  const resultado = evento.result;
   elemento('#resultados-busca').textContent =
-    `${resultado.activeMatchOrdinal} de ${resultado.matches}`
+    `${resultado.activeMatchOrdinal} de ${resultado.matches}`;
 
-  if (!resultado.finalUpdate || !resultado.selectionArea) return
+  if (!resultado.finalUpdate || !resultado.selectionArea) return;
 
-  const caixa = elemento('#caixa-busca')
-  caixa.style.left = ''
-  caixa.style.opacity = ''
+  const caixa = elemento('#caixa-busca');
+  caixa.style.left = '';
+  caixa.style.opacity = '';
 
   // Tira a caixa da frente da ocorrência ativa, ou a deixa translúcida se não
   // houver espaço na tela.
   if (caixaCobreOcorrencia(caixa.getBoundingClientRect(), resultado.selectionArea)) {
-    const esquerda = resultado.selectionArea.x - caixa.getBoundingClientRect().width - 10
+    const esquerda = resultado.selectionArea.x - caixa.getBoundingClientRect().width - 10;
     if (esquerda >= 5) {
-      caixa.style.left = `${esquerda}px`
+      caixa.style.left = `${esquerda}px`;
     } else {
-      caixa.style.opacity = '0.5'
+      caixa.style.opacity = '0.5';
     }
   }
 }
@@ -194,28 +194,28 @@ function aoEncontrarNaPagina(evento: Electron.FoundInPageEvent): void {
 // --- eventos de carregamento ------------------------------------------------
 
 function aoTerminarCarga(): void {
-  limparEstadoDeFalha()
-  const alvo = webview()
-  elemento<HTMLInputElement>('#endereco').value = alvo.getURL()
-  elemento<HTMLButtonElement>('#voltar').disabled = !alvo.canGoBack()
-  elemento<HTMLButtonElement>('#avancar').disabled = !alvo.canGoForward()
-  fecharCaixas()
+  limparEstadoDeFalha();
+  const alvo = webview();
+  elemento<HTMLInputElement>('#endereco').value = alvo.getURL();
+  elemento<HTMLButtonElement>('#voltar').disabled = !alvo.canGoBack();
+  elemento<HTMLButtonElement>('#avancar').disabled = !alvo.canGoForward();
+  fecharCaixas();
 }
 
 function aoIniciarCarga(): void {
-  document.body.classList.add('carregando')
-  carregando = true
-  limparEstadoDeFalha()
+  document.body.classList.add('carregando');
+  carregando = true;
+  limparEstadoDeFalha();
 }
 
 function aoPararCarga(): void {
   // A classe não sai aqui: a animação do indicador termina sozinha, e removê-la
   // agora faria o giro saltar de volta ao início.
-  carregando = false
+  carregando = false;
 }
 
 function aoFalharCarga(evento: Electron.DidFailLoadEvent): void {
-  console.log(`Falha ao carregar: ${evento.validatedURL} (${evento.errorDescription})`)
+  console.log(`Falha ao carregar: ${evento.validatedURL} (${evento.errorDescription})`);
 }
 
 // --- teclado ----------------------------------------------------------------
@@ -237,116 +237,116 @@ function aoFalharCarga(evento: Electron.DidFailLoadEvent): void {
 // renderizador por IPC - o que acrescentaria preload e ponte a um exemplo que
 // hoje não precisa de nenhum dos dois.
 function aoTeclar(evento: KeyboardEvent): void {
-  const modificador = evento.ctrlKey || evento.metaKey
-  if (!modificador) return
+  const modificador = evento.ctrlKey || evento.metaKey;
+  if (!modificador) return;
 
   if (evento.key === 'f') {
-    evento.preventDefault()
-    abrirCaixaDeBusca()
+    evento.preventDefault();
+    abrirCaixaDeBusca();
   } else if (evento.key === '+' || evento.key === '=') {
-    evento.preventDefault()
-    aumentarZoom()
+    evento.preventDefault();
+    aumentarZoom();
   } else if (evento.key === '-') {
-    evento.preventDefault()
-    diminuirZoom()
+    evento.preventDefault();
+    diminuirZoom();
   }
 }
 
 // --- ligação -----------------------------------------------------------------
 
-window.addEventListener('resize', ajustarLayout)
+window.addEventListener('resize', ajustarLayout);
 
 window.addEventListener('DOMContentLoaded', () => {
-  const alvo = webview()
-  ajustarLayout()
+  const alvo = webview();
+  ajustarLayout();
 
-  elemento('#voltar').addEventListener('click', () => alvo.goBack())
-  elemento('#avancar').addEventListener('click', () => alvo.goForward())
-  elemento('#inicio').addEventListener('click', () => navegarPara(PAGINA_INICIAL))
+  elemento('#voltar').addEventListener('click', () => alvo.goBack());
+  elemento('#avancar').addEventListener('click', () => alvo.goForward());
+  elemento('#inicio').addEventListener('click', () => navegarPara(PAGINA_INICIAL));
   elemento('#recarregar').addEventListener('click', () => {
-    if (carregando) alvo.stop()
-    else alvo.reload()
-  })
+    if (carregando) alvo.stop();
+    else alvo.reload();
+  });
   elemento('#recarregar').addEventListener('animationiteration', () => {
-    if (!carregando) document.body.classList.remove('carregando')
-  })
+    if (!carregando) document.body.classList.remove('carregando');
+  });
 
   elemento('#formulario-endereco').addEventListener('submit', (evento) => {
-    evento.preventDefault()
-    navegarPara(elemento<HTMLInputElement>('#endereco').value)
-  })
+    evento.preventDefault();
+    navegarPara(elemento<HTMLInputElement>('#endereco').value);
+  });
 
-  alvo.addEventListener('did-start-loading', aoIniciarCarga)
-  alvo.addEventListener('did-stop-loading', aoPararCarga)
-  alvo.addEventListener('did-finish-load', aoTerminarCarga)
-  alvo.addEventListener('did-fail-load', aoFalharCarga)
-  alvo.addEventListener('found-in-page', aoEncontrarNaPagina)
+  alvo.addEventListener('did-start-loading', aoIniciarCarga);
+  alvo.addEventListener('did-stop-loading', aoPararCarga);
+  alvo.addEventListener('did-finish-load', aoTerminarCarga);
+  alvo.addEventListener('did-fail-load', aoFalharCarga);
+  alvo.addEventListener('found-in-page', aoEncontrarNaPagina);
 
   // `close` com tipo 'abnormal' ou 'killed' deu lugar a dois eventos próprios.
-  alvo.addEventListener('crashed', () => marcarFalha('travou'))
-  alvo.addEventListener('render-process-gone', () => marcarFalha('morto'))
+  alvo.addEventListener('crashed', () => marcarFalha('travou'));
+  alvo.addEventListener('render-process-gone', () => marcarFalha('morto'));
 
   elemento('#zoom').addEventListener('click', () => {
-    if (elemento('#caixa-zoom').style.display === 'flex') fecharCaixaDeZoom()
-    else abrirCaixaDeZoom()
-  })
+    if (elemento('#caixa-zoom').style.display === 'flex') fecharCaixaDeZoom();
+    else abrirCaixaDeZoom();
+  });
 
   elemento('#formulario-zoom').addEventListener('submit', (evento) => {
-    evento.preventDefault()
-    const fator = Math.min(ZOOM_MAXIMO, Math.max(ZOOM_MINIMO, Number(campoZoom().value)))
-    aplicarZoom(fator)
-  })
+    evento.preventDefault();
+    const fator = Math.min(ZOOM_MAXIMO, Math.max(ZOOM_MINIMO, Number(campoZoom().value)));
+    aplicarZoom(fator);
+  });
 
   elemento('#aumentar-zoom').addEventListener('click', (evento) => {
-    evento.preventDefault()
-    aumentarZoom()
-  })
+    evento.preventDefault();
+    aumentarZoom();
+  });
   elemento('#diminuir-zoom').addEventListener('click', (evento) => {
-    evento.preventDefault()
-    diminuirZoom()
-  })
+    evento.preventDefault();
+    diminuirZoom();
+  });
 
   elemento('#buscar').addEventListener('click', () => {
     if (elemento('#caixa-busca').style.display === 'block') {
-      alvo.stopFindInPage('clearSelection')
-      fecharCaixaDeBusca()
+      alvo.stopFindInPage('clearSelection');
+      fecharCaixaDeBusca();
     } else {
-      abrirCaixaDeBusca()
+      abrirCaixaDeBusca();
     }
-  })
+  });
 
-  campoBusca().addEventListener('input', () => buscar())
+  campoBusca().addEventListener('input', () => buscar());
   campoBusca().addEventListener('keydown', (evento) => {
     if ((evento.ctrlKey || evento.metaKey) && evento.key === 'Enter') {
-      evento.preventDefault()
+      evento.preventDefault();
       // 'activate' virou 'activateSelection'.
-      alvo.stopFindInPage('activateSelection')
-      fecharCaixaDeBusca()
+      alvo.stopFindInPage('activateSelection');
+      fecharCaixaDeBusca();
     }
-  })
+  });
 
   elemento('#diferenciar-maiusculas').addEventListener('click', (evento) => {
-    evento.preventDefault()
-    considerarMaiusculas = !considerarMaiusculas
-    const botao = elemento('#diferenciar-maiusculas')
-    botao.style.color = considerarMaiusculas ? 'blue' : 'black'
-    botao.style.fontWeight = considerarMaiusculas ? 'bold' : ''
-    buscar()
-  })
+    evento.preventDefault();
+    considerarMaiusculas = !considerarMaiusculas;
+    const botao = elemento('#diferenciar-maiusculas');
+    botao.style.color = considerarMaiusculas ? 'blue' : 'black';
+    botao.style.fontWeight = considerarMaiusculas ? 'bold' : '';
+    buscar();
+  });
 
   elemento('#buscar-anterior').addEventListener('click', (evento) => {
-    evento.preventDefault()
-    buscar({ forward: false })
-  })
+    evento.preventDefault();
+    buscar({ forward: false });
+  });
   elemento('#buscar-proximo').addEventListener('click', (evento) => {
-    evento.preventDefault()
-    buscar({ forward: true })
-  })
+    evento.preventDefault();
+    buscar({ forward: true });
+  });
 
   elemento('#formulario-busca').addEventListener('submit', (evento) => {
-    evento.preventDefault()
-    buscar()
-  })
+    evento.preventDefault();
+    buscar();
+  });
 
-  window.addEventListener('keydown', aoTeclar)
-})
+  window.addEventListener('keydown', aoTeclar);
+});
