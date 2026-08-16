@@ -2,22 +2,22 @@ import { app, BrowserWindow, ipcMain } from 'electron'
 import path from 'path'
 
 declare global {
-  var sharedObj: { myvar: string }
+  var objetoCompartilhado: { minhaVariavel: string }
 }
 
-global.sharedObj = { myvar: "hellofrommainjs" }
+global.objetoCompartilhado = { minhaVariavel: 'olá, vindo do main.ts' }
 
-let mainWindow: BrowserWindow | null = null
+let janelaPrincipal: BrowserWindow | null = null
 
 // O objeto continua vivendo no processo principal, como no original. O que mudou
 // é o caminho até ele: o renderizador não alcança mais o Main por conta própria,
 // então o valor é entregue por um canal declarado aqui e exposto pelo preload.
-ipcMain.handle('sharedobj:get-myvar', () => {
-  return global.sharedObj.myvar
+ipcMain.handle('objeto-compartilhado:obter-minha-variavel', () => {
+  return global.objetoCompartilhado.minhaVariavel
 })
 
-function createWindow() {
-  mainWindow = new BrowserWindow({
+function criarJanela() {
+  janelaPrincipal = new BrowserWindow({
     width: 800,
     height: 600,
     webPreferences: {
@@ -29,13 +29,13 @@ function createWindow() {
 
   // Em desenvolvimento a página vem do servidor do Vite; empacotado, do build.
   if (process.env.VITE_DEV_SERVER_URL) {
-    mainWindow.loadURL(process.env.VITE_DEV_SERVER_URL)
+    janelaPrincipal.loadURL(process.env.VITE_DEV_SERVER_URL)
   } else {
-    mainWindow.loadFile(path.join(__dirname, '../dist/index.html'))
+    janelaPrincipal.loadFile(path.join(__dirname, '../dist/index.html'))
   }
 }
 
-app.whenReady().then(createWindow)
+app.whenReady().then(criarJanela)
 
 // O original não registrava este handler, e sem ele o Electron encerra sozinho
 // quando a última janela fecha. Declarar o encerramento de forma explícita

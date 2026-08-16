@@ -1,5 +1,5 @@
 {
-  "name": "helloworld-sharedobj",
+  "name": "ola-mundo-objeto-compartilhado",
   "version": "1.0.1",
   "description": "Lê no renderizador um valor que vive no processo principal",
   "main": "dist-electron/main.js",
