@@ -1,6 +1,6 @@
-import { contextBridge, ipcRenderer } from 'electron'
-import type { ComandoDoMenu, Nota, NotaNova } from './main'
-import type { ApiNotas } from './ponte'
+import { contextBridge, ipcRenderer } from 'electron';
+import type { ComandoDoMenu, Nota, NotaNova } from './main';
+import type { ApiNotas } from './ponte';
 
 // O tipo é aplicado à variável porque `exposeInMainWorld(apiKey: string, api: any)` não
 // confere nada: sem esta anotação, a ponte poderia divergir do contrato em silêncio.
@@ -15,9 +15,9 @@ const apiNotas: ApiNotas = {
 
   aoReceberComando: (ouvinte: (comando: ComandoDoMenu) => void): void => {
     ipcRenderer.on('notas:comando', (_evento, comando: ComandoDoMenu) => {
-      ouvinte(comando)
-    })
+      ouvinte(comando);
+    });
   },
-}
+};
 
-contextBridge.exposeInMainWorld('apiNotas', apiNotas)
+contextBridge.exposeInMainWorld('apiNotas', apiNotas);
