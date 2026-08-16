@@ -42,6 +42,14 @@ function criarJanela(): void {
 // comportamento que o README original descreve, e que difere do navegador, onde o
 // usuário escolhe num diálogo. O handler abaixo faz explicitamente o que ficaria
 // implícito, e de quebra mostra no terminal o que estava disponível.
+// Nenhum dos cinco parâmetros acima precisa de anotação, e este exemplo não tem
+// `src/ponte.d.ts`: `listaCertificados` chega como `Certificate[]` e `callback` como
+// `(certificate?: Certificate) => void`, tudo pelo `electron.d.ts`. Evento nativo traz o
+// tipo junto - é só no IPC que o Electron declara `...args: any[]` e o contrato se perde.
+//
+// Vale saber que o `servidor.mts`, na raiz do exemplo, está FORA do `include: ["src"]`
+// do tsconfig: ele é um script à parte, rodado direto pelo Node, e não passa pela
+// verificação de tipos do exemplo. Nem todo arquivo `.ts` da pasta está sob `strict`.
 app.on('select-client-certificate', (evento, _janela, url, listaCertificados, callback) => {
   evento.preventDefault()
 
