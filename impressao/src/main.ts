@@ -72,7 +72,7 @@ function criarJanela(): void {
   })
 }
 
-ipcMain.handle('impressao:abrir-previa', () => {
+ipcMain.handle('impressao:abrir-previa', (): void => {
   abrirPrevia()
 })
 
