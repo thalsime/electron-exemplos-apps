@@ -1,12 +1,12 @@
-import { app, BrowserWindow, Menu, MenuItem } from 'electron'
-import path from 'path'
+import { app, BrowserWindow, Menu, MenuItem } from 'electron';
+import path from 'path';
 
 // Idiomas do corretor. O Electron baixa os dicionários sob demanda, na primeira
 // verificação, e mantém em cache - por isso a primeira execução pode levar um
 // instante a mais para sublinhar as palavras.
-const IDIOMAS = ['pt-BR', 'en-US']
+const IDIOMAS = ['pt-BR', 'en-US'];
 
-let janelaPrincipal: BrowserWindow | null = null
+let janelaPrincipal: BrowserWindow | null = null;
 
 function criarJanela(): void {
   janelaPrincipal = new BrowserWindow({
@@ -16,7 +16,7 @@ function criarJanela(): void {
       contextIsolation: true,
       nodeIntegration: false,
     },
-  })
+  });
 
   // O corretor é nativo do Electron desde a versão 8. O exemplo original usava
   // `webFrame.setSpellCheckProvider` com o módulo `spellchecker`, um pacote
@@ -43,17 +43,17 @@ function criarJanela(): void {
   // (consultado direto, `NSSpellChecker` responde "erro, erre, erra, errou" para
   // "erru"). O que não repassa essas sugestões é a ponte entre o Chromium e o
   // corretor do macOS.
-  const sessao = janelaPrincipal.webContents.session
-  sessao.setSpellCheckerEnabled(true)
-  sessao.setSpellCheckerLanguages(IDIOMAS)
+  const sessao = janelaPrincipal.webContents.session;
+  sessao.setSpellCheckerEnabled(true);
+  sessao.setSpellCheckerLanguages(IDIOMAS);
 
   // Imprime o que valeu de fato, que nem sempre é o que foi pedido. No macOS
   // desta validação, pedir ['pt-BR', 'en-US'] resultou em apenas ['pt-BR'] - o
   // idioma do sistema. A linha existe para tornar essa diferença visível ao
   // aluno em vez de deixá-la como surpresa.
-  const emVigor = sessao.getSpellCheckerLanguages()
-  console.log(`Idiomas pedidos:   ${IDIOMAS.join(', ')}`)
-  console.log(`Idiomas em vigor:  ${emVigor.join(', ') || '(nenhum)'}`)
+  const emVigor = sessao.getSpellCheckerLanguages();
+  console.log(`Idiomas pedidos:   ${IDIOMAS.join(', ')}`);
+  console.log(`Idiomas em vigor:  ${emVigor.join(', ') || '(nenhum)'}`);
 
   // Sublinhar a palavra é só metade do recurso. A outra metade é oferecer as
   // sugestões, e elas chegam prontas no evento `context-menu`: o Chromium já
@@ -69,46 +69,46 @@ function criarJanela(): void {
   // `misspelledWord` e `dictionarySuggestions` no lugar. Evento nativo traz o tipo junto;
   // canal de IPC, não.
   janelaPrincipal.webContents.on('context-menu', (_evento, parametros) => {
-    const menu = new Menu()
+    const menu = new Menu();
 
     for (const sugestao of parametros.dictionarySuggestions) {
       menu.append(new MenuItem({
         label: sugestao,
         click: () => janelaPrincipal?.webContents.replaceMisspelling(sugestao),
-      }))
+      }));
     }
 
     // Sem palavra errada sob o cursor não há o que sugerir, e um menu vazio
     // confundiria mais do que ajudaria.
     if (parametros.misspelledWord) {
       if (parametros.dictionarySuggestions.length === 0) {
-        menu.append(new MenuItem({ label: 'Nenhuma sugestão', enabled: false }))
+        menu.append(new MenuItem({ label: 'Nenhuma sugestão', enabled: false }));
       }
-      menu.append(new MenuItem({ type: 'separator' }))
+      menu.append(new MenuItem({ type: 'separator' }));
       menu.append(new MenuItem({
         label: `Aprender "${parametros.misspelledWord}"`,
         click: () => sessao.addWordToSpellCheckerDictionary(parametros.misspelledWord),
-      }))
+      }));
     }
 
     if (menu.items.length > 0) {
-      menu.popup({ window: janelaPrincipal! })
+      menu.popup({ window: janelaPrincipal! });
     }
-  })
+  });
 
   if (process.env.VITE_DEV_SERVER_URL) {
-    janelaPrincipal.loadURL(process.env.VITE_DEV_SERVER_URL)
+    janelaPrincipal.loadURL(process.env.VITE_DEV_SERVER_URL);
   } else {
-    janelaPrincipal.loadFile(path.join(__dirname, '../dist/index.html'))
+    janelaPrincipal.loadFile(path.join(__dirname, '../dist/index.html'));
   }
 
   janelaPrincipal.on('closed', () => {
-    janelaPrincipal = null
-  })
+    janelaPrincipal = null;
+  });
 }
 
-app.whenReady().then(criarJanela)
+app.whenReady().then(criarJanela);
 
 app.on('window-all-closed', () => {
-  app.quit()
-})
+  app.quit();
+});
