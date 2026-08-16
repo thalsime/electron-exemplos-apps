@@ -1,5 +1,7 @@
 import { contextBridge, ipcRenderer } from 'electron'
 
+import type { ApiRegistros } from './ponte'
+
 // O preload roda no processo do RENDERIZADOR, não no principal. É a confusão
 // mais comum sobre ele: por rodar antes da página e ter acesso ao Node, parece
 // que pertence ao main - mas o console dele sai junto com o da página.
@@ -15,7 +17,10 @@ function emitirOsCincoNiveis(origem: string): void {
 // preload roda ANTES do renderer.ts - repare na ordem em que as duas aparecem.
 console.log('[preload] preload carregado - roda antes do código da página')
 
-contextBridge.exposeInMainWorld('apiRegistros', {
+// O tipo é aplicado à variável, e não passado direto ao contextBridge: a assinatura
+// dele é `exposeInMainWorld(apiKey: string, api: any)`, então sem esta anotação nada
+// compararia o que o preload entrega com o que a página espera receber.
+const apiRegistros: ApiRegistros = {
   // Vai até o processo principal e emite de lá.
   emitirNoMain: (): Promise<void> => ipcRenderer.invoke('registros:emitir-no-main'),
 
@@ -23,4 +28,6 @@ contextBridge.exposeInMainWorld('apiRegistros', {
   emitirNoPreload: (): void => emitirOsCincoNiveis('preload'),
 
   abrirDevTools: (): Promise<void> => ipcRenderer.invoke('registros:abrir-devtools'),
-})
+}
+
+contextBridge.exposeInMainWorld('apiRegistros', apiRegistros)

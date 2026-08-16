@@ -1,14 +1,7 @@
 import './estilo.css'
 
-declare global {
-  interface Window {
-    apiRegistros: {
-      emitirNoMain: () => Promise<void>
-      emitirNoPreload: () => void
-      abrirDevTools: () => Promise<void>
-    }
-  }
-}
+// Quem descreve `window.apiRegistros` é o src/ponte.d.ts, o mesmo arquivo que o preload
+// usa para se conferir. Aqui a página só consome.
 
 // A mesma função das outras duas camadas, com o mesmo texto. Só o rótulo muda.
 function emitirOsCincoNiveis(origem: string): void {
