@@ -2,7 +2,7 @@ import type { OpcoesDeImpressao } from './main'
 
 declare global {
   interface Window {
-    printingApi: {
+    apiImpressao: {
       abrirPrevia: () => Promise<void>
       imprimir: () => Promise<string>
       salvarPDF: (opcoes: OpcoesDeImpressao) => Promise<string>
@@ -22,37 +22,37 @@ function elemento<T extends HTMLElement>(seletor: string): T {
 // no lugar dos inteiros 0, 1 e 2 do antigo marginsType.
 function opcoesDoFormulario(): OpcoesDeImpressao {
   return {
-    landscape: elemento<HTMLSelectElement>('#layout-settings').value === 'Landscape',
-    pageSize: elemento<HTMLSelectElement>('#page-size-settings')
-      .value as OpcoesDeImpressao['pageSize'],
-    marginType: elemento<HTMLSelectElement>('#margin-settings')
-      .value as OpcoesDeImpressao['marginType'],
-    printBackground: elemento<HTMLInputElement>('#print-background').checked,
+    paisagem: elemento<HTMLSelectElement>('#orientacao').value === 'paisagem',
+    tamanhoDaPagina: elemento<HTMLSelectElement>('#tamanho-da-pagina')
+      .value as OpcoesDeImpressao['tamanhoDaPagina'],
+    tipoDeMargem: elemento<HTMLSelectElement>('#margens')
+      .value as OpcoesDeImpressao['tipoDeMargem'],
+    imprimirFundo: elemento<HTMLInputElement>('#imprimir-fundo').checked,
   }
 }
 
 function registrar(mensagem: string): void {
-  const log = elemento('#output-log')
+  const registro = elemento('#registro')
   const linha = document.createElement('p')
   linha.textContent = mensagem
-  log.replaceChildren(linha)
+  registro.replaceChildren(linha)
 }
 
 window.addEventListener('DOMContentLoaded', () => {
-  elemento('#print_button').addEventListener('click', () => {
-    void window.printingApi.imprimir().then(registrar)
+  elemento('#botao-imprimir').addEventListener('click', () => {
+    void window.apiImpressao.imprimir().then(registrar)
   })
 
-  elemento('#save_pdf_button').addEventListener('click', () => {
-    void window.printingApi.salvarPDF(opcoesDoFormulario()).then(registrar)
+  elemento('#botao-salvar-pdf').addEventListener('click', () => {
+    void window.apiImpressao.salvarPDF(opcoesDoFormulario()).then(registrar)
   })
 
-  elemento('#view_pdf_button').addEventListener('click', () => {
-    void window.printingApi.abrirPDF().then(registrar)
+  elemento('#botao-ver-pdf').addEventListener('click', () => {
+    void window.apiImpressao.abrirPDF().then(registrar)
   })
 
-  elemento('#preview_button').addEventListener('click', () => {
-    void window.printingApi.abrirPrevia()
+  elemento('#botao-previa').addEventListener('click', () => {
+    void window.apiImpressao.abrirPrevia()
   })
 })
 
