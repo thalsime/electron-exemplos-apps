@@ -42,13 +42,20 @@ function criarJanela(): void {
 
 // O renderizador não consegue escrever no terminal por conta própria: ele pede
 // ao processo principal, que é quem tem stdout e stderr de verdade.
-ipcMain.handle('registros:emitir-no-main', () => {
+//
+// O `: void` anota o que o outro processo vai receber. O Electron declara este ouvinte
+// devolvendo `Promise<any> | any`, então sem a anotação um `return` esquecido no meio do
+// handler passaria batido - e o `emitirNoMain` da ponte promete `Promise<void>`.
+ipcMain.handle('registros:emitir-no-main', (): void => {
   emitirOsCincoNiveis('main')
 })
 
 // `webContents.openDevTools` é o caminho oficial para abrir as ferramentas sem
 // depender de atalho de teclado, que muda de sistema para sistema.
-ipcMain.handle('registros:abrir-devtools', (evento) => {
+//
+// O parâmetro `evento` não é anotado, e não deve ser: o Electron já o tipa como
+// `IpcMainInvokeEvent`. São os argumentos depois dele que ele deixa como `any[]`.
+ipcMain.handle('registros:abrir-devtools', (evento): void => {
   evento.sender.openDevTools()
 })
 
