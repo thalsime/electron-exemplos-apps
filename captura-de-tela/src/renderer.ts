@@ -1,14 +1,9 @@
 import './app.css'
 import type { FonteDeCaptura } from './main'
 
-declare global {
-  interface Window {
-    capturaApi: {
-      listarFontes: () => Promise<FonteDeCaptura[]>
-      escolherFonte: (id: string) => Promise<boolean>
-    }
-  }
-}
+// Quem descreve `window.capturaApi` é o src/ponte.d.ts, o mesmo arquivo contra o qual o
+// preload se confere. `FonteDeCaptura` continua importado aqui porque `montarLista` o
+// usa na própria assinatura - o import não era só para a declaração.
 
 // A grade de miniaturas era um <select> transformado pelo plugin jQuery
 // image-picker. Aqui ela é HTML e CSS: o exemplo é sobre captura de tela, e
