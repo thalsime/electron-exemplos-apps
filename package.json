@@ -5,6 +5,7 @@
   "private": true,
   "license": "Apache-2.0",
   "workspaces": [
+    "bandeja",
     "bloqueio-de-suspensao",
     "camera",
     "captura-de-tela",
@@ -22,7 +23,6 @@
     "ola-mundo-objeto-compartilhado",
     "relatorio-de-falha",
     "service-worker/resposta-simulada",
-    "tray",
     "webgl",
     "webview/browser"
   ],
