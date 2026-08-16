@@ -14,26 +14,26 @@
 // compilador não deixa. Com `any` no lugar, um `detalhe.message` compilaria - e
 // quebraria em execução no dia em que a promessa rejeitasse com uma string.
 function registrar(mensagem: string, detalhe?: unknown): void {
-  const linha = document.createElement('p')
-  linha.textContent = detalhe === undefined ? mensagem : `${mensagem} ${String(detalhe)}`
-  document.body.appendChild(linha)
-  console.log(mensagem, detalhe ?? '')
+  const linha = document.createElement('p');
+  linha.textContent = detalhe === undefined ? mensagem : `${mensagem} ${String(detalhe)}`;
+  document.body.appendChild(linha);
+  console.log(mensagem, detalhe ?? '');
 }
 
 window.addEventListener('error', (evento) => {
-  registrar('Erro:', evento.message)
-})
+  registrar('Erro:', evento.message);
+});
 
 if ('serviceWorker' in navigator) {
   navigator.serviceWorker
     .register('service-worker.js', { scope: './' })
     .then((registro) => {
-      registrar('Registrado!', registro.scope)
-      registrar('Recarregue a página para receber a resposta do worker.')
+      registrar('Registrado!', registro.scope);
+      registrar('Recarregue a página para receber a resposta do worker.');
     })
     .catch((erro: unknown) => {
-      registrar('Erro no registro:', erro)
-    })
+      registrar('Erro no registro:', erro);
+    });
 } else {
-  registrar('Este ambiente não expõe navigator.serviceWorker.')
+  registrar('Este ambiente não expõe navigator.serviceWorker.');
 }
