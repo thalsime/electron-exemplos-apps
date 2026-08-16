@@ -3,6 +3,12 @@ import path from 'path'
 
 let janelaPrincipal: BrowserWindow | null = null
 
+// Os três menus que a página pode pedir. Antes esta união era escrita por extenso em
+// quatro lugares, e o lado que a CONSOME - o `abrirMenuDeContexto` aqui embaixo -
+// recebia `string` cru: um pedido escrito errado chegaria até o `if/else`, cairia fora
+// dos três ramos e devolveria um menu vazio, sem erro nenhum de compilação.
+export type TipoDeMenu = 'itens' | 'frutas' | 'cores'
+
 // As cores oferecidas pelo menu de contexto da terceira área.
 const CORES = [
   '#000000', '#FF0000', '#00FF00', '#0000FF', '#FFFF00',
@@ -80,7 +86,7 @@ function criarMenuDaAplicacao(): void {
 // O menu é construído aqui, e não no renderizador: Menu e MenuItem são APIs do
 // processo principal. Antes o renderizador as alcançava pelo módulo remote, que
 // não existe mais - a página agora pede, e o resultado volta pelo IPC.
-function abrirMenuDeContexto(tipo: string): Promise<string | null> {
+function abrirMenuDeContexto(tipo: TipoDeMenu): Promise<string | null> {
   return new Promise((resolve) => {
     const janela = janelaPrincipal
     if (!janela) {
@@ -156,7 +162,10 @@ function criarJanela(): void {
   })
 }
 
-ipcMain.handle('menus:abrir-contexto', (_evento, tipo: string) => abrirMenuDeContexto(tipo))
+ipcMain.handle(
+  'menus:abrir-contexto',
+  (_evento, tipo: TipoDeMenu): Promise<string | null> => abrirMenuDeContexto(tipo),
+)
 
 app.whenReady().then(() => {
   criarMenuDaAplicacao()
