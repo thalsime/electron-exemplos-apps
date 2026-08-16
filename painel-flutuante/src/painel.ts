@@ -1,8 +1,8 @@
 import './estilo.css'
 import type { EstadoDaApresentacao } from './main'
 
-// A declaração da ponte vive no src/ponte.d.ts, que serve as duas páginas e o preload.
-// Este comentário antes dizia que a declaração vinha do conteudo.ts para evitar
+// A declaração da ponte vive no `src/ponte.d.ts`, que serve as duas páginas e o preload.
+// Este comentário antes dizia que a declaração vinha do `conteudo.ts` para evitar
 // duplicação - e ela estava duplicada aqui embaixo assim mesmo.
 
 // O painel não guarda estado próprio: ele só desenha o que recebe e manda a
