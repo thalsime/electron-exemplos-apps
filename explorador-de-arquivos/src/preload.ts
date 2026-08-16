@@ -1,6 +1,6 @@
-import { contextBridge, ipcRenderer } from 'electron'
-import type { ConteudoDePasta } from './main'
-import type { ArquivosApi } from './ponte'
+import { contextBridge, ipcRenderer } from 'electron';
+import type { ConteudoDePasta } from './main';
+import type { ArquivosApi } from './ponte';
 
 // Todo o acesso ao disco fica do lado do processo principal. O renderizador
 // pede pelo caminho e recebe a lista pronta - é a troca do antigo `remote`,
@@ -16,6 +16,6 @@ const arquivosApi: ArquivosApi = {
   abrir: (caminho: string): Promise<string> => ipcRenderer.invoke('arquivos:abrir', caminho),
   inicio: (): Promise<string> => ipcRenderer.invoke('arquivos:inicio'),
   sobre: (): Promise<void> => ipcRenderer.invoke('arquivos:sobre'),
-}
+};
 
-contextBridge.exposeInMainWorld('arquivosApi', arquivosApi)
+contextBridge.exposeInMainWorld('arquivosApi', arquivosApi);
