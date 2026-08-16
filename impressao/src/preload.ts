@@ -1,6 +1,6 @@
-import { contextBridge, ipcRenderer } from 'electron'
-import type { OpcoesDeImpressao } from './main'
-import type { ApiImpressao } from './ponte'
+import { contextBridge, ipcRenderer } from 'electron';
+import type { OpcoesDeImpressao } from './main';
+import type { ApiImpressao } from './ponte';
 
 // A janela de pré-visualização, o diálogo de salvamento e a gravação do arquivo
 // vivem no processo principal. A página só envia as opções escolhidas no
@@ -14,6 +14,6 @@ const apiImpressao: ApiImpressao = {
   salvarPDF: (opcoes: OpcoesDeImpressao): Promise<string> =>
     ipcRenderer.invoke('impressao:salvar-pdf', opcoes),
   abrirPDF: (): Promise<string> => ipcRenderer.invoke('impressao:abrir-pdf'),
-}
+};
 
-contextBridge.exposeInMainWorld('apiImpressao', apiImpressao)
+contextBridge.exposeInMainWorld('apiImpressao', apiImpressao);

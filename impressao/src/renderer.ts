@@ -1,13 +1,13 @@
-import type { OpcoesDeImpressao } from './main'
+import type { OpcoesDeImpressao } from './main';
 
 // Quem descreve `window.apiImpressao` é o src/ponte.d.ts, o mesmo arquivo contra o qual
 // o preload se confere. `OpcoesDeImpressao` continua importado aqui porque
 // `opcoesDoFormulario` o usa no retorno - o import não era só para a declaração.
 
 function elemento<T extends HTMLElement>(seletor: string): T {
-  const alvo = document.querySelector<T>(seletor)
-  if (!alvo) throw new Error(`Elemento não encontrado: ${seletor}`)
-  return alvo
+  const alvo = document.querySelector<T>(seletor);
+  if (!alvo) throw new Error(`Elemento não encontrado: ${seletor}`);
+  return alvo;
 }
 
 // Lê o formulário e monta as opções no formato que a API espera hoje. O select
@@ -21,32 +21,32 @@ function opcoesDoFormulario(): OpcoesDeImpressao {
     tipoDeMargem: elemento<HTMLSelectElement>('#margens')
       .value as OpcoesDeImpressao['tipoDeMargem'],
     imprimirFundo: elemento<HTMLInputElement>('#imprimir-fundo').checked,
-  }
+  };
 }
 
 function registrar(mensagem: string): void {
-  const registro = elemento('#registro')
-  const linha = document.createElement('p')
-  linha.textContent = mensagem
-  registro.replaceChildren(linha)
+  const registro = elemento('#registro');
+  const linha = document.createElement('p');
+  linha.textContent = mensagem;
+  registro.replaceChildren(linha);
 }
 
 window.addEventListener('DOMContentLoaded', () => {
   elemento('#botao-imprimir').addEventListener('click', () => {
-    void window.apiImpressao.imprimir().then(registrar)
-  })
+    void window.apiImpressao.imprimir().then(registrar);
+  });
 
   elemento('#botao-salvar-pdf').addEventListener('click', () => {
-    void window.apiImpressao.salvarPDF(opcoesDoFormulario()).then(registrar)
-  })
+    void window.apiImpressao.salvarPDF(opcoesDoFormulario()).then(registrar);
+  });
 
   elemento('#botao-ver-pdf').addEventListener('click', () => {
-    void window.apiImpressao.abrirPDF().then(registrar)
-  })
+    void window.apiImpressao.abrirPDF().then(registrar);
+  });
 
   elemento('#botao-previa').addEventListener('click', () => {
-    void window.apiImpressao.abrirPrevia()
-  })
-})
+    void window.apiImpressao.abrirPrevia();
+  });
+});
 
-export {}
+export {};
