@@ -3,7 +3,7 @@ import type { AcaoDeEdicao, ComandoDoMenu } from './main'
 
 declare global {
   interface Window {
-    editorApi: {
+    apiEditor: {
       abrir: () => Promise<{ caminho: string; conteudo: string } | null>
       salvar: (caminho: string, conteudo: string) => Promise<void>
       salvarComo: (conteudo: string) => Promise<string | null>
@@ -46,25 +46,25 @@ function aplicarModo(caminho: string | null): void {
   // Sem arquivo carregado o editor continua editável, então o modo também
   // precisa valer: o rótulo vazio dava a impressão de que nada estava ativo.
   if (!caminho) {
-    elemento('#title').textContent = '[nenhum documento carregado]'
-    document.title = 'Mini Code Editor'
+    elemento('#titulo').textContent = '[nenhum documento carregado]'
+    document.title = 'Mini editor de código'
     editor.setOption('mode', MODO_PADRAO.modo)
-    elemento('#mode').textContent = MODO_PADRAO.rotulo
+    elemento('#modo').textContent = MODO_PADRAO.rotulo
     return
   }
 
   const nome = caminho.split('/').pop() ?? caminho
-  elemento('#title').textContent = nome
+  elemento('#titulo').textContent = nome
   document.title = nome
 
   const extensao = nome.includes('.') ? `.${nome.split('.').pop()}` : ''
   const escolhido = MODOS[extensao] ?? { modo: 'javascript', rotulo: 'JavaScript' }
   editor.setOption('mode', escolhido.modo)
-  elemento('#mode').textContent = escolhido.rotulo
+  elemento('#modo').textContent = escolhido.rotulo
 }
 
 async function abrirArquivo(): Promise<void> {
-  const resultado = await window.editorApi.abrir()
+  const resultado = await window.apiEditor.abrir()
   if (!resultado) return
   caminhoAtual = resultado.caminho
   editor.setValue(resultado.conteudo)
@@ -73,7 +73,7 @@ async function abrirArquivo(): Promise<void> {
 
 async function salvarArquivo(): Promise<void> {
   if (caminhoAtual) {
-    await window.editorApi.salvar(caminhoAtual, editor.getValue())
+    await window.apiEditor.salvar(caminhoAtual, editor.getValue())
     return
   }
   await salvarComo()
@@ -83,7 +83,7 @@ async function salvarArquivo(): Promise<void> {
 // exemplo original isso não existia como ação própria: só acontecia por acaso,
 // quando o Save encontrava um documento ainda sem arquivo.
 async function salvarComo(): Promise<void> {
-  const caminho = await window.editorApi.salvarComo(editor.getValue())
+  const caminho = await window.apiEditor.salvarComo(editor.getValue())
   if (!caminho) return
   caminhoAtual = caminho
   aplicarModo(caminhoAtual)
@@ -94,15 +94,15 @@ async function salvarComo(): Promise<void> {
 async function aoPedirMenu(evento: MouseEvent): Promise<void> {
   evento.preventDefault()
   const selecao = editor.getSelection()
-  const acao = await window.editorApi.menuDeContexto(selecao.length > 0)
+  const acao = await window.apiEditor.menuDeContexto(selecao.length > 0)
 
   if (acao === 'copiar') {
-    window.editorApi.escreverNaAreaDeTransferencia(selecao)
+    window.apiEditor.escreverNaAreaDeTransferencia(selecao)
   } else if (acao === 'recortar') {
-    window.editorApi.escreverNaAreaDeTransferencia(selecao)
+    window.apiEditor.escreverNaAreaDeTransferencia(selecao)
     editor.replaceSelection('')
   } else if (acao === 'colar') {
-    editor.replaceSelection(window.editorApi.lerAreaDeTransferencia())
+    editor.replaceSelection(window.apiEditor.lerAreaDeTransferencia())
   }
 }
 
@@ -128,12 +128,12 @@ window.addEventListener('DOMContentLoaded', () => {
   // O botão "novo" abria outra janela com `window.open('file://...')`, caminho
   // que deixou de funcionar com contextIsolation. Agora é o processo principal
   // que cria a janela.
-  elemento('#new').addEventListener('click', () => void window.editorApi.novaJanela())
-  elemento('#open').addEventListener('click', () => void abrirArquivo())
-  elemento('#save').addEventListener('click', () => void salvarArquivo())
-  elemento('#save-as').addEventListener('click', () => void salvarComo())
+  elemento('#novo').addEventListener('click', () => void window.apiEditor.novaJanela())
+  elemento('#abrir').addEventListener('click', () => void abrirArquivo())
+  elemento('#salvar').addEventListener('click', () => void salvarArquivo())
+  elemento('#salvar-como').addEventListener('click', () => void salvarComo())
 
-  window.editorApi.aoReceberComando((comando) => {
+  window.apiEditor.aoReceberComando((comando) => {
     if (comando === 'abrir') void abrirArquivo()
     else if (comando === 'salvar') void salvarArquivo()
     else if (comando === 'salvar-como') void salvarComo()

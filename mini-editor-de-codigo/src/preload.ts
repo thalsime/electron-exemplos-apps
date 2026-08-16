@@ -4,7 +4,7 @@ import type { AcaoDeEdicao, ComandoDoMenu } from './main'
 // O `clipboard` do Electron não é alcançável pela página com contextIsolation
 // ligado, então passa por aqui. As funções de arquivo e de menu vão ao processo
 // principal por IPC, no lugar do antigo `remote`.
-contextBridge.exposeInMainWorld('editorApi', {
+contextBridge.exposeInMainWorld('apiEditor', {
   abrir: (): Promise<{ caminho: string; conteudo: string } | null> =>
     ipcRenderer.invoke('editor:abrir'),
   salvar: (caminho: string, conteudo: string): Promise<void> =>

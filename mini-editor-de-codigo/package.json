@@ -1,5 +1,5 @@
 {
-  "name": "mini-code-editor-demo",
+  "name": "mini-editor-de-codigo",
   "version": "1.1.0",
   "description": "Editor de código com CodeMirror, arquivos e menu de contexto pelo processo principal",
   "main": "dist-electron/main.js",
