@@ -55,7 +55,7 @@ jobs:
           - mini-editor-de-codigo
           - codificador-mp3
           - notificacoes
-          - power-save-blocker
+          - bloqueio-de-suspensao
           - printing
           - service-worker/mock-response
           - spell-check

@@ -1,5 +1,5 @@
 {
-  "name": "power-save-blocker-demo",
+  "name": "bloqueio-de-suspensao",
   "version": "1.1.0",
   "description": "Impede a suspensão do sistema ou do monitor a partir da bandeja",
   "main": "dist-electron/main.js",
