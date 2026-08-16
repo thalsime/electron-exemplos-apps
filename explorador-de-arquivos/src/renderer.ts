@@ -2,19 +2,10 @@ import './style.css'
 import { BarraDeEndereco } from './barra-de-endereco'
 import { ListaDeArquivos } from './lista-de-arquivos'
 import type { EntradaDePasta } from './main'
-import type { ConteudoDePasta } from './preload'
 
-declare global {
-  interface Window {
-    arquivosApi: {
-      listar: (diretorio: string) => Promise<ConteudoDePasta>
-      ehPasta: (caminho: string) => Promise<boolean>
-      abrir: (caminho: string) => Promise<string>
-      inicio: () => Promise<string>
-      sobre: () => Promise<void>
-    }
-  }
-}
+// Quem descreve `window.arquivosApi` é o src/ponte.d.ts, o mesmo arquivo contra o qual o
+// preload se confere. `ConteudoDePasta` saiu dos imports daqui: o tipo de `conteudo`
+// chega por inferência do contrato.
 
 function elemento<T extends HTMLElement>(seletor: string): T {
   const alvo = document.querySelector<T>(seletor)

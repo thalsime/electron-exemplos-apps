@@ -25,6 +25,15 @@ export interface EntradaDePasta {
   type: string
 }
 
+// O que o handler `arquivos:listar` devolve. Esta interface morava no preload, e por
+// isso o handler que MONTA o objeto não podia usá-la: importá-la de lá criaria um ciclo
+// `main` <-> `preload`. Declarada aqui, onde o dado nasce, o ciclo some e o retorno do
+// handler passa a ser conferido contra o que o preload promete.
+export interface ConteudoDePasta {
+  caminho: string
+  entradas: EntradaDePasta[]
+}
+
 let janelaPrincipal: BrowserWindow | null = null
 let janelaSobre: BrowserWindow | null = null
 
@@ -65,38 +74,41 @@ function criarJanela(): void {
 // O acesso ao disco vivia no renderizador, com `fs.readdir` e `fs.statSync`
 // chamados direto da página. Agora fica aqui, e o renderizador recebe a lista
 // pronta - já com o tipo resolvido para escolher o ícone.
-ipcMain.handle('arquivos:listar', async (_evento, diretorio: string) => {
-  const alvo = diretorio.startsWith('~')
-    ? path.join(os.homedir(), diretorio.slice(1))
-    : diretorio
+ipcMain.handle(
+  'arquivos:listar',
+  async (_evento, diretorio: string): Promise<ConteudoDePasta> => {
+    const alvo = diretorio.startsWith('~')
+      ? path.join(os.homedir(), diretorio.slice(1))
+      : diretorio
 
-  const nomes = await fs.readdir(alvo)
-  const entradas: EntradaDePasta[] = []
+    const nomes = await fs.readdir(alvo)
+    const entradas: EntradaDePasta[] = []
 
-  for (const nome of nomes) {
-    const completo = path.join(alvo, nome)
-    try {
-      const informacao = await fs.stat(completo)
-      entradas.push({
-        name: nome,
-        path: completo,
-        type: informacao.isDirectory() ? 'folder' : tipoPorExtensao(nome),
-      })
-    } catch {
-      // Link quebrado ou permissão negada: entra na lista, sem ícone próprio.
-      entradas.push({ name: nome, path: completo, type: 'blank' })
+    for (const nome of nomes) {
+      const completo = path.join(alvo, nome)
+      try {
+        const informacao = await fs.stat(completo)
+        entradas.push({
+          name: nome,
+          path: completo,
+          type: informacao.isDirectory() ? 'folder' : tipoPorExtensao(nome),
+        })
+      } catch {
+        // Link quebrado ou permissão negada: entra na lista, sem ícone próprio.
+        entradas.push({ name: nome, path: completo, type: 'blank' })
+      }
     }
-  }
 
-  // Pastas primeiro, depois arquivos, cada grupo em ordem alfabética.
-  entradas.sort((a, b) => {
-    if (a.type === 'folder' && b.type !== 'folder') return -1
-    if (a.type !== 'folder' && b.type === 'folder') return 1
-    return a.name.localeCompare(b.name)
-  })
+    // Pastas primeiro, depois arquivos, cada grupo em ordem alfabética.
+    entradas.sort((a, b) => {
+      if (a.type === 'folder' && b.type !== 'folder') return -1
+      if (a.type !== 'folder' && b.type === 'folder') return 1
+      return a.name.localeCompare(b.name)
+    })
 
-  return { caminho: alvo, entradas }
-})
+    return { caminho: alvo, entradas }
+  },
+)
 
 ipcMain.handle('arquivos:e-pasta', async (_evento, caminho: string): Promise<boolean> => {
   try {
@@ -114,7 +126,7 @@ ipcMain.handle('arquivos:abrir', async (_evento, caminho: string): Promise<strin
 
 ipcMain.handle('arquivos:inicio', (): string => os.homedir())
 
-ipcMain.handle('arquivos:sobre', () => {
+ipcMain.handle('arquivos:sobre', (): void => {
   if (janelaSobre && !janelaSobre.isDestroyed()) {
     janelaSobre.focus()
     return
