@@ -1,6 +1,6 @@
-import { contextBridge, ipcRenderer } from 'electron'
+import { contextBridge, ipcRenderer } from 'electron';
 
-import type { ApiObjetoCompartilhado } from './ponte'
+import type { ApiObjetoCompartilhado } from './ponte';
 
 // O preload é a única parte que enxerga os dois lados. Ele não entrega o
 // ipcRenderer inteiro à página: expõe apenas a função de leitura que este
@@ -11,6 +11,6 @@ import type { ApiObjetoCompartilhado } from './ponte'
 const apiObjetoCompartilhado: ApiObjetoCompartilhado = {
   obterMinhaVariavel: (): Promise<string> =>
     ipcRenderer.invoke('objeto-compartilhado:obter-minha-variavel'),
-}
+};
 
-contextBridge.exposeInMainWorld('apiObjetoCompartilhado', apiObjetoCompartilhado)
+contextBridge.exposeInMainWorld('apiObjetoCompartilhado', apiObjetoCompartilhado);
