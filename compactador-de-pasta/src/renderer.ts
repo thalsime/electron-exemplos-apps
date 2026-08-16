@@ -1,16 +1,9 @@
 import './estilo.css'
-import type { LinhaDeSaida, ResultadoDaCompactacao } from './main'
+import type { LinhaDeSaida } from './main'
 
-declare global {
-  interface Window {
-    apiCompactador: {
-      escolherPasta: () => Promise<string | null>
-      compactar: (pasta: string) => Promise<ResultadoDaCompactacao>
-      revelar: (arquivo: string) => Promise<void>
-      aoReceberLinha: (ouvinte: (linha: LinhaDeSaida) => void) => void
-    }
-  }
-}
+// Quem descreve `window.apiCompactador` é o src/ponte.d.ts, o mesmo arquivo contra o
+// qual o preload se confere. `ResultadoDaCompactacao` saiu dos imports daqui junto com a
+// declaração duplicada: o tipo de `resultado` chega por inferência do contrato.
 
 let pastaEscolhida: string | null = null
 let ultimoArquivo: string | null = null

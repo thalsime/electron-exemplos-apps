@@ -132,7 +132,7 @@ ipcMain.handle(
   },
 )
 
-ipcMain.handle('compactador:revelar', (_evento, arquivo: string) => {
+ipcMain.handle('compactador:revelar', (_evento, arquivo: string): void => {
   // `showItemInFolder` abre a pasta e deixa o arquivo selecionado - melhor do
   // que `openPath`, que abriria o arquivo no aplicativo padrão.
   shell.showItemInFolder(arquivo)
