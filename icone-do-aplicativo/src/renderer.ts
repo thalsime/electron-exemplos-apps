@@ -1,4 +1,4 @@
-import './estilo.css'
+import './estilo.css';
 
 // Quem descreve `window.apiIcone` é o src/ponte.d.ts, o mesmo arquivo contra o qual o
 // preload se confere. O tipo de `recursos`, lá embaixo, chega por inferência.
@@ -10,14 +10,14 @@ const NOMES_DE_PLATAFORMA: Partial<Record<NodeJS.Platform, string>> = {
   darwin: 'macOS',
   win32: 'Windows',
   linux: 'Linux',
-}
+};
 
-let contador = 0
+let contador = 0;
 
 function anunciar(mensagem: string): void {
-  const area = document.getElementById('retorno')
+  const area = document.getElementById('retorno');
   if (area) {
-    area.textContent = mensagem
+    area.textContent = mensagem;
   }
 }
 
@@ -25,12 +25,12 @@ function anunciar(mensagem: string): void {
 // indisponível continua na tela, marcado - esconder daria a impressão de que
 // ele não existe.
 async function montarQuadroDeRecursos(): Promise<void> {
-  const recursos = await window.apiIcone.recursos()
+  const recursos = await window.apiIcone.recursos();
 
-  const nome = NOMES_DE_PLATAFORMA[recursos.plataforma] ?? recursos.plataforma
-  const plataforma = document.getElementById('plataforma')
+  const nome = NOMES_DE_PLATAFORMA[recursos.plataforma] ?? recursos.plataforma;
+  const plataforma = document.getElementById('plataforma');
   if (plataforma) {
-    plataforma.textContent = nome
+    plataforma.textContent = nome;
   }
 
   const disponibilidade: Array<[string, boolean, string]> = [
@@ -38,39 +38,39 @@ async function montarQuadroDeRecursos(): Promise<void> {
     ['ícone do Dock', recursos.temDock, 'só existe no macOS'],
     ['contador no ícone', recursos.temContadorNoDock, 'macOS e Linux'],
     ['sobreposição na barra', recursos.temSobreposicaoNaBarra, 'só no Windows'],
-  ]
+  ];
 
-  const lista = document.getElementById('recursos')
+  const lista = document.getElementById('recursos');
   for (const [rotulo, disponivel, observacao] of disponibilidade) {
-    const linha = document.createElement('li')
-    linha.className = disponivel ? 'disponivel' : 'indisponivel'
-    linha.textContent = `${rotulo}: ${disponivel ? 'disponível aqui' : 'não aqui'} (${observacao})`
-    lista?.appendChild(linha)
+    const linha = document.createElement('li');
+    linha.className = disponivel ? 'disponivel' : 'indisponivel';
+    linha.textContent = `${rotulo}: ${disponivel ? 'disponível aqui' : 'não aqui'} (${observacao})`;
+    lista?.appendChild(linha);
   }
 }
 
 document.getElementById('botao-somar')?.addEventListener('click', () => {
-  contador += 1
-  void window.apiIcone.definirContador(contador)
-  anunciar(`Contador em ${contador}. Olhe o ícone do aplicativo.`)
-})
+  contador += 1;
+  void window.apiIcone.definirContador(contador);
+  anunciar(`Contador em ${contador}. Olhe o ícone do aplicativo.`);
+});
 
 document.getElementById('botao-limpar')?.addEventListener('click', () => {
-  contador = 0
-  void window.apiIcone.limparContador()
-  anunciar('Contador limpo. O distintivo some do ícone.')
-})
+  contador = 0;
+  void window.apiIcone.limparContador();
+  anunciar('Contador limpo. O distintivo some do ícone.');
+});
 
 document.getElementById('botao-alerta')?.addEventListener('click', () => {
-  void window.apiIcone.trocarIcone('alerta.png')
-  anunciar('Ícone trocado pela variante de alerta.')
-})
+  void window.apiIcone.trocarIcone('alerta.png');
+  anunciar('Ícone trocado pela variante de alerta.');
+});
 
 document.getElementById('botao-restaurar')?.addEventListener('click', () => {
-  void window.apiIcone.trocarIcone('icone.png')
-  anunciar('Ícone original restaurado.')
-})
+  void window.apiIcone.trocarIcone('icone.png');
+  anunciar('Ícone original restaurado.');
+});
 
-void montarQuadroDeRecursos()
+void montarQuadroDeRecursos();
 
-export {}
+export {};
