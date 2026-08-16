@@ -61,7 +61,7 @@ ipcMain.handle('icone:recursos', (): RecursosDaPlataforma => {
   }
 })
 
-ipcMain.handle('icone:definir-contador', (_evento, quantidade: number) => {
+ipcMain.handle('icone:definir-contador', (_evento, quantidade: number): void => {
   // Caminho portátil: funciona no macOS e no Linux, e é ignorado no Windows.
   app.setBadgeCount(quantidade)
 
@@ -77,7 +77,7 @@ ipcMain.handle('icone:definir-contador', (_evento, quantidade: number) => {
   }
 })
 
-ipcMain.handle('icone:limpar-contador', () => {
+ipcMain.handle('icone:limpar-contador', (): void => {
   app.setBadgeCount(0)
   app.dock?.setBadge('')
 
@@ -87,7 +87,7 @@ ipcMain.handle('icone:limpar-contador', () => {
   }
 })
 
-ipcMain.handle('icone:trocar-icone', (_evento, nome: string) => {
+ipcMain.handle('icone:trocar-icone', (_evento, nome: string): void => {
   // `setIcon` aceita caminho ou NativeImage. Aqui vai a imagem, para deixar
   // claro que ela pode vir de qualquer lugar - inclusive desenhada em runtime.
   const imagem = nativeImage.createFromPath(caminhoDoIcone(nome))
