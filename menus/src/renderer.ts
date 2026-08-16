@@ -1,20 +1,17 @@
-declare global {
-  interface Window {
-    apiMenus: {
-      abrirContexto: (tipo: 'itens' | 'frutas' | 'cores') => Promise<string | null>
-    }
-  }
-}
+import type { TipoDeMenu } from './main'
+
+// Quem descreve `window.apiMenus` é o src/ponte.d.ts, o mesmo arquivo contra o qual o
+// preload se confere.
 
 // Cada área da janela pede um menu diferente. O clique com o botão direito só
 // informa qual menu quer; quem monta e exibe é o processo principal.
-const AREAS: Array<{ id: string; tipo: 'itens' | 'frutas' | 'cores' }> = [
+const AREAS: Array<{ id: string; tipo: TipoDeMenu }> = [
   { id: 'area-1', tipo: 'itens' },
   { id: 'area-2', tipo: 'frutas' },
   { id: 'area-3', tipo: 'cores' },
 ]
 
-function registrarArea(id: string, tipo: 'itens' | 'frutas' | 'cores'): void {
+function registrarArea(id: string, tipo: TipoDeMenu): void {
   const area = document.getElementById(id)
   if (!area) return
 
