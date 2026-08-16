@@ -55,6 +55,7 @@ jobs:
           - mini-editor-de-codigo
           - codificador-mp3
           - console-e-registros
+          - comunicacao-entre-janelas
           - notificacoes
           - bloqueio-de-suspensao
           - impressao

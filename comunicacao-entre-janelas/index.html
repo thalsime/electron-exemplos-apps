@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Comunicação entre janelas</title>
+  </head>
+  <body>
+    <!-- Este mesmo arquivo é carregado pelas DUAS janelas. O que muda entre
+         elas é a consulta do endereço (?papel=azul ou ?papel=verde), lida pelo
+         renderer.ts para ajustar o título e as cores. -->
+    <h1 id="titulo">Janela</h1>
+
+    <p class="explicacao">
+      O que você enviar daqui aparece na janela <strong id="destino"></strong>, e nunca nesta.
+      A mensagem sobe para o processo principal, que decide o destino e reenvia.
+    </p>
+
+    <div class="envio">
+      <input id="campo-mensagem" type="text" placeholder="Escreva e tecle Enter" />
+      <button id="botao-enviar">Enviar</button>
+    </div>
+
+    <h2>Histórico desta janela</h2>
+    <ul id="historico"></ul>
+
+    <script type="module" src="/src/renderer.ts"></script>
+  </body>
+</html>
