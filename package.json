@@ -23,6 +23,7 @@
     "ola-mundo-objeto-compartilhado",
     "relatorio-de-falha",
     "service-worker/resposta-simulada",
+    "telas-no-mesmo-renderizador",
     "webgl",
     "webview/navegador"
   ],

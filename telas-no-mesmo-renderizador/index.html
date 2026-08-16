@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Telas no mesmo renderizador</title>
+  </head>
+  <body>
+    <!-- Os links apontam para um endereço com "#". Trocar o que vem depois do
+         "#" não recarrega a página: o navegador apenas avisa o código, pelo
+         evento hashchange, e o renderizador decide o que mostrar. -->
+    <nav id="menu">
+      <a href="#inicio" data-tela="inicio">Início</a>
+      <a href="#cadastro" data-tela="cadastro">Cadastro</a>
+      <a href="#sobre" data-tela="sobre">Sobre</a>
+    </nav>
+
+    <main>
+      <section id="tela-inicio" class="tela">
+        <h1>Três telas, uma janela</h1>
+        <p>
+          Este aplicativo tem três telas e <strong>nenhuma</strong> biblioteca de roteamento.
+          Cada tela é uma seção do mesmo documento, e trocar de tela é mostrar uma e esconder
+          as outras.
+        </p>
+        <p>
+          Repare no endereço logo abaixo: ele muda a cada clique no menu, e os botões de voltar
+          e avançar do histórico continuam funcionando.
+        </p>
+        <p class="endereco">Endereço atual: <code id="endereco-atual"></code></p>
+      </section>
+
+      <section id="tela-cadastro" class="tela">
+        <h1>Cadastro</h1>
+        <p>
+          Preencha os campos, vá até outra tela e volte. O que você digitou continua aqui,
+          porque a página nunca foi recarregada - só ficou escondida.
+        </p>
+
+        <form id="formulario-cadastro">
+          <label for="campo-nome">Nome</label>
+          <input id="campo-nome" type="text" placeholder="Seu nome" />
+
+          <label for="campo-curso">Curso</label>
+          <input id="campo-curso" type="text" placeholder="Técnico em Desenvolvimento de Sistemas" />
+
+          <button type="submit">Salvar</button>
+        </form>
+
+        <p id="retorno-cadastro" class="retorno"></p>
+      </section>
+
+      <section id="tela-sobre" class="tela">
+        <h1>Sobre</h1>
+        <p>
+          A troca de telas usa <code>location.hash</code> e o evento <code>hashchange</code>,
+          que são do próprio navegador. É o mesmo mecanismo por trás do modo "hash" dos
+          roteadores de bibliotecas de interface, sem a biblioteca.
+        </p>
+        <p>
+          Uma tela nova custa três coisas: um link no menu, uma seção no HTML e o nome dela na
+          lista de telas do <code>renderer.ts</code>.
+        </p>
+        <p class="contador">Telas visitadas nesta execução: <strong id="contador-visitas">0</strong></p>
+      </section>
+    </main>
+
+    <script type="module" src="/src/renderer.ts"></script>
+  </body>
+</html>

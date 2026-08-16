@@ -27,7 +27,10 @@ acrescenta a ponte entre os dois processos.
 Cada pasta tem README próprio, com o que o exemplo demonstra, como executar e as armadilhas de
 cada API.
 
-## Os vinte exemplos
+## Os exemplos
+
+O acervo tem **21** exemplos. Os dois primeiros são a base de todos os outros; os demais estão
+em ordem alfabética.
 
 | Exemplo | Assunto |
 |---|---|
@@ -49,6 +52,7 @@ cada API.
 | [`notificacoes`](notificacoes/) | notificações do sistema operacional |
 | [`relatorio-de-falha`](relatorio-de-falha/) | `crashReporter` e relatório de falha |
 | [`service-worker/resposta-simulada`](service-worker/resposta-simulada/) | interceptar requisições com Service Worker |
+| [`telas-no-mesmo-renderizador`](telas-no-mesmo-renderizador/) | várias telas numa janela só, sem roteador |
 | [`webgl`](webgl/) | modelo 3D com WebGL e three.js |
 | [`webview/navegador`](webview/navegador/) | navegador em miniatura com a tag `<webview>` |
 
