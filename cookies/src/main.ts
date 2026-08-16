@@ -1,14 +1,14 @@
-import { app, BrowserWindow, ipcMain, session } from 'electron'
-import path from 'path'
+import { app, BrowserWindow, ipcMain, session } from 'electron';
+import path from 'path';
 
 export interface ResumoDeCookie {
-  domain: string
-  name: string
-  path: string
-  secure: boolean
+  domain: string;
+  name: string;
+  path: string;
+  secure: boolean;
 }
 
-let janelaPrincipal: BrowserWindow | null = null
+let janelaPrincipal: BrowserWindow | null = null;
 
 // A sessão de um aplicativo recém-aberto não tem cookie algum, e o exemplo
 // abriria com a tabela vazia. Estes cookies de demonstração deixam o exemplo
@@ -21,21 +21,21 @@ const COOKIES_DE_DEMONSTRACAO = [
   { url: 'https://loja.exemplo.com.br/', name: 'carrinho', value: '3-itens' },
   { url: 'https://outro-dominio.org/', name: 'visitas', value: '7' },
   { url: 'http://sem-tls.net/', name: 'aviso', value: 'sem-https' },
-]
+];
 
 async function semearCookies(): Promise<void> {
   for (const cookie of COOKIES_DE_DEMONSTRACAO) {
-    await session.defaultSession.cookies.set(cookie)
+    await session.defaultSession.cookies.set(cookie);
   }
-  console.log(`${COOKIES_DE_DEMONSTRACAO.length} cookies de demonstração criados.`)
+  console.log(`${COOKIES_DE_DEMONSTRACAO.length} cookies de demonstração criados.`);
 }
 
 // Monta a URL a partir dos campos do cookie. Fica no processo principal, e não
 // no renderizador, porque é a forma que a API de remoção exige - o renderizador
 // só precisa dizer QUAL cookie quer remover.
 function urlDoCookie(cookie: ResumoDeCookie): string {
-  const esquema = cookie.secure ? 'https' : 'http'
-  return `${esquema}://${cookie.domain}${cookie.path}`
+  const esquema = cookie.secure ? 'https' : 'http';
+  return `${esquema}://${cookie.domain}${cookie.path}`;
 }
 
 function criarJanela(): void {
@@ -47,17 +47,17 @@ function criarJanela(): void {
       nodeIntegration: false,
       preload: path.join(__dirname, 'preload.js'),
     },
-  })
+  });
 
   if (process.env.VITE_DEV_SERVER_URL) {
-    janelaPrincipal.loadURL(process.env.VITE_DEV_SERVER_URL)
+    janelaPrincipal.loadURL(process.env.VITE_DEV_SERVER_URL);
   } else {
-    janelaPrincipal.loadFile(path.join(__dirname, '../dist/index.html'))
+    janelaPrincipal.loadFile(path.join(__dirname, '../dist/index.html'));
   }
 
   janelaPrincipal.on('closed', () => {
-    janelaPrincipal = null
-  })
+    janelaPrincipal = null;
+  });
 }
 
 // `cookies.get` e `cookies.remove` passaram de callback para Promise. No exemplo
@@ -65,24 +65,24 @@ function criarJanela(): void {
 // entre si - uma esperava (cookies) e a outra (error, cookies) -, então pelo
 // menos uma estava errada desde sempre. Com Promise a ambiguidade desaparece.
 ipcMain.handle('cookies:listar', async (): Promise<ResumoDeCookie[]> => {
-  const cookies = await session.defaultSession.cookies.get({})
+  const cookies = await session.defaultSession.cookies.get({});
   return cookies.map((c) => ({
     domain: c.domain ?? '',
     name: c.name,
     path: c.path ?? '/',
     secure: c.secure ?? false,
-  }))
-})
+  }));
+});
 
 ipcMain.handle('cookies:remover', async (_evento, cookie: ResumoDeCookie): Promise<void> => {
-  await session.defaultSession.cookies.remove(urlDoCookie(cookie), cookie.name)
-})
+  await session.defaultSession.cookies.remove(urlDoCookie(cookie), cookie.name);
+});
 
 app.whenReady().then(async () => {
-  await semearCookies()
-  criarJanela()
-})
+  await semearCookies();
+  criarJanela();
+});
 
 app.on('window-all-closed', () => {
-  app.quit()
-})
+  app.quit();
+});
