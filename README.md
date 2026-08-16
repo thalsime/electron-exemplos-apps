@@ -82,7 +82,7 @@ Para gerar a versão de produção de um exemplo, use `npm run build` dentro da 
 |-- index.html          a página
 |-- package.json        main aponta para dist-electron/main.js
 |-- tsconfig.json
-|-- vite.config.ts
+|-- vite.config.mts     a extensão .mts declara o arquivo como módulo ES
 +-- src/
     |-- main.ts         processo principal
     |-- preload.ts      a ponte, quando o exemplo precisa de uma
