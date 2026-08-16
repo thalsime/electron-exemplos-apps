@@ -1,20 +1,8 @@
 import './style.css'
-import type { AcaoDeEdicao, ComandoDoMenu } from './main'
 
-declare global {
-  interface Window {
-    apiEditor: {
-      abrir: () => Promise<{ caminho: string; conteudo: string } | null>
-      salvar: (caminho: string, conteudo: string) => Promise<void>
-      salvarComo: (conteudo: string) => Promise<string | null>
-      novaJanela: () => Promise<void>
-      menuDeContexto: (temSelecao: boolean) => Promise<AcaoDeEdicao | null>
-      aoReceberComando: (ouvinte: (comando: ComandoDoMenu) => void) => void
-      lerAreaDeTransferencia: () => string
-      escreverNaAreaDeTransferencia: (texto: string) => void
-    }
-  }
-}
+// Quem descreve `window.apiEditor` é o src/ponte.d.ts, o mesmo arquivo contra o qual o
+// preload se confere. Nada precisa ser importado aqui: o tipo de `resultado`, o de
+// `acao` e o de `comando` chegam todos por inferência do contrato.
 
 interface ModoDoEditor {
   modo: unknown
