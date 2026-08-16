@@ -29,7 +29,7 @@ cada API.
 
 ## Os exemplos
 
-O acervo tem **27** exemplos. Os dois primeiros são a base de todos os outros; os demais estão
+O acervo tem **28** exemplos. Os dois primeiros são a base de todos os outros; os demais estão
 em ordem alfabética.
 
 | Exemplo | Assunto |
@@ -53,6 +53,7 @@ em ordem alfabética.
 | [`janela-sem-moldura`](janela-sem-moldura/) | janela sem barra de título, com controles próprios |
 | [`menus`](menus/) | menu de aplicação e menus de contexto |
 | [`mini-editor-de-codigo`](mini-editor-de-codigo/) | editor com destaque de sintaxe e arquivos |
+| [`navegador-com-sessao`](navegador-com-sessao/) | `<webview>`, cookies, Service Worker e relatório de falha |
 | [`notificacoes`](notificacoes/) | notificações do sistema operacional |
 | [`painel-flutuante`](painel-flutuante/) | painel sem moldura, sempre no topo, comandando outra janela |
 | [`relatorio-de-falha`](relatorio-de-falha/) | `crashReporter` e relatório de falha |

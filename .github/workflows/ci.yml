@@ -54,6 +54,7 @@ jobs:
           - ola-mundo-objeto-compartilhado
           - menus
           - mini-editor-de-codigo
+          - navegador-com-sessao
           - codificador-mp3
           - console-e-registros
           - comunicacao-entre-janelas
