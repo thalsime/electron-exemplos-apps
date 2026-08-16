@@ -1,17 +1,8 @@
 import './estilo.css'
 import type { EstadoDaApresentacao } from './main'
 
-declare global {
-  interface Window {
-    apiPainel: {
-      estadoAtual: () => Promise<EstadoDaApresentacao>
-      alternarApresentacao: () => void
-      moverSlide: (passo: number) => void
-      ocultarPainel: () => void
-      aoMudarEstado: (ouvinte: (estado: EstadoDaApresentacao) => void) => void
-    }
-  }
-}
+// Quem descreve `window.apiPainel` é o src/ponte.d.ts, o mesmo arquivo contra o qual o
+// preload se confere - e o mesmo que serve o painel.ts, a outra página deste exemplo.
 
 const TITULOS = ['Abertura', 'O problema', 'A proposta', 'Como funciona', 'Perguntas']
 

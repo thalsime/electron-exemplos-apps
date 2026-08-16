@@ -1,19 +1,9 @@
 import './estilo.css'
 import type { EstadoDaApresentacao } from './main'
 
-// A declaração da ponte vive em conteudo.ts, que é carregado pela outra página.
-// Aqui o `declare global` seria duplicado, então basta o acesso tipado.
-declare global {
-  interface Window {
-    apiPainel: {
-      estadoAtual: () => Promise<EstadoDaApresentacao>
-      alternarApresentacao: () => void
-      moverSlide: (passo: number) => void
-      ocultarPainel: () => void
-      aoMudarEstado: (ouvinte: (estado: EstadoDaApresentacao) => void) => void
-    }
-  }
-}
+// A declaração da ponte vive no `src/ponte.d.ts`, que serve as duas páginas e o preload.
+// Este comentário antes dizia que a declaração vinha do `conteudo.ts` para evitar
+// duplicação - e ela estava duplicada aqui embaixo assim mesmo.
 
 // O painel não guarda estado próprio: ele só desenha o que recebe e manda a
 // intenção de volta. Guardar uma cópia aqui seria a porta de entrada para as

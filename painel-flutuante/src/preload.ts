@@ -1,11 +1,15 @@
 import { contextBridge, ipcRenderer } from 'electron'
 import type { EstadoDaApresentacao } from './main'
+import type { ApiPainel } from './ponte'
 
 // Um preload só, compartilhado pelas duas janelas - a de conteúdo e o painel.
 // Cada uma usa a parte que lhe interessa: o painel manda comandos, a de
 // conteúdo apenas escuta. Separar em dois arquivos duplicaria a ponte sem
 // ganho, já que o processo principal é quem controla quem pode o quê.
-contextBridge.exposeInMainWorld('apiPainel', {
+//
+// O tipo é aplicado à variável porque `exposeInMainWorld(apiKey: string, api: any)` não
+// confere nada: sem esta anotação, a ponte poderia divergir do contrato em silêncio.
+const apiPainel: ApiPainel = {
   estadoAtual: (): Promise<EstadoDaApresentacao> => ipcRenderer.invoke('painel:estado-atual'),
 
   alternarApresentacao: (): void => {
@@ -26,4 +30,6 @@ contextBridge.exposeInMainWorld('apiPainel', {
       ouvinte(estado)
     })
   },
-})
+}
+
+contextBridge.exposeInMainWorld('apiPainel', apiPainel)
