@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Navegador com sessão</title>
+  </head>
+  <body>
+    <form id="formulario-endereco" class="barra">
+      <button type="button" id="botao-voltar" title="Voltar">&lt;</button>
+      <button type="button" id="botao-recarregar" title="Recarregar">recarregar</button>
+      <button type="button" id="botao-inicio" title="Página inicial">início</button>
+      <input id="campo-endereco" type="text" placeholder="Digite um endereço e tecle Enter" />
+      <button type="submit">Ir</button>
+      <button type="button" id="botao-nova-janela">Abrir em nova janela</button>
+    </form>
+
+    <p id="situacao" class="situacao"></p>
+
+    <main>
+      <!-- A página inicial é montada pelo Service Worker e vive na casca. -->
+      <section id="inicio" class="inicio"></section>
+
+      <!-- O conteúdo externo roda em outro processo, dentro desta tag. -->
+      <webview id="visualizador" src="about:blank"></webview>
+    </main>
+
+    <section class="paineis">
+      <div class="painel">
+        <h3>Cookies da sessão</h3>
+        <div class="botoes">
+          <button id="botao-cookies">Atualizar</button>
+          <button id="botao-limpar-cookies">Limpar todos</button>
+        </div>
+        <table>
+          <thead>
+            <tr><th>domínio</th><th>nome</th><th>valor</th></tr>
+          </thead>
+          <tbody id="corpo-cookies"></tbody>
+        </table>
+      </div>
+
+      <div class="painel">
+        <h3>Relatórios de falha</h3>
+        <div class="botoes">
+          <button id="botao-travar">Fazer o conteúdo travar</button>
+        </div>
+        <table>
+          <thead>
+            <tr><th>id</th><th>data</th></tr>
+          </thead>
+          <tbody id="corpo-relatorios"></tbody>
+        </table>
+      </div>
+
+      <div class="painel">
+        <h3>Avisos de outras janelas</h3>
+        <ul id="avisos"></ul>
+      </div>
+    </section>
+
+    <script type="module" src="/src/renderer.ts"></script>
+  </body>
+</html>
