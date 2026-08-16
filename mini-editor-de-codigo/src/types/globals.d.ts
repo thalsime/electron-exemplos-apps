@@ -21,4 +21,4 @@ interface CodeMirrorEditor {
 declare function CodeMirror(
   elemento: HTMLElement,
   opcoes: Record<string, unknown>,
-): CodeMirrorEditor
+): CodeMirrorEditor;
