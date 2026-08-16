@@ -4,6 +4,14 @@ import path from 'path'
 
 export type AcaoDeEdicao = 'copiar' | 'recortar' | 'colar'
 
+// O que o diálogo de abertura devolve à página. Esta forma estava escrita por extenso
+// em três lugares - aqui, no preload e no renderizador -, três cópias que ninguém
+// comparava. Com um nome só, mudar um campo quebra as três pontas de uma vez.
+export interface ArquivoAberto {
+  caminho: string
+  conteudo: string
+}
+
 const janelas = new Set<BrowserWindow>()
 
 function criarJanela(): BrowserWindow {
@@ -35,7 +43,7 @@ function janelaDoEvento(evento: Electron.IpcMainInvokeEvent): BrowserWindow | nu
 // showOpenDialog e showSaveDialog passaram de callback para Promise, e o retorno
 // virou um objeto com `canceled` e o caminho - no lugar do caminho solto que o
 // exemplo original recebia.
-ipcMain.handle('editor:abrir', async (evento): Promise<{ caminho: string; conteudo: string } | null> => {
+ipcMain.handle('editor:abrir', async (evento): Promise<ArquivoAberto | null> => {
   const janela = janelaDoEvento(evento)
   const escolha = janela
     ? await dialog.showOpenDialog(janela, { properties: ['openFile'] })
@@ -63,7 +71,7 @@ ipcMain.handle('editor:salvar', async (_evento, caminho: string, conteudo: strin
   await fs.writeFile(caminho, conteudo, 'utf8')
 })
 
-ipcMain.handle('editor:nova-janela', () => {
+ipcMain.handle('editor:nova-janela', (): void => {
   criarJanela()
 })
 

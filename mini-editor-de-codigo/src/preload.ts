@@ -1,12 +1,15 @@
 import { clipboard, contextBridge, ipcRenderer } from 'electron'
-import type { AcaoDeEdicao, ComandoDoMenu } from './main'
+import type { AcaoDeEdicao, ArquivoAberto, ComandoDoMenu } from './main'
+import type { ApiEditor } from './ponte'
 
 // O `clipboard` do Electron não é alcançável pela página com contextIsolation
 // ligado, então passa por aqui. As funções de arquivo e de menu vão ao processo
 // principal por IPC, no lugar do antigo `remote`.
-contextBridge.exposeInMainWorld('apiEditor', {
-  abrir: (): Promise<{ caminho: string; conteudo: string } | null> =>
-    ipcRenderer.invoke('editor:abrir'),
+//
+// O tipo é aplicado à variável porque `exposeInMainWorld(apiKey: string, api: any)` não
+// confere nada: sem esta anotação, a ponte poderia divergir do contrato em silêncio.
+const apiEditor: ApiEditor = {
+  abrir: (): Promise<ArquivoAberto | null> => ipcRenderer.invoke('editor:abrir'),
   salvar: (caminho: string, conteudo: string): Promise<void> =>
     ipcRenderer.invoke('editor:salvar', caminho, conteudo),
   salvarComo: (conteudo: string): Promise<string | null> =>
@@ -23,4 +26,6 @@ contextBridge.exposeInMainWorld('apiEditor', {
 
   lerAreaDeTransferencia: (): string => clipboard.readText(),
   escreverNaAreaDeTransferencia: (texto: string): void => clipboard.writeText(texto),
-})
+}
+
+contextBridge.exposeInMainWorld('apiEditor', apiEditor)
