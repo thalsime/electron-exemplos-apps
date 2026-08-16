@@ -1,5 +1,5 @@
 {
-  "name": "webgl-demo",
+  "name": "webgl",
   "version": "1.1.0",
   "description": "Modelo 3D renderizado com WebGL em janela sem moldura",
   "main": "dist-electron/main.js",
