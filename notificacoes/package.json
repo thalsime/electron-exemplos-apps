@@ -1,5 +1,5 @@
 {
-  "name": "notification-demo",
+  "name": "notificacoes",
   "version": "1.1.0",
   "description": "Demonstra a API de notificações do sistema a partir do renderizador",
   "main": "dist-electron/main.js",

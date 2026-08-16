@@ -54,7 +54,7 @@ jobs:
           - menus
           - mini-editor-de-codigo
           - codificador-mp3
-          - notifications
+          - notificacoes
           - power-save-blocker
           - printing
           - service-worker/mock-response
