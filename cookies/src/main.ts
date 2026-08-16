@@ -74,7 +74,7 @@ ipcMain.handle('cookies:listar', async (): Promise<ResumoDeCookie[]> => {
   }))
 })
 
-ipcMain.handle('cookies:remover', async (_evento, cookie: ResumoDeCookie) => {
+ipcMain.handle('cookies:remover', async (_evento, cookie: ResumoDeCookie): Promise<void> => {
   await session.defaultSession.cookies.remove(urlDoCookie(cookie), cookie.name)
 })
 

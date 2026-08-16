@@ -1,14 +1,9 @@
 import './manager.css'
 import type { ResumoDeCookie } from './main'
 
-declare global {
-  interface Window {
-    cookiesApi: {
-      listar: () => Promise<ResumoDeCookie[]>
-      remover: (cookie: ResumoDeCookie) => Promise<void>
-    }
-  }
-}
+// Quem descreve `window.cookiesApi` é o src/ponte.d.ts, o mesmo arquivo contra o qual o
+// preload se confere. `ResumoDeCookie` continua importado aqui porque o cache por
+// domínio o usa - o import não era só para a declaração.
 
 const TECLA_ESC = 'Escape'
 
