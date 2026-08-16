@@ -29,7 +29,7 @@ cada API.
 
 ## Os exemplos
 
-O acervo tem **24** exemplos. Os dois primeiros são a base de todos os outros; os demais estão
+O acervo tem **25** exemplos. Os dois primeiros são a base de todos os outros; os demais estão
 em ordem alfabética.
 
 | Exemplo | Assunto |
@@ -55,6 +55,7 @@ em ordem alfabética.
 | [`notificacoes`](notificacoes/) | notificações do sistema operacional |
 | [`relatorio-de-falha`](relatorio-de-falha/) | `crashReporter` e relatório de falha |
 | [`service-worker/resposta-simulada`](service-worker/resposta-simulada/) | interceptar requisições com Service Worker |
+| [`sqlite`](sqlite/) | CRUD local com `node:sqlite`, sem dependência |
 | [`telas-no-mesmo-renderizador`](telas-no-mesmo-renderizador/) | várias telas numa janela só, sem roteador |
 | [`webgl`](webgl/) | modelo 3D com WebGL e three.js |
 | [`webview/navegador`](webview/navegador/) | navegador em miniatura com a tag `<webview>` |

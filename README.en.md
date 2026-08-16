@@ -30,7 +30,7 @@ the bridge between the two processes.
 
 ## The samples
 
-The collection has **24** samples. The first two are the foundation for all the others; the
+The collection has **25** samples. The first two are the foundation for all the others; the
 rest are in alphabetical order.
 
 | Sample | Topic |
@@ -56,6 +56,7 @@ rest are in alphabetical order.
 | [`notificacoes`](notificacoes/) | operating system notifications |
 | [`relatorio-de-falha`](relatorio-de-falha/) | `crashReporter` and crash reports |
 | [`service-worker/resposta-simulada`](service-worker/resposta-simulada/) | intercepting requests with a Service Worker |
+| [`sqlite`](sqlite/) | local CRUD with `node:sqlite`, no dependency |
 | [`telas-no-mesmo-renderizador`](telas-no-mesmo-renderizador/) | several screens in a single window, no router |
 | [`webgl`](webgl/) | 3D model with WebGL and three.js |
 | [`webview/navegador`](webview/navegador/) | mini browser built on the `<webview>` tag |

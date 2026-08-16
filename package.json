@@ -26,6 +26,7 @@
     "ola-mundo-objeto-compartilhado",
     "relatorio-de-falha",
     "service-worker/resposta-simulada",
+    "sqlite",
     "telas-no-mesmo-renderizador",
     "webgl",
     "webview/navegador"
