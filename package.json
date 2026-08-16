@@ -20,7 +20,7 @@
     "ola-mundo",
     "ola-mundo-objeto-compartilhado",
     "relatorio-de-falha",
-    "service-worker/mock-response",
+    "service-worker/resposta-simulada",
     "spell-check",
     "tray",
     "webgl",

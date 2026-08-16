@@ -57,7 +57,7 @@ jobs:
           - notificacoes
           - bloqueio-de-suspensao
           - impressao
-          - service-worker/mock-response
+          - service-worker/resposta-simulada
           - spell-check
           - tray
           - webgl

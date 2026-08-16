@@ -20,5 +20,5 @@ self.addEventListener('activate', () => {
 // Por isso a página muda de conteúdo ao ser recarregada.
 self.addEventListener('fetch', (event) => {
   console.log('Requisição interceptada:', event.request.url)
-  event.respondWith(new Response('Hello world!'))
+  event.respondWith(new Response('Olá, mundo! Esta resposta veio do Service Worker, não da rede.'))
 })
