@@ -1,16 +1,16 @@
-import { app, BrowserWindow, crashReporter, ipcMain } from 'electron'
-import http from 'node:http'
-import path from 'path'
+import { app, BrowserWindow, crashReporter, ipcMain } from 'electron';
+import http from 'node:http';
+import path from 'path';
 
-const PORTA_COLETOR = 9999
-const URL_COLETOR = `http://127.0.0.1:${PORTA_COLETOR}`
+const PORTA_COLETOR = 9999;
+const URL_COLETOR = `http://127.0.0.1:${PORTA_COLETOR}`;
 
 // O contrato do que trafega no canal é declarado aqui, e não no preload, porque é
 // aqui que o dado nasce: quem monta cada relatório é o handler lá embaixo. O preload
 // e a página importam este mesmo tipo, então mudar um campo quebra os três de uma vez.
 export interface RelatorioDeFalha {
-  id: string
-  data: string
+  id: string;
+  data: string;
 }
 
 // O crashReporter é iniciado UMA vez, e só aqui. No exemplo original ele também
@@ -24,9 +24,9 @@ crashReporter.start({
   submitURL: URL_COLETOR,
   uploadToServer: true,
   globalExtra: { _companyName: 'sample' },
-})
+});
 
-let janelaPrincipal: BrowserWindow | null = null
+let janelaPrincipal: BrowserWindow | null = null;
 
 // Servidor que recebe o relatório de falha. Num aplicativo real isto seria um
 // serviço remoto; aqui roda em localhost para o exemplo ser autocontido.
@@ -35,10 +35,10 @@ let janelaPrincipal: BrowserWindow | null = null
 // depois na coluna ID da tabela.
 function criarColetor(): http.Server {
   return http.createServer((_req, res) => {
-    const identificador = Math.floor(1000 + Math.random() * 9000).toString()
-    console.log(`Relatório de falha recebido. ID atribuído: ${identificador}`)
-    res.end(identificador)
-  })
+    const identificador = Math.floor(1000 + Math.random() * 9000).toString();
+    console.log(`Relatório de falha recebido. ID atribuído: ${identificador}`);
+    res.end(identificador);
+  });
 }
 
 function criarJanela(): void {
@@ -50,17 +50,17 @@ function criarJanela(): void {
       nodeIntegration: false,
       preload: path.join(__dirname, 'preload.js'),
     },
-  })
+  });
 
   if (process.env.VITE_DEV_SERVER_URL) {
-    janelaPrincipal.loadURL(process.env.VITE_DEV_SERVER_URL)
+    janelaPrincipal.loadURL(process.env.VITE_DEV_SERVER_URL);
   } else {
-    janelaPrincipal.loadFile(path.join(__dirname, '../dist/index.html'))
+    janelaPrincipal.loadFile(path.join(__dirname, '../dist/index.html'));
   }
 
   janelaPrincipal.on('closed', () => {
-    janelaPrincipal = null
-  })
+    janelaPrincipal = null;
+  });
 }
 
 // A lista de relatórios só existe no processo principal. O renderizador pede por
@@ -70,16 +70,16 @@ ipcMain.handle('crash-report:listar-relatorios', (): RelatorioDeFalha[] => {
     id: relatorio.id,
     // Date não atravessa o IPC preservando o tipo: vai como texto já formatado.
     data: relatorio.date.toLocaleString(),
-  }))
-})
+  }));
+});
 
 app.whenReady().then(() => {
   criarColetor().listen(PORTA_COLETOR, '127.0.0.1', () => {
-    console.log(`Coletor de relatórios ouvindo em ${URL_COLETOR}`)
-    criarJanela()
-  })
-})
+    console.log(`Coletor de relatórios ouvindo em ${URL_COLETOR}`);
+    criarJanela();
+  });
+});
 
 app.on('window-all-closed', () => {
-  app.quit()
-})
+  app.quit();
+});

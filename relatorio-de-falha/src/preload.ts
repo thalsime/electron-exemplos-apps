@@ -1,7 +1,7 @@
-import { contextBridge, ipcRenderer } from 'electron'
+import { contextBridge, ipcRenderer } from 'electron';
 
-import type { RelatorioDeFalha } from './main'
-import type { CrashReportApi } from './ponte'
+import type { RelatorioDeFalha } from './main';
+import type { CrashReportApi } from './ponte';
 
 // O preload é a única parte que enxerga os dois lados. Ele não entrega o
 // ipcRenderer nem o process inteiros à página: expõe apenas as duas operações
@@ -18,6 +18,6 @@ const crashReportApi: CrashReportApi = {
   // outro processo. O preload tem acesso ao `process` do Node, então a página
   // consegue disparar a falha sem que nodeIntegration seja ligado.
   provocarFalha: (): void => process.crash(),
-}
+};
 
-contextBridge.exposeInMainWorld('crashReportApi', crashReportApi)
+contextBridge.exposeInMainWorld('crashReportApi', crashReportApi);
