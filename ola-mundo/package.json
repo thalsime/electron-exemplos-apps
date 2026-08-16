@@ -1,5 +1,5 @@
 {
-  "name": "helloworld",
+  "name": "ola-mundo",
   "version": "1.0.2",
   "description": "Aplicativo Electron mínimo: abre uma janela e carrega uma página HTML",
   "main": "dist-electron/main.js",
