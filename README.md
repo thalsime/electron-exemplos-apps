@@ -99,6 +99,7 @@ Para gerar a versão de produção de um exemplo, use `npm run build` dentro da 
 +-- src/
     |-- main.ts         processo principal
     |-- preload.ts      a ponte, quando o exemplo precisa de uma
+    |-- ponte.d.ts      o contrato da ponte, quando ela existe
     +-- renderer.ts     código da página
 ```
 
@@ -116,6 +117,65 @@ do Electron, e por isso **não foram traduzidos** - é por eles que se procura a
   exigidos por manifesto, URLs, e caminhos reais do sistema de arquivos - as pastas pessoais do
   macOS se chamam `Documents` e `Pictures` no disco, mesmo que o Finder as exiba traduzidas.
 - **Bibliotecas de terceiros** não são traduzidas, nem em código nem em prosa.
+
+## Convenções de tipagem
+
+Os 30 exemplos compilam sob `strict`, e ainda assim o IPC do Electron é um buraco no sistema
+de tipos. As declarações do próprio pacote dizem:
+
+```ts
+ipcMain.handle(channel: string, listener: (event, ...args: any[]) => (Promise<any>) | (any))
+ipcRenderer.invoke(channel: string, ...args: any[]): Promise<any>
+contextBridge.exposeInMainWorld(apiKey: string, api: any): void
+```
+
+Ou seja: tudo que atravessa o IPC chega como `any`, e o objeto entregue ao `contextBridge`
+não é conferido contra coisa nenhuma. Não porque alguém escreveu `any` - não há um único no
+acervo - mas porque a API é assim. As regras abaixo existem para reconstruir o tipo
+exatamente na fronteira onde ele se perde.
+
+**O que se anota**
+
+1. **O retorno de toda função nomeada de topo**, inclusive os handlers de `ipcMain.handle` e
+   `ipcMain.on`. O retorno do handler é o que o outro processo vai receber.
+2. **O contrato da ponte**, numa interface nomeada em `src/ponte.d.ts`, que também declara o
+   `window`. O `preload.ts` importa esse tipo e o aplica ao objeto antes de expô-lo; o
+   renderizador só usa `window.<api>`. Escrever a forma duas vezes - uma no preload, outra
+   num `declare global` - produz duas descrições que o compilador nunca compara entre si.
+3. **Todo payload estruturado de IPC**, numa interface declarada onde o dado é produzido, em
+   geral o `main.ts`, e importada pelos dois lados com `import type`. O nome do canal é uma
+   string que o compilador não confere; o tipo compartilhado é o único vínculo real.
+4. **Valor cuja inferência é mais larga que o uso**: uma união como `'a' | 'b'` que o outro
+   lado receberia como `string`, ou uma coleção iniciada vazia. `string` aceita o erro de
+   digitação que a união recusa.
+5. **`import type` na importação usada só como tipo.** Deixa explícito que aquela linha
+   desaparece na compilação e não cria dependência em tempo de execução.
+6. Tipo mesmo desconhecido vira `unknown`, com estreitamento antes do uso. `any` não entra.
+
+**O que não se anota**
+
+1. Inicialização literal óbvia: `const limite = 5` não melhora com `: number`.
+2. Parâmetro já tipado pelo contexto - inclusive o `event` dos handlers, que o Electron tipa.
+   São os `...args` que ele deixa em aberto.
+3. Genérico, utility type ou tipo condicional além do que as regras acima exigem.
+4. Renomear, refatorar ou reorganizar a pretexto de tipagem.
+5. Trocar `!` ou `as` por verificação em tempo de execução: isso é mudança de lógica.
+
+A regra de bolso: anotação que não muda o tipo inferido **e** não comunica um contrato a quem
+lê é ruído, e não entra.
+
+**De onde vêm estas regras.** O TypeScript Handbook recomenda o oposto do excesso - "try
+using fewer type annotations than you think" - e trata o retorno explícito como opcional; o
+Google TypeScript Style Guide diz que anotar retorno "is up to the code author". Do outro
+lado, a regra `explicit-function-return-type` do typescript-eslint exige em toda função. Este
+acervo fica no meio, na posição da regra `explicit-module-boundary-types`: anotar **na
+fronteira** - e o handler de IPC e a ponte do `contextBridge` são exatamente isso. O padrão
+do `declare global` vem da página Context Isolation do Electron; o tutorial de IPC, esse, não
+menciona tipagem em ponto algum.
+
+Nomes de tipos seguem as convenções de tradução acima - português, ASCII puro - em
+PascalCase. O nome do tipo da ponte deriva da chave já exposta, sem renomeá-la: `apiNotas`
+vira `ApiNotas`.
 
 ## Requisitos
 

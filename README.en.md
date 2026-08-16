@@ -100,11 +100,71 @@ To produce a production build of a sample, run `npm run build` inside its folder
 +-- src/
     |-- main.ts         main process
     |-- preload.ts      the bridge, when the sample needs one
+    |-- ponte.d.ts      the bridge contract, when there is a bridge
     +-- renderer.ts     page code
 ```
 
 The three file names `main.ts`, `preload.ts` and `renderer.ts` are the vocabulary of the
 official Electron documentation, and were deliberately **not** translated.
+
+## Typing conventions
+
+All 30 samples compile under `strict`, and even so Electron's IPC is a hole in the type
+system. The package's own declarations read:
+
+```ts
+ipcMain.handle(channel: string, listener: (event, ...args: any[]) => (Promise<any>) | (any))
+ipcRenderer.invoke(channel: string, ...args: any[]): Promise<any>
+contextBridge.exposeInMainWorld(apiKey: string, api: any): void
+```
+
+That is: everything crossing IPC arrives as `any`, and the object handed to `contextBridge`
+is checked against nothing at all. Not because anyone wrote `any` - there is not a single one
+in the collection - but because that is how the API is shaped. The rules below exist to
+rebuild the type exactly at the boundary where it is lost.
+
+**What gets annotated**
+
+1. **The return type of every named top-level function**, including `ipcMain.handle` and
+   `ipcMain.on` handlers. A handler's return value is what the other process receives.
+2. **The bridge contract**, as a named interface in `src/ponte.d.ts`, which also declares
+   `window`. The `preload.ts` imports that type and applies it to the object before exposing
+   it; the renderer just uses `window.<api>`. Writing the shape twice - once in the preload,
+   once in a `declare global` - produces two descriptions the compiler never compares.
+3. **Every structured IPC payload**, as an interface declared where the data is produced,
+   usually `main.ts`, and imported by both sides with `import type`. A channel name is a
+   string the compiler does not check; the shared type is the only real link.
+4. **Values whose inferred type is wider than their use**: a union such as `'a' | 'b'` that
+   the other side would receive as `string`, or a collection initialised empty. `string`
+   accepts the typo that the union rejects.
+5. **`import type` on imports used only as types.** It makes explicit that the line vanishes
+   at compile time and creates no runtime dependency.
+6. A genuinely unknown type becomes `unknown`, narrowed before use. `any` does not enter.
+
+**What does not get annotated**
+
+1. Obvious literal initialisation: `const limite = 5` is not improved by `: number`.
+2. Parameters already typed by context - including the handlers' `event`, which Electron does
+   type. It is the `...args` it leaves open.
+3. Generics, utility types or conditional types beyond what the rules above require.
+4. Renaming, refactoring or reorganising under the pretext of typing.
+5. Replacing `!` or `as` with a runtime check: that is a change of logic, not of typing.
+
+Rule of thumb: an annotation that neither changes the inferred type **nor** communicates a
+contract to the reader is noise, and stays out.
+
+**Where these rules come from.** The TypeScript Handbook argues against excess - "try using
+fewer type annotations than you think" - and treats explicit return types as optional; the
+Google TypeScript Style Guide says annotating returns "is up to the code author". On the
+other side, typescript-eslint's `explicit-function-return-type` requires it on every
+function. This collection sits in between, at the position of the
+`explicit-module-boundary-types` rule: annotate **at the boundary** - and an IPC handler and
+the `contextBridge` are exactly that. The `declare global` pattern comes from Electron's
+Context Isolation page; the IPC tutorial, for its part, never mentions typing at all.
+
+Type names follow the collection's translation conventions - Portuguese, plain ASCII - in
+PascalCase. The bridge type's name derives from the key already exposed, without renaming it:
+`apiNotas` becomes `ApiNotas`.
 
 ## Requirements
 
